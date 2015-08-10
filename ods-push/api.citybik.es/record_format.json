@@ -1,0 +1,31 @@
+{
+  "company": "Nextbike GmbH",
+  "href": "/v2/networks/opole-bike",
+  "network_id": "opole-bike",
+  "network_location": {
+    "city": "Opole",
+    "country": "PL",
+    "latitude": 50.6645,
+    "longitude": 17.9276
+  },
+  "network_name": "Opole Bike",
+  "empty_slots": 7,
+  "extra": {
+    "bike_uids": [
+      60178,
+      60122,
+      60081,
+      60066,
+      60095
+    ],
+    "bikes_approximate": true,
+    "slots": "12",
+    "uid": 132109
+  },
+  "free_bikes": 5,
+  "station_id": "0a6b2cecada0633f30cbbd2e46b5fba3",
+  "latitude": 50.6592826420164,
+  "longitude": 17.9224938154221,
+  "station_name": "Wyspa Pasieka",
+  "timestamp": "2015-07-30T13:41:29.483Z"
+}
