@@ -12,4 +12,11 @@
 
 ##### Json file :
  
-Describes pushed document format. Copy and paste it into OpenDataSoft Real-time Push API settings. 
+Describes pushed document format. Copy and paste it into OpenDataSoft Real-time Push API settings.
+ 
+ 
+##### PNG File :
+
+A fun #datafact twitted with this dataset ;-)
+
+https://twitter.com/opendatasoft/status/627089794670194688
