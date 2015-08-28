@@ -57,8 +57,8 @@ isvalid: 1
 
 #2
 gender : 1 (Female)
-height: 187
-weight: 74
+height: 168
+weight: 57
 isvalid: 0
 </pre>
 
@@ -134,8 +134,22 @@ Table result :
 |--------------------|-------------------|---------------------------|
 | 167.75321336760925 | 60.65638389031705 | Male (not validated)      |
 | 168.01616322204558 | 61.27265500794912 | Male (validated profile)  |
-| 177.17472719924558 | 74.3245318604338  | Female (not validated)    |
+| 177.17472719924558 | 74.3245318604338 | Female (not validated)    |
 | 177.8441081661891  | 75.00420845272207 | Female (validated profile)|
 
 
 
+With additional AngularJS filters :
+
+```html
+<p ng-if="!e.gender && !e.isvalid">
+    {{ e | number:'1' }}
+</p>
+```
+
+| Height | Weight | Gender (account state) |
+|--------|--------|------------------------|
+| 167.7 | 60.6 | Male (not validated)      |
+| 168.0 | 61.2 | Male (validated profile)  |
+| 177.1 | 74.3 | Female (not validated)    |
+| 177.8 | 75.0 | Female (validated profile)|
