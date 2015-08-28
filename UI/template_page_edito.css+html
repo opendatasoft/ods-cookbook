@@ -1,0 +1,132 @@
+@media (min-width: 700px) {
+    aside {
+        float: left;
+        display: block;
+        width: 320px;
+        transition: all .25s ease-in-out;
+    }
+    aside.left+section {
+        margin: 0 0 0 340px;
+    }
+    section {
+        display: block;
+        overflow: hidden;
+        transition: all .25s ease-in-out;
+    }
+}
+
+@media (max-width: 700px) {
+    aside {
+        display: block;
+        transition: all .25s ease-in-out;
+    }
+    section {
+        display: block;
+        overflow: hidden;
+        transition: all .25s ease-in-out;
+    }
+}
+
+#counter {
+    color: #004b96; // FIXME
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-size: 22px;
+}
+
+a.tooltip {outline:none; }
+a.tooltip strong {
+    line-height:30px;
+}
+a.tooltip:hover {text-decoration:none;}
+a.tooltip span {
+    z-index:10000;
+    display:none;
+    padding:14px 20px;
+    margin-top:-30px;
+    margin-left:10px;
+    width:300px; line-height:18px;
+}
+a.tooltip span ul {
+    list-style-type:none;
+    padding: 0;
+}
+a.tooltip:hover span{
+    display:inline;
+    position:absolute;
+    color:#004B96;
+    border:1px solid #DCA;
+    background:#fff;}
+.callout {z-index:20;position:absolute;top:30px;border:0;left:-12px;}
+/*CSS3 extras*/
+a.tooltip span
+{
+    border-radius:4px;
+    box-shadow: 3px 3px 6px #CCC;
+}
+
+
+
+
+
+================================================================================
+
+
+
+
+
+
+<ods-dataset-context context="context" context-dataset="donnees">
+    <div id="page-layout-single-main">
+
+        <aside class="left">
+            <div class="whitebox">
+                <div id="counter">
+                    {{ context.nhits | number }}
+                    <span ng-pluralize="" count="context.nhits" translate="when" when="{'0': 'résultat', '1': 'résultat', 'other': 'résultats'}">
+                        jeu de données
+                    </span>
+                </div>
+                <ods-filter-summary context="context"></ods-filter-summary>
+                <h2>Recherche textuelle :</h2>
+                <a href="#" class="tooltip">
+                    Aide à la recherche
+                    <span>
+                        <strong>Fonctionnalité de recherche avancée :</strong><br />
+                        <ul>
+                            <hr/>
+                            <li><strong>Recherche par identifiant</strong></li>
+                            <li>De X: <code>X:"100"</code></li>
+                            <li>De Y: <code>Y:"170300"</code></li>
+                            <hr/>
+                            <li><strong>Requête composée</strong></li>
+                            <li>Ex. A et B: <code>A:O AND B:O</code></li>
+                            <li>Ex. C et D: <code>C AND D:100</code>
+                                <hr/>
+                            <li><strong>Pour aller plus loin, cf. documentation "query language"</strong></li>
+                            <li><code>(X:AB OR Y:AC) AND (A:O OR B:N) AND NOT C:Y</code></li>
+                        </ul>
+                    </span>
+                </a>
+
+                <ods-text-search
+                                 button="Recherche"
+                                 context="context">
+                </ods-text-search>
+
+
+                <h2>Filtres :</h2>
+                <ods-facets context="context"></ods-facets>
+            </div>
+        </aside>
+
+        <section>
+            <div class="whitebox">
+                <!-- ODS Widget here -->
+            </div>
+            <div class="whitebox">
+                <!-- ODS Widget here -->
+            </div>
+        </section>
+    </div>
+</ods-catalog-context>
