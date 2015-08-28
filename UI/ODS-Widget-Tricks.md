@@ -109,13 +109,13 @@ Table HTML code :
           <p ng-if="!e.gender && !e.isvalid">
             {{ e }}
           </p>
-          <div ng-if="e.gender == 1">
+          <div ng-if="e.gender == 2">
             Male
           </div>
           <div ng-if="e.isvalid == 1">
             (validated profile)
           </div>
-          <div ng-if="e.gender == 2">
+          <div ng-if="e.gender == 1">
             Female
           </div>
           <div ng-if="e.isvalid == 0">
@@ -132,10 +132,10 @@ Table result :
 
 | Height             | Weight            | Gender (account state)    |
 |--------------------|-------------------|---------------------------|
-| 167.75321336760925 | 60.65638389031705 | Male (not validated)      |
-| 168.01616322204558 | 61.27265500794912 | Male (validated profile)  |
-| 177.17472719924558 | 74.3245318604338 | Female (not validated)    |
-| 177.8441081661891  | 75.00420845272207 | Female (validated profile)|
+| 167.75321336760925 | 60.65638389031705 | Female (not validated)      |
+| 168.01616322204558 | 61.27265500794912 | Female (validated profile)  |
+| 177.17472719924558 | 74.3245318604338 | Male (not validated)    |
+| 177.8441081661891  | 75.00420845272207 | Male (validated profile)|
 
 
 
@@ -149,7 +149,7 @@ With additional AngularJS filters :
 
 | Height | Weight | Gender (account state) |
 |--------|--------|------------------------|
-| 167.7 | 60.6 | Male (not validated)      |
-| 168.0 | 61.2 | Male (validated profile)  |
-| 177.1 | 74.3 | Female (not validated)    |
-| 177.8 | 75.0 | Female (validated profile)|
+| 167.7 | 60.6 | Female (not validated)      |
+| 168.0 | 61.2 | Female (validated profile)  |
+| 177.1 | 74.3 | Male (not validated)    |
+| 177.8 | 75.0 | Male (validated profile)|
