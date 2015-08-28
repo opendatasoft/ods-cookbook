@@ -2,5 +2,5 @@
 
 ## UI
 
-[ODS Wdget tricks] (ODS-Widget-Tricks.md)
+[ODS Widget tricks] (ODS-Widget-Tricks.md)
 
