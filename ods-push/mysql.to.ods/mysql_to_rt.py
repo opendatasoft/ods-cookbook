@@ -58,4 +58,12 @@ for row in cur:
         delta = datetime.datetime.now() - now
         print "[Push status] %d documents pushed in %.2f minutes"%(cpt_total, delta.total_seconds() / 60)
 
+if cpt != 0:
+    ret = requests.post(push_base_url, data=json.dumps(doc_list, cls=DTEncoder))
+    ret.raise_for_status()
+
+delta = datetime.datetime.now() - now
+print "*** END ***"
+print "[Total time] %d documents pushed in %.2f minutes"%(cpt_total, delta.total_seconds() / 60)
+
 db.close()
