@@ -5,7 +5,7 @@ The HTML select if fed by the values of a facet.
 
 Dataset : [here] (http://public.opendatasoft.com/explore/dataset/titres-diffuses-sur-6-stations-de-radios-francaises/?tab=table)
  
-'''
+```html
 <ods-dataset-context  
                  context="test"
                  test-domain="public"
@@ -43,4 +43,4 @@ Dataset : [here] (http://public.opendatasoft.com/explore/dataset/titres-diffuses
 
     </div>
 </ods-dataset-context>
-'''
+```
