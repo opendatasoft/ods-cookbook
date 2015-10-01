@@ -1,10 +1,14 @@
 ### Feed an HTML Select with Facet values
 
-In this case, we want to force a refine by default, and allo the user to switch to another one.
+In this case, we want to force a refine by default, and allow the user to switch to another one.
 The HTML select if fed by the values of a facet.
 
 Dataset : [here] (http://public.opendatasoft.com/explore/dataset/titres-diffuses-sur-6-stations-de-radios-francaises/?tab=table)
  
+Prerequisite : the facet must be disjunctive (allow multiple criteria selection)
+
+N.B. : Remove the ods-facet widget, it's here to illustrate that the refine works correctly
+
 ```html
 <ods-dataset-context  
                  context="test"
