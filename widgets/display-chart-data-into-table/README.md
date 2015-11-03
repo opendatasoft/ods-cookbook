@@ -8,7 +8,7 @@ We would also like to split the gender axis by a second dimension : the account 
 
 Here's an example of the final result.
 
-![](/widgets/display-chart-data-into-table/chart_to_table.jpg?raw=true)
+![](/widgets/display-chart-data-into-table/chart_to_table.png?raw=true)
 
 Data sample :
 
