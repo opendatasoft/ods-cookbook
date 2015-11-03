@@ -4,7 +4,7 @@ Various samples, recipes, goodies and little stuff around OpenDataSoft's platfor
 You will find the following things in their respective folders:
 - **Push API** (`push-api`): scripts and little applications that leverage the
 OpenDataSoft Push API.
-- ** Widgets** (`widgets`): examples of snippets or entire pages
+- **Widgets** (`widgets`): examples of snippets or entire pages
 that use ODS-Widgets to build dashboards or interactive visualizations
 - **Portal Customization** (`portal-customization`): recipes to customize your
 OpenDataSoft portals: how to add a search box in your header, how to hide pictos
