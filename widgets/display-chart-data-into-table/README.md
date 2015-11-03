@@ -6,10 +6,6 @@ Each profile is validated or not.
 We would like to display in a chart the average height and weight split by gender.
 We would also like to split the gender axis by a second dimension : the account validation status.
 
-Here's an example of the final result.
-
-![](/widgets/display-chart-data-into-table/chart_to_table.png?raw=true)
-
 Data sample :
 
 <pre>
