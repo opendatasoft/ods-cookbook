@@ -10,6 +10,6 @@ that use ODS-Widgets to build dashboards or interactive visualizations
 OpenDataSoft portals: how to add a search box in your header, how to hide pictos
 in your datasets...
 
-This repository is open to contributions: feel free to send Pull Requests if you
+**This repository is open to contributions:** feel free to send Pull Requests if you
 want to add your own recipe. Each folder contains information about how to organize
 each new recipe.
