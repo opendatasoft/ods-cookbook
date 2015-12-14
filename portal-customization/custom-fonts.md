@@ -14,7 +14,7 @@ This fonts contains 12 styles, that is 6 weights, each available in italic and r
 
 If you are lost with all these formats, a good rule of thumb is to use the `.woff` format since it is supported by all browsers that work with the OpenDataSoft platform.
 
-For each of these styles, you'll have to upload the correspondinf files to the platform (using the *Assets* management page) and write the following CSS code.
+For each of these styles, you'll have to upload the corresponding files to the platform (using the *Assets* management page) and write the following CSS code.
 
 ``` css
 @font-face {
