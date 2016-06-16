@@ -1,4 +1,5 @@
 #### Index
+
 ##### Contexts
 
  - [Initialize a context using another context's results] (context-with-another-contexts-result)
@@ -11,6 +12,11 @@
 ##### Navigation
 
  - [Feed an HTML Select with Facet values] (facet-as-a-list-selection)
+ - [Display result as card boxes instead on table lines] (card-result-list)
+
+##### Translation
+
+ - [How to translate textual content in external pages] (translate-text-external)
 
 #### Contributing
 Create a new folder named after the title of your recipe, in lowercase, and with
