@@ -4,6 +4,10 @@
 
  - [Initialize a context using another context's results] (context-with-another-contexts-result)
 
+##### User control
+
+ - [Ods-Datetime tricks, i.e. how to play with date pickers] (datetime-tricks)
+
 ##### Charts
 
  - [How to hide some legends with CSS code] (hide-chart-legends)
