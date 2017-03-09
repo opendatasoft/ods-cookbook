@@ -13,7 +13,7 @@ Some other aspect needs your attentions :
 - Custom basemap needs to be defined in your HTML code as it can't get the configuration from your platform automatically. 
 - ng-cloak to prevent displaying AngularJS before it has been fully loaded 
 
-An example for most of these topics is available on Plnkr [here] (http://embed.plnkr.co/x19rZSNCdf07MEJc2Bxq/)
+An example for most of these topics is available on Plnkr [here] (http://embed.plnkr.co/Ly6BNY/)
  
 Do not hesitate to fork it and use it as a template or simply download the [virgin template] (./template.html) !
  
