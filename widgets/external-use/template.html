@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <base href="/">
+
+        <title>ODS Widgets Sandbox</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://opendatasoft.github.io/ods-widgets/dist/ods-widgets.css">
+    </head>
+
+    <body>
+
+        <div ng-app="ods-widgets">
+
+            <!-- YOUR ODS CODE HERE !!! -->
+
+        </div>
+
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular-sanitize.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/i18n/angular-locale_fr-fr.js"></script>
+        <script type="text/javascript" src="//opendatasoft.github.io/ods-widgets/dist/ods-widgets.js"></script>
+
+        <!-- ODS Translation dict. -->
+        <script type="text/javascript">
+            var ods = angular.module('ods-widgets');
+            ods.run(function(gettextCatalog) {
+                gettextCatalog.setStrings('fr', {
+                    'Clear all': 'Tout effacer',
+                    'More': 'Voir plus',
+                    'Less': 'Voir moins',
+                    'Download image': 'Télécharger l\'image'
+                });
+                gettextCatalog.setCurrentLanguage('fr');
+            });
+        </script>
+
+        <!-- urlsync patch -->
+        <script type="text/javascript">
+            angular.module('ods-widgets').config(function($locationProvider) {
+                $locationProvider.html5Mode(true);
+            });
+        </script>
+
+        <!-- custom basemap -->
+        <script type="text/javascript">
+            angular.module('ods-widgets').config(function(ODSWidgetsConfigProvider) {
+                ODSWidgetsConfigProvider.setConfig({
+                    "basemaps": [
+                        {
+                            "label": "Stamen",
+                            "provider": "stamen.toner"
+                        },
+                        {
+                            "url": "https://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png",
+                            "strictTMS": false,
+                            "provider": "custom",
+                            "label": "Thunderforest",
+                            "id": "land"
+                        }
+                    ]
+                });
+            });
+        </script>
+
+    </body>
+
+</html>

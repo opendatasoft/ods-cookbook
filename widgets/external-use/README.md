@@ -3,30 +3,31 @@
 In order to use ODS-Widget outside the platform a few elements needs to be added :
  
 - AngularJS Locale module to deal with numbers display for exemple (French VS English, space VS comma to separate 1000x digits)
-- Translations : ODS Platform embed traduction that are not available the platfrom, you'll need to define your own traduction
+- Translations : ODS Widgets do not embed translations automatically, like it does on the platform, you'll need to define your own translation dictionary
 - Context urlsync parameter is not properly working without some additionnal javascript parameters.
 
 Some other aspect needs your attentions :
 
 - Library should be downloaded and hosted on your site, in order to block the corresponding AngularJS and ODSWidget version regarding your code.
 - The ods-dataset-context must know on wich domain the dataset is hosted with the `context-domain` parameter. A private dataset should also required a `context-apikey` parameter to authenticate the API call.
+- Custom basemap needs to be defined in your HTML code as it can't get the configuration from your platform automatically. 
 
-An exemple for most of these topics is available on Plnkr here : [here] (http://embed.plnkr.co/x19rZSNCdf07MEJc2Bxq/)
+An example for most of these topics is available on Plnkr [here] (http://embed.plnkr.co/x19rZSNCdf07MEJc2Bxq/)
  
-Do not hesitate to fork it and use it as a template !
+Do not hesitate to fork it and use it as a template or simply download the [virgin template] (./template.html) !
  
-Prerequisite : the facet must be disjunctive (allow multiple criteria selection)
 
-N.B. : Remove the ods-facet widget, it's here to illustrate that the refine works correctly
+#### AngularJS Locale
 
+The angular-locale library should be included in the script includes at the end of the html page.
+All locales can be found here for AngularJS V 1.4.7 :
+https://code.angularjs.org/1.4.7/i18n/
 
-#### AngularJS Locale_FR
-
-In javascript includes, the angular-locale script should be included.
-It can be downloaded here :
+French version for exemple is : 
 https://code.angularjs.org/1.4.7/i18n/angular-locale_fr-fr.js
 
-Or include directly the file :
+
+Or include directly the file from Cloudflare CDN :
 ```html
 <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/i18n/angular-locale_fr-fr.js"></script>
 ```
@@ -73,11 +74,13 @@ then, at the end, with other scripts :
 #### Blocking JQuery, AngularJS and ODSWidget versions
 
 To prevent from any changes or weird behavior from external libraries, the best practice is to block the working version of each library you use.
-ODSWidget doesn't contains the version number, it means that for each new release, your code will be run on this new version if you point directly to the remote address.
-It's highly advised to download and store the ODSWidget library locally on your website and include it in your page.
+
+The current URL of the ODS-Widgets library doesn't contains the version number, which means that for each new release, your code will be run on this new version if you point directly to the remote address, and your page could change without you knowing so if a widget changes
+
+For this reason, it's highly advised to download and store the ODSWidget library locally on your website and include it in your page.
 
 
-#### context-domain and context-apikey
+#### `context-domain` and `context-apikey`
 
 Any context declaration on ODS Platform suppose that the corresponding dataset is hosted locally (on the domain where you display the page) and the user right are the current user displaying the page.
 You can override these 2 behaviors by defining :
@@ -91,76 +94,62 @@ A context declaration should looks like this :
 ```html
 <ods-dataset-context 
     context="ctx,ctx1" 
-    ctx-dataset="formesjuridiquefinal" 
-    ctx-domain="fpassaniti"
+    
+    ctx-dataset="us-hospitals" 
+    ctx-domain="discovery"
+    
     ctx1-dataset="formesjuridiquefinal"
     ctx1-parameters="{'q':'societe'}"
-    ctx1-domain="fpassaniti">
+    ctx1-domain="fpassaniti"
+    
+    >
     
     ...
     
 </ods-dataset-context>
 ```
 
+#### Custom basemaps throught the `ODSWidgetsConfigProvider`
+
+First, have a look to the [ODSWidgetsConfigProvider] (https://opendatasoft.github.io/ods-widgets/docs/#/api/ods-widgets.ODSWidgetsConfigProvider) documentation.
+It explains how to set up custom basemap while using ODS Widgets library.
+
+To add an OpenStreeMap custom basemap like [Thunderforest landscape] (http://www.thunderforest.com/maps/landscape/)
+Get the tile URL : `https://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png`
+And build the json configuration like :
+```json
+{
+    "url": "https://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png",
+    "strictTMS": false,
+    "provider": "custom",
+    "label": "Thunderforest",
+    "id": "landscape"
+}
+```
+
+Then, add it to your code :
+```html
+<script type="text/javascript">
+angular.module('ods-widgets').config(function(ODSWidgetsConfigProvider) {
+  ODSWidgetsConfigProvider.setConfig({
+      "basemaps": [
+        {
+           "label": "Stamen",
+           "provider": "stamen.toner"
+        },
+        {
+          "url": "https://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png",
+          "strictTMS": false,
+          "provider": "custom",
+          "label": "Thunderforest",
+          "id": "land"
+        }  
+      ]
+      });
+});
+</script>
+```
 
 ### Final code :
 
-```html
-<!DOCTYPE html>
-<html>
-
-<head>
-  <base href="/">
-
-  <title>ODS Widgets Sandbox</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="https://opendatasoft.github.io/ods-widgets/dist/ods-widgets.css">
-</head>
-
-<body>
-
-  <div ng-app="ods-widgets">
-
-    <ods-dataset-context 
-    context="ctx" 
-    ctx-dataset="formesjuridiquefinal" 
-    ctx-domain="fpassaniti">
-      <h2>{{ ctx.dataset.metas.records_count | number }} formes juridiques</h2>
-      
-      <ods-text-search context="ctx" placeholder="société, caisse, asso"></ods-text-search>
-      <ods-table context="ctx" sort="nom"></ods-table>
-    </ods-dataset-context>
-
-  </div>
-
-  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular-sanitize.min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/i18n/angular-locale_fr-fr.js"></script>
-  <script type="text/javascript" src="//opendatasoft.github.io/ods-widgets/dist/ods-widgets.js"></script>
-
-  <script type="text/javascript">
-    var ods = angular.module('ods-widgets');
-    ods.run(function(gettextCatalog) {
-      gettextCatalog.setStrings('fr', {
-        'Clear all': 'Tout effacer',
-        'More': 'Voir plus',
-        'Less': 'Voir moins',
-        'Download image': 'Télécharger l\'image'
-      });
-      gettextCatalog.setCurrentLanguage('fr');
-    });
-  </script>
-
-  <script type="text/javascript">
-    angular.module('ods-widgets').config(function($locationProvider) {
-      $locationProvider.html5Mode(true);
-    });
-  </script>
-</body>
-
-</html>
-```
+[here] (./template.html)
