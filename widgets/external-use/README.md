@@ -11,6 +11,7 @@ Some other aspect needs your attentions :
 - Library should be downloaded and hosted on your site, in order to block the corresponding AngularJS and ODSWidget version regarding your code.
 - The ods-dataset-context must know on wich domain the dataset is hosted with the `context-domain` parameter. A private dataset should also required a `context-apikey` parameter to authenticate the API call.
 - Custom basemap needs to be defined in your HTML code as it can't get the configuration from your platform automatically. 
+- ng-cloak to prevent displaying AngularJS before it has been fully loaded 
 
 An example for most of these topics is available on Plnkr [here] (http://embed.plnkr.co/x19rZSNCdf07MEJc2Bxq/)
  
@@ -148,6 +149,20 @@ angular.module('ods-widgets').config(function(ODSWidgetsConfigProvider) {
       });
 });
 </script>
+```
+
+#### `ng-cloak` the page loading
+
+Everything is explained [here] (https://docs.angularjs.org/api/ng/directive/ngCloak) : This directive is used to prevent the AngularJS html template from being briefly displayed by the browser in its raw (uncompiled) form while your application is loading. Use this directive to avoid the undesirable flicker effect caused by the html template display.
+
+To sum up, simply add `ng-cloak` directive on the HTML element that contains all your AngularJS/ODS Widget code.
+
+```html
+<body>
+
+  <div ng-cloak ng-app="ods-widgets">
+
+    <ods-dataset-context . . . 
 ```
 
 ### Final code :
