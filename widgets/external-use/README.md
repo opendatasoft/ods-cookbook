@@ -3,7 +3,6 @@
 In order to use ODS-Widget outside the platform a few elements needs to be added :
  
 - AngularJS locale module to deal with numbers display for exemple (French VS English, space VS comma to separate 1000x digits)
-- Highcharts locale must also be defined
 - Translations : ODS Widgets do not embed translations automatically, like it does on the platform, you'll need to define your own translation dictionary
 - Context urlsync parameter is not properly working without some additionnal javascript parameters.
 
@@ -33,26 +32,6 @@ Or include directly the file from Cloudflare CDN :
 ```html
 <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/i18n/angular-locale_fr-fr.js"></script>
 ```
-
-#### Highcharts locale :
-
-Highcharts locale must be managed manually, the locale options can be declared this way :
- 
-```html
-<script type="text/javascript">
-    Highcharts.setOptions({
-        lang: {
-            decimalPoint: ',',
-            thousandsSep: ' ',
-            months: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',  'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
-            shortMonths: [ "Jan" , "Fév" , "Mars" , "Avr" , "Mai" , "Juin" , "Juil" , "Août" , "Sept" , "Oct" , "Nov" , "Déc"],
-            weekdays: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi']
-        }
-    });
-</script>
-```
-
-More information about Highcharts `lang` options [here] (http://api.highcharts.com/highcharts/lang)
 
 
 #### Translations :
