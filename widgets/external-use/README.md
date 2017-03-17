@@ -33,6 +33,12 @@ Or include directly the file from Cloudflare CDN :
 <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/i18n/angular-locale_fr-fr.js"></script>
 ```
 
+Another module might need to be localized concerning date formating filter. 
+Include directly this file :
+```html
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/locale/fr.js"></script>
+```
+
 
 #### Translations :
 
