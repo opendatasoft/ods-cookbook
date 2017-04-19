@@ -1,12 +1,12 @@
 ### External use of ODS-Widget
 
-In order to use ODS-Widget outside the platform a few elements needs to be added :
+In order to use ODS-Widget outside the platform a few elements need to be added :
  
-- AngularJS locale module to deal with numbers display for exemple (French VS English, space VS comma to separate 1000x digits)
+- AngularJS locale module to deal with numbers display for example (French VS English, space VS comma to separate 1000x digits)
 - Translations : ODS Widgets do not embed translations automatically, like it does on the platform, you'll need to define your own translation dictionary
-- Context urlsync parameter is not properly working without some additionnal javascript parameters.
+- Context urlsync parameter is not properly working without some additional javascript parameters.
 
-Some other aspect needs your attentions :
+Some other aspects need your attention :
 
 - Library should be downloaded and hosted on your site, in order to block the corresponding AngularJS and ODSWidget version regarding your code.
 - The ods-dataset-context must know on wich domain the dataset is hosted with the `context-domain` parameter. A private dataset should also required a `context-apikey` parameter to authenticate the API call.
@@ -24,7 +24,7 @@ The angular-locale library should be included in the script includes at the end 
 All locales can be found here for AngularJS V 1.4.7 :
 https://code.angularjs.org/1.4.7/i18n/
 
-French version for exemple is : 
+French version for example is : 
 https://code.angularjs.org/1.4.7/i18n/angular-locale_fr-fr.js
 
 
@@ -44,7 +44,7 @@ Include directly this file :
 
 ##### AngularJS :
 
-Translation dictinary must be declared for each language through this bunch of code :
+Translation dictionary must be declared for each language through this bunch of code :
 
 ```html
 <script type="text/javascript">
@@ -68,7 +68,7 @@ Here, 4 keys are declared with the corresponding French translation.
 
 First, some information about urlsync parameter [here] (http://opendatasoft.github.io/ods-widgets/docs/#/api/ods-widgets.directive:odsCatalogContext)
 
-To make it work with an external use of ODSWidget, 2 elements needs to be added to the page, first in the header :
+To make it work with an external use of ODSWidget, 2 elements need to be added to the page, first in the header :
 ```html
   <base href="/">
 ```
@@ -83,9 +83,9 @@ then, at the end, with other scripts :
 
 #### Blocking JQuery, AngularJS and ODSWidget versions
 
-To prevent from any changes or weird behavior from external libraries, the best practice is to block the working version of each library you use.
+To prevent from any changes or weird behaviors from external libraries, the best practice is to block the working version of each library you use.
 
-The current URL of the ODS-Widgets library doesn't contains the version number, which means that for each new release, your code will be run on this new version if you point directly to the remote address, and your page could change without you knowing so if a widget changes
+The current URL of the ODS-Widgets library doesn't contain the version number, which means that for each new release, your code will be run on this new version if you point directly to the remote address, and your page could change without you knowing so if a widget changes
 
 For this reason, it's highly advised to download and store the ODSWidget library locally on your website and include it in your page.
 
