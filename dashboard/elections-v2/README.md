@@ -3,6 +3,7 @@
  - [Election dashboard here] (https://discovery.opendatasoft.com/pages/apps-elections-v2/)
  
 ###How to :
+
 ####Federate these 2 datasets on your domain
 
    * [Results] **Election présidentielle 2017 Résultats par bureaux de vote – Tour 1** (https://data.opendatasoft.com/explore/dataset/election-presidentielle-2017-resultats-par-bureaux-de-vote-tour-1%40public/)
@@ -10,6 +11,7 @@
    * [Voting places] **Bureaux de vote - France 2017** (https://data.opendatasoft.com/explore/dataset/bureaux-vote-france-2017%40public/)
 
 ####If you don't know how to federate a dataset, please follow the steps below
+
 1. Create a new dataset, and select "Add a dataset from the OpenDataSoft network" in the "Add a Source" button
 ![Step 1](1.png)
 2. Select the first dataset **Election présidentielle 2017 Résultats par bureaux de vote – Tour 1**
@@ -24,7 +26,9 @@
 ![Step 6](6.png)
 
 ####Create a new content page and copy paste the code below
+
 #####HTML Tab :
+
 ```html
 <div class="container-fluid">
     
@@ -292,6 +296,8 @@
     <a class="external-links__link" href="https://github.com/opendatasoft/ods-cookbook/tree/master/dashboard/elections-v2" target="_blank">Voir le code sur github <i class="fa fa-external-link"></i></a>
 </div>
 ```
+
+#####CSS Tab :
 
 ```css
 .remove-filter {
