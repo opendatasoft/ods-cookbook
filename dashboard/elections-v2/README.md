@@ -143,7 +143,7 @@
 
 
                         </div>
-                        <div class="alert">Cliquez sur un lieu de vote pour afficher les résultats de celui-ci !</div>
+                        <div class="alert"><div>Cliquez sur un lieu de vote pour afficher les résultats de celui-ci !</div></div>
                     </div>
 
                     <div ng-if="resultatslieu.parameters['refine.uniq_bdv']">
