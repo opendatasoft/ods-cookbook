@@ -205,7 +205,7 @@
 
                         </div>
 
-                        <div class="alert">Sélectionnez un bureau de vote ci-dessous pour afficher les résultats pour celui-ci !</div>
+                        <div class="alert"><div>Sélectionnez un bureau de vote ci-dessous pour afficher les résultats pour celui-ci !</div></div>
                     </div>
 
                 </div>
@@ -213,19 +213,22 @@
             <div class="row ods-box">
                 <div class="col-md-12" ng-init="var = {}; var.tab={'numbureau':''}">
                     <div ng-if="resultatslieu.parameters['refine.uniq_bdv']">
-                        <div ods-results="items" ods-results-max="121" ods-results-context="resultatslieu">
+                        <div ods-facet-results="items"
+                             ods-facet-results-context="resultatslieu"
+                             ods-facet-results-facet-name="code_du_b_vote"
+                             ods-facet-results-sort="ALPHANUM">
                             <ul class="items tab-links">
                                 <li ng-repeat="item in items"
-                                    class="item ods-button ods-button--primary" ng-class="{'ods-button--custom': var.tab.numbureau == item.fields.code_du_b_vote}" 
-                                    ng-click="var.tab.numbureau=item.fields.code_du_b_vote; resultatslieu2.parameters['refine.code_du_b_vote'] = item.fields.code_du_b_vote" ng-if="$index % 11 === 0">
+                                    class="item ods-button ods-button--primary" ng-class="{'ods-button--custom': var.tab.numbureau == item.name}" 
+                                    ng-click="var.tab.numbureau=item.name; resultatslieu2.parameters['refine.code_du_b_vote'] = item.name">
                                     <span>
-                                        Bureau N° {{ item.fields.code_du_b_vote }}
+                                        Bureau N° {{ item.name }}
                                     </span>
                                 </li>
                             </ul>
 
                             <div class="col-md-12">
-                                <div ng-if="var.tab.numbureau == resultatslieu2.parameters['refine.code_du_b_vote']" class="row" ng-class="item.fields.code_du_b_vote">
+                                <div ng-if="var.tab.numbureau == resultatslieu2.parameters['refine.code_du_b_vote']" class="row" ng-class="item.name">
                                     <div class="col-md-6">
                                         <div ods-analysis="election"
                                              ods-analysis-context="resultatslieu2"
