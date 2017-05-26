@@ -1,8 +1,8 @@
-## Print & Share demo !
+### Demo urlsync ! Howto sync, share and print !
 
- - [Dashboard here] (https://discovery.opendatasoft.com/pages/demo-urlsync/)
+ - [Demo url sync here](https://discovery.opendatasoft.com/pages/demo-urlsync/)
  
-### Main page code :
+#### Main page :
 
 ```html
 <div class="container">
@@ -17,6 +17,9 @@
         <div class="row ods-box">
             <h3>
                 Share by copying this link : 
+            </h3>
+            <h3 class="red-box">
+                Filter and have a look to your browser URL ! It's synced !
             </h3>
             <h4>
                 <a href="?{{ ctx.getQueryStringURL() }}"
@@ -100,15 +103,31 @@
     </ods-dataset-context>
 
 </div>
+
 ```
 
-### Secondary page / card code :
+```css
+.boutons {
+    margin-left: 30px;
+}
+
+.red-box {
+    float: right;
+    border: 2px solid darkred;
+    color: darkred;
+    padding: 20px;
+    background-color: #ffe8e8;
+}
+```
+
+
+#### Card / Secondary page :
 
 ```html
 <div class="ods-box card">
 
     <h2>
-        Fiche magasin <span style="font-size:0.7em; color:darkred; margin-left:40px">Imprimez la (Ctrl/Cmd+P) ou partagez le lien !</span>
+        Record store card <span style="font-size:0.7em; color:darkred; margin-left:40px">Print it (Ctrl/Cmd+P) or just share the link !</span>
     </h2>
 
     <ods-dataset-context context="ctx"
@@ -133,6 +152,7 @@
     </ods-dataset-context>
 
 </div>
+
 ```
 
 ```css
@@ -148,8 +168,8 @@
 }
 .field {
     display: inline-flex;
-    line-height: 25px;
-    margin-bottom: 5px;
+    line-height: 18px;
+    margin-bottom: 4px;
 }
 
 .label {
@@ -165,5 +185,11 @@
     padding: 2px 0px 0px 5px;
     line-height: 25px;
     background-color: #f0f0f0;
+}
+
+@media print {
+    header, footer {
+        display: none;
+    }
 }
 ```
