@@ -541,7 +541,19 @@
                                          entreprisesimmatriculees2017infogreffe-domain="infogreffe"
                                          entreprisesimmatriculees2017infogreffe-parameters="{'sort':'date_immatriculation','q.code':'9311Z OR 9312Z OR 9313Z OR 9319Z OR 9321 OR 9329Z OR 4764Z OR 8551Z OR 7721Z OR 5010Z OR 5030Z'}"
 
-                                         fresrimplantationsetablissementsdenseignementsuperieurpublicsmesr-dataset="fr-esr-implantations_etablissements_d_enseignement_superieur_publics@mesr"k>
+                                         fresrimplantationsetablissementsdenseignementsuperieurpublicsmesr-dataset="fr-esr-implantations_etablissements_d_enseignement_superieur_publics@mesr">
+                                         
+ 
+                                {{ 
+                                sirenepublic.parameters['q'] = limitecommune.parameters['refine.insee_com'] ;
+                                localequipementsportloisirparcommunes2014.parameters['q'] = limitecommune.parameters['refine.insee_com'] ;
+                                entreprisesimmatriculees2016infogreffe.parameters['q'] = (limitecommune.parameters['refine.nom_com']?'ville:':'') + limitecommune.parameters['refine.nom_com'] ;
+                                entreprisesimmatriculees2017infogreffe.parameters['q'] = (limitecommune.parameters['refine.nom_com']?'ville:':'') + limitecommune.parameters['refine.nom_com'] ;
+                                fresrimplantationsetablissementsdenseignementsuperieurpublicsmesr.parameters['q'] = limitecommune.parameters['refine.nom_com'] ;
+                                ""
+                                }}
+                                
+                                
                         <div class="row">
                             <div class="box col-md-12">
                                 <div class="grey-box" style="height: 500px; padding: 0">
