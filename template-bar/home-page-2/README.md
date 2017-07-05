@@ -180,14 +180,13 @@ input.odswidget-searchbox__box {
 .body-content {
     border: none;
     background-color: white;
-    margin-top: -10px;
 }
 
 /* Blocks */
 .themeblock {
     color:black; /* COLOR */
     text-align: center;
-    padding: 10px;
+    padding-bottom: 20px;
 }
 .themeblock h3 {
     color: #336179; /* COLOR */
