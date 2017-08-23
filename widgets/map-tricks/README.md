@@ -1,5 +1,7 @@
 ### Ods-Map Tips&Tricks
 
+[Live exemple here] (https://discovery.opendatasoft.com/pages/demo-map-levels/)
+
 #### Refine-On-Click - Simple usage
 
 How to refine on a context based on another one displayed on a map :
