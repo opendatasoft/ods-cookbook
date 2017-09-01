@@ -2,8 +2,8 @@
 
 #### First, the result !
 
-[See the template here !](https://template-discovery.opendatasoft.com/pages/datastory1/)
-[See an example here !](https://template-discovery.opendatasoft.com/pages/datastory1_example/)
+  * [See the template here !](https://template-discovery.opendatasoft.com/pages/datastory1/)
+  * [See an example here !](https://template-discovery.opendatasoft.com/pages/datastory1_example/)
 
 #### Then, some explanations of all subsets of codes !
 
