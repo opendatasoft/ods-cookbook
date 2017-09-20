@@ -45,6 +45,6 @@ The requirements are :
 If you fulfill, more or less, these requirements, let's pursue !
 
  - [Alert me when my dataset is no longer updated (ie the processing date didn't change since more than 15 minutes)](./zapier-monitor-data-processed.md)
- - [Alert me when value changes on a specific record or on several record]()
+ - [Alert me when value changes on a specific record or on several records](./zapier-monitor-field-value.md)
  
  
