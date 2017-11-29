@@ -8,9 +8,8 @@ Example to restrict a whole page:
 ```html
 <ods-dataset-context context="ctx" ctx-dataset="my-restricted-dataset">
 
-    <div ng-if="!ctx || !ctx.dataset || ctx.error">
-        <!-- everything here is NOT restricted -->
-        <!-- and displayed ONLY if the user doesn't have the rights on the dataset -->
+    <div ng-if="ctx && ctx.dataset && ctx.error">
+        <!-- everything here ONLY if the user doesn't have the rights on the dataset -->
         <!-- or if something wrong happened -->
         No data available or you don't have access to this content
     </div>
