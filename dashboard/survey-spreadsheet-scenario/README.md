@@ -1,4 +1,4 @@
-## The Survey/Spreadsheet export scenario!
+# The Survey/Spreadsheet export scenario!
 
 The guide present how to gather data from your customers, citizen, attendees, listener or any kind of people that might produce data or share their opinion or information.
 
@@ -17,8 +17,18 @@ To do so, it's convenient to use simple tools like online survey platforms, onli
 In this guide we will see how to do so with **Google Form** as the form tool. **Google Sheets** as the spreadsheet tool and CSV publisher.
 We will finally apply some advanced processing and create a simple dashboard to analyse the results.
 
+## Live example!
+
+Share withs us your travel experiences! And see how it goes on the platform! 
+
+The form:
+https://docs.google.com/forms/d/e/1FAIpQLScQw8zszuqt37pPN_wPZcLfhc50MMoI-_8P_AK-pYlBWQg2dw/viewform?usp=sf_link
+
+The dataset:
+https://discovery.opendatasoft.com/explore/dataset/travel-experience-survey/
+
  
-### How to :
+## How to :
 
 #### Create a from
 
