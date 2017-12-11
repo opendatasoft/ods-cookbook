@@ -176,4 +176,4 @@ To sum up, simply add `ng-cloak` directive on the HTML element that contains all
 
 ### Final code :
 
-[here] (./template.html)
+[here](./template.html)
