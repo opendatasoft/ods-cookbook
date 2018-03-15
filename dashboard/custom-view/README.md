@@ -2,7 +2,7 @@
 
 #### Live result
 
-[Please find the live exemple on Discovery](https://discovery.opendatasoft.com/explore/dataset/2015-registry-of-power-plant-connections-to-the-eletricity-transport-network/)
+[Please find the live exemple on Discovery](https://discovery.opendatasoft.com/explore/dataset/2015-registry-of-power-plant-connections-to-the-eletricity-transport-network/custom/)
 
 #### Code
 
