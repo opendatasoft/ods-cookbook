@@ -6,7 +6,7 @@
 
 #### Documentation
 
-[Please find this dashboard documentation here](https://docs.opendatasoft.com/)
+[Please find this dashboard documentation here](http://docs.opendatasoft.com/en/editing_pages/dashboard/advanced_dashboard.html)
 
 #### Code
 
