@@ -1,4 +1,4 @@
-### Template bar - dashboard #1 !
+### Template bar - dashboard !
 
 #### Code 
 
