@@ -270,7 +270,7 @@ HTML code:
         ...
 
         <p style="text-align: center">
-            <strong>Current selection:</strong> events starting from the <strong>{{ dates.from | date }}</strong> to the <strong>{{ (dates.to | momentadd : 'days' : dayrange) | date }}</strong> (<strong>+{{ dayrange }} day{{dayrange>1?'s':''}}</strong>)
+            <strong>Current selection:</strong> events starting from the <strong>{{ dates.from | date }}</strong> to the <strong>{{ (dates.from | momentadd : 'days' : dayrange) | date }}</strong> (<strong>+{{ dayrange }} day{{dayrange>1?'s':''}}</strong>)
         </p>
 
         <div class="controlers">
@@ -301,7 +301,7 @@ HTML code:
             </div>
         </div>
 
-        {{ ds.parameters['q'] = 'date_start:[' + dates.from + ' TO ' + (dates.to | momentadd : 'days' : dayrange) + ']' ; "" }}
+        {{ ds.parameters['q'] = 'date_start:[' + dates.from + ' TO ' + (dates.from | momentadd : 'days' : 1*dayrange+1) + ']' ; "" }}
 
         <br/>
 
