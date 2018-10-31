@@ -1,6 +1,6 @@
 ### Timeline custom view
 
-[Live exemple here] (https://discovery.opendatasoft.com/explore/dataset/les-grandes-dates-dissy-les-moulineaux/timeline/)
+[Live exemple here](https://discovery.opendatasoft.com/explore/dataset/les-grandes-dates-dissy-les-moulineaux/timeline/)
 
 This custom view is an interesting way to present data sorted by date and highlighting details about an event, a person or a story.
 
