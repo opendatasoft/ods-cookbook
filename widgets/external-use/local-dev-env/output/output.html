@@ -1,0 +1,60 @@
+<div>
+        <ods-dataset-context context="ctx"
+                     ctx-dataset="evenements-publics-cibul@public"
+                     ctx-domain="public"
+                     ctx-parameters="{'refine.placename':'France'}">
+
+    <div class="container">
+        <div class="ods-box" ng-init="values = {}">
+            <div class="row">
+                <div class="red col-xs-6">
+                    Animate whole range
+                    <ods-timer stop-condition="values.to | isBefore : values.from"
+                               delay="2000"
+                               exec="values.from = (values.from | momentadd : 'day' : 1 | moment : 'YYYY-MM-DD');
+                                     values.to = (values.to | momentadd : 'day' : 1 | moment : 'YYYY-MM-DD');">
+                    </ods-timer>
+                </div>
+                <div class="col-xs-6">
+                    Animate start date
+                    <ods-timer stop-condition="values.to === values.from"
+                               delay="2000"
+                               exec="values.from = (values.from | momentadd : 'day' : 1 | moment : 'YYYY-MM-DD')">
+                    </ods-timer>
+                </div>
+            </div>
+            <ods-date-range-slider context="ctx"
+
+                                   date-format="DD MMM YYYY"
+
+                                   initial-from="2019/01/01"
+                                   initial-to="now"
+
+                                   date-field="date_end"
+
+                                   start-bound="'2017/01/01'"
+                                   end-bound="'now'"
+
+                                   from="values.from"
+                                   to="values.to">
+            </ods-date-range-slider>
+            <div class="row">
+                <div class="col-sm-offset-3 col-sm-6">
+                    <ods-chart align-month="true">
+                        <ods-chart-query context="ctx" field-x="region" maxpoints="0">
+                            <ods-chart-serie chart-type="column" function-y="COUNT" color="#FF515A"
+                                             scientific-display="true">
+                            </ods-chart-serie>
+                        </ods-chart-query>
+                    </ods-chart>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <ods-table context="ctx"></ods-table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</ods-dataset-context></div>
