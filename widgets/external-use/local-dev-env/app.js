@@ -1,3 +1,6 @@
+var yargs = require('yargs');
+var argv = yargs.argv;
+
 let express = require('express');
 let app = express();
 
@@ -9,4 +12,4 @@ app.get('/', (req, res) => {
 
 app.use(express.static('static'));
 
-app.listen(9090, () => console.log('Listening on :9090 !'));
+app.listen(argv.port, () => console.log('ExpressJS App listening on :' + argv.port + ' !'));
