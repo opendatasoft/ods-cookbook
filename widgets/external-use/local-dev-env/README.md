@@ -1,6 +1,6 @@
 # Local development environment
 
-For an easier development phase, it might me useful to work locally (local server, and local files) and then, once finished, copy-paste your code into your online environment
+For an easier development phase, it might be useful to work locally (local server, and local files) and then, once finished, copy-paste your code into your online environment.
 
 The biggest advantage for big and complex pages is the ability to split your code into several pieces and then compile and reassemble the whole content to copy-paste it online.
 
@@ -10,10 +10,10 @@ The biggest advantage for big and complex pages is the ability to split your cod
 
 http://lesscss.org
 
-Less provide the ability to include css pages into anothers, we will mainly use this aspect to code properly and more efficiently.
-Once you have a less tree view, you can compile it back to regular css to use it in the platform.
+Less provide the ability to include CSS stylesheets into anothers, we will mainly use this aspect to write cleaner and more efficient code.
+Once you have a Less tree view, you can compile it back to regular CSS to use it in the platform.
 
-To do so, follow the following steps
+To do so, follow these steps
 (pre-requisites: having npm installed)
 
 ##### Install lessc
@@ -42,13 +42,13 @@ https://expressjs.com/
 
 Express is a minimal and flexible Node.js web application framework that provides a robust set of features for web applications.
 
-We will use Express to create a simple tree view of our application
+We will use Express to create a simple tree view of our application.
 
 https://ejs.co/
 
 EJS is a simple templating language that lets you generate HTML markup with plain JavaScript.
 
-We will use EJS to create layouts to have a well structured and organized layout for our app
+We will use EJS to create layouts to have a well structured and organized layout for our app.
 
 
 ##### Install both
@@ -76,44 +76,44 @@ We will use EJS to create layouts to have a well structured and organized layout
 `index.ejs` is the starting point.
 It loads all pre-requisites, CSS libs, JS libs etc... and loads them all.
 
-Then, it loads ods-app.html that is a single page ODS app. 
+Then, it loads ods-app.html which is a single page ODS app. 
 
-But we can also imagine a more complex setup with a middle level :
+But we can also imagine a more complex setup with a middle level:
 
 ```
 \- views
-    \- index.ejs <--- loads blocs.ejs
-    \- blocs.ejs <--- loads bloc1.html, bloc2.html, bloc3.ejs
-    \- bloc1.html
-    \- bloc2.html
-    \- bloc3.ejs
-    \- bloc3content.html
+    \- index.ejs <--- loads blocks.ejs
+    \- blocks.ejs <--- loads block1.html, block2.html, block3.ejs
+    \- block1.html
+    \- block2.html
+    \- block3.ejs
+    \- block3content.html
 ```
 
-blocs.ejs :
+blocks.ejs :
 ```
 <div>
     <div>
-        <%- include('bloc1.html'); -%>
+        <%- include('block1.html'); -%>
     </div>
     <div>
-        <%- include('bloc2.html'); -%>
+        <%- include('block2.html'); -%>
     </div>
     <div>
-        <%- include('bloc3.ejs'); -%>
+        <%- include('block3.ejs'); -%>
     </div>
 </div>
 ```
 
-bloc3.ejs
+block3.ejs
 ```
 <h2>
-    Bloc 3
+    Block 3
 </h2>
-<%- include('bloc3content.html'); -%>
+<%- include('block3content.html'); -%>
 ```
 
-then, html pages might include any HTML content
+then, HTML pages might include any HTML content.
 
 ##### Result
 
@@ -121,20 +121,20 @@ then, html pages might include any HTML content
 <div>
     <div>
         <h2>
-            Bloc 1
+            Block 1
         </h2>    
     </div>
     <div>
         <h2>
-            Bloc 2
+            Block 2
         </h2>    
     </div>
     <div>
         <h2>
-            Bloc 3
+            Block 3
         </h2>
         <h3>
-            Bloc 3 sub content
+            Block 3 sub content
         </h3>    
     </div>
 </div>
