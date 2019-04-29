@@ -1,0 +1,20 @@
+<!-- custom basemap -->
+<script type="text/javascript">
+    angular.module('ods-widgets').config(function (ODSWidgetsConfigProvider) {
+        ODSWidgetsConfigProvider.setConfig({
+            "basemaps": [
+                {
+                    "label": "Stamen",
+                    "provider": "stamen.toner"
+                },
+                {
+                    "url": "https://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png",
+                    "strictTMS": false,
+                    "provider": "custom",
+                    "label": "Thunderforest",
+                    "id": "land"
+                }
+            ]
+        });
+    });
+</script>

@@ -4,39 +4,109 @@ For an easier development phase, it might me useful to work locally (local serve
 
 The biggest advantage for big and complex pages is the ability to split your code into several pieces and then compile and reassemble the whole content to copy-paste it online.
 
-**This guide helps to go through the usage of 2 different methods, Less for CSS compiling, and EJS for HTML compiling** 
+**This toolkit helps to develop locally, compile your code, and even push it directly to your domain through the Managment API** 
 
-## CSS with Less
+## List of actions
 
-http://lesscss.org
+### Main actions
 
-Less provide the ability to include css pages into anothers, we will mainly use this aspect to code properly and more efficiently.
-Once you have a less tree view, you can compile it back to regular css to use it in the platform.
+**server**
 
-To do so, follow the following steps
-(pre-requisites: having npm installed)
+Starts the web server with a auto-refresh module that reload automatically your page when any resource is modified.
+Pretty useful during your development to see the modifications while you code.
 
-##### Install lessc
-```bash
-http://lesscss.org
+**compile**
+
+Compile web resources and build a single HTML and CSS file to upload on ODS
+
+**update**
+
+Update the ODS page by replacing it's content by the compile local resources. 
+(this task triggers **get, compile, edit, put** tasks)
+
+* **get** Get the page properties structure from the API (according to the json configuration file).
+* **compile** Compile HTML and CSS local resources.
+* **edit** Edit the properties structure whith the compiled resources.
+* **put** Put the new resources to the API (according to the json configuration file).
+
+
+**clean**
+
+Delete temporary folders and compiled files
+
+
+### Secondary actions 
+
+**express-app**
+
+Starts ExpressJS: a local web server
+ 
+**browser-sync**
+
+Starts browserSync: a synchronised browser testing tool.
+
+**compile-html**
+
+Compile EJS and HTML files into one single HTML file ready to upload on ODS
+
+**compile-css**
+
+Compile LESS and CSS files into one single CSS file ready to upload on ODS
+
+
+
+
+## Setup
+
+
+### Get the proper tree view
+
+```
+\- app.js
+     \- static
+         \- lib <--- optionnal/local libs
+         \- stylesheets <--- less playground
+     \- views
+         \- index.ejs <--- main EJS template, the STARTING point
+         \- includes-and-specifics
+            \- * <---all headers and sub-body includes ands scripts
+         \- ods-app.ejs <--- the ODS App container
+         \- ods-app-content.ejs <--- the ODS App content
+
 ```
 
-`lessc` command line usage:
+`index.ejs` is the starting point.
+It loads all pre-requisites, CSS libs, JS libs etc... and run them all.
+
+Then, it loads ods-app.html that is a single page ODS app. 
+
+### Install dependencies
+
+Install nodeJs packages
 ```
-lessc [option option=parameter ...] <source> [destination]
+npm install
 ```
 
-##### Compile your less code
+Gulp is then available locally:
 ```
-mkdir -p output
-lessc static/stylesheets/index.less output/output.css
+./node_modules/.bin/gulp
 ```
 
-Then simply copy paste `output.css` content
+To see the list of available tasks
+```
+gulp --tasks 
+```
+
+Or simply gulp <task> to execute:
+```
+gulp server
+``` 
 
 
 
-## Local server and templating with `Express` and `EJS`
+## Good to know
+
+### Local server and templating with `Express` and `EJS`
 
 https://expressjs.com/
 
@@ -51,111 +121,9 @@ EJS is a simple templating language that lets you generate HTML markup with plai
 We will use EJS to create layouts to have a well structured and organized layout for our app
 
 
-##### Install both
+### CSS with `Less`
 
-```npm install express --save```
+http://lesscss.org
 
-```npm install ejs```
-
-##### Get the proper tree view
-
-```
-\- app.js
-     \- static
-         \- lib <--- optionnal/local libs
-         \- stylesheets <--- less playground
-     \- views
-         \- index.ejs <--- main EJS template, the STARTING point
-         \- headers.ejs <--- all head includes
-         \- subbody.ejs <--- all angularjs and widgets scripts
-         \- ods-app.ejs <--- the ODS App container
-         \- ods-app.html <--- the ODS App content
-
-```
-
-`index.ejs` is the starting point.
-It loads all pre-requisites, CSS libs, JS libs etc... and loads them all.
-
-Then, it loads ods-app.html that is a single page ODS app. 
-
-But we can also imagine a more complex setup with a middle level :
-
-```
-\- views
-    \- index.ejs <--- loads blocs.ejs
-    \- blocs.ejs <--- loads bloc1.html, bloc2.html, bloc3.ejs
-    \- bloc1.html
-    \- bloc2.html
-    \- bloc3.ejs
-    \- bloc3content.html
-```
-
-blocs.ejs :
-```
-<div>
-    <div>
-        <%- include('bloc1.html'); -%>
-    </div>
-    <div>
-        <%- include('bloc2.html'); -%>
-    </div>
-    <div>
-        <%- include('bloc3.ejs'); -%>
-    </div>
-</div>
-```
-
-bloc3.ejs
-```
-<h2>
-    Bloc 3
-</h2>
-<%- include('bloc3content.html'); -%>
-```
-
-then, html pages might include any HTML content
-
-##### Result
-
-```
-<div>
-    <div>
-        <h2>
-            Bloc 1
-        </h2>    
-    </div>
-    <div>
-        <h2>
-            Bloc 2
-        </h2>    
-    </div>
-    <div>
-        <h2>
-            Bloc 3
-        </h2>
-        <h3>
-            Bloc 3 sub content
-        </h3>    
-    </div>
-</div>
-```
-
-### Finally, compile HTML 
-
-Usage
-```
-node compile.js <ejs file> <output file>
-```
-
-Finally, to export your HTML code, use the `compile.js` node helper to generate automatically the final code to copy-paste on the platform
-
-```
-mkdir -p output
-node compile.js ./views/ods-app.ejs output/output.html
-```
-
-
-**N.B.:** to generate the entire page for external-usage, you can also start the generation from the `index.ejs` page
-```
-node compile.js ./views/index.ejs test.html
-```
+Less provide the ability to include CSS stylesheets into another, we will mainly use this feature to write cleaner and more efficient code.
+Once you have a Less tree view, you can compile it back to regular CSS to use it in the platform.
