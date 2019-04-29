@@ -6,20 +6,22 @@ The biggest advantage for big and complex pages is the ability to split your cod
 
 **This toolkit helps to develop locally, compile your code, and even push it directly to your domain through the Managment API** 
 
-## List of actions
+This toolkit is composed of several `gulp` tasks. `gulp` is a toolkit for automating tasks in your development. (also called a task runner).
 
-### Main actions
+## List of tasks
 
-**server**
+### Main tasks
+
+#### **server**
 
 Starts the web server with a auto-refresh module that reload automatically your page when any resource is modified.
 Pretty useful during your development to see the modifications while you code.
 
-**compile**
+#### **compile**
 
 Compile web resources and build a single HTML and CSS file to upload on ODS
 
-**update**
+#### **update**
 
 Update the ODS page by replacing it's content by the compile local resources. 
 (this task triggers **get, compile, edit, put** tasks)
@@ -30,26 +32,26 @@ Update the ODS page by replacing it's content by the compile local resources.
 * **put** Put the new resources to the API (according to the json configuration file).
 
 
-**clean**
+#### **clean**
 
 Delete temporary folders and compiled files
 
 
 ### Secondary actions 
 
-**express-app**
+#### **express-app**
 
 Starts ExpressJS: a local web server
  
-**browser-sync**
+#### **browser-sync**
 
 Starts browserSync: a synchronised browser testing tool.
 
-**compile-html**
+#### **compile-html**
 
 Compile EJS and HTML files into one single HTML file ready to upload on ODS
 
-**compile-css**
+#### **compile-css**
 
 Compile LESS and CSS files into one single CSS file ready to upload on ODS
 
@@ -92,15 +94,20 @@ Gulp is then available locally:
 ./node_modules/.bin/gulp
 ```
 
-To see the list of available tasks
+But you can also install it globally to just call `gulp` directly:
+```
+npm install -g gulp
+```
+
+Then, to see the list of available tasks
 ```
 gulp --tasks 
 ```
 
-Or simply gulp <task> to execute:
+And to run a task simply `gulp <task>` to execute. For exemple:
 ```
 gulp server
-``` 
+```
 
 
 
