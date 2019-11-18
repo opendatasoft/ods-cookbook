@@ -3,6 +3,12 @@ module.exports = {
     ODS_USERNAME: '<USERNAME>',
     ODS_PASSWORD: '<PASSWORD>',
     PAGE_ID: '<ID>',
+    API_KEYS: [
+        {
+            'domain':'mydomainID',
+            'apikey':'APIKEY HERE',
+        },
+    ],
 
     // Command-line defaults
     DEFAULT_EJSFILE: 'views/ods-app.ejs',

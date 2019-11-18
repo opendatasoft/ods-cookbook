@@ -9,6 +9,8 @@
   },
   "author": "fpassaniti",
   "dependencies": {
+    "ejs": "latest",
+    "express": "latest",
     "gulp": "latest",
     "gulp-live-server": "latest",
     "browser-sync": "latest",

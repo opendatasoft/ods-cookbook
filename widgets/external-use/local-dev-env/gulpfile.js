@@ -101,18 +101,15 @@ gulp.task('put', function (cb) {
     gulp.src(path.join(__dirname, 'tmp', 'pages.json'))
         .pipe(through2.obj(function(file, enc, cb) {
                 // Prepare the payload
-                var body = file.contents.toString();
-                console.log(body);
                 request.put({
                     url: 'https://' + config.ODS_PORTAL_DOMAIN + config.ODS_PORTAL_SUFFIX + '/api/management/v2/pages/' + config.PAGE_ID,
                     auth: {
                         'user': config.ODS_USERNAME,
                         'pass': config.ODS_PASSWORD
                     },
-                    body: body,
+                    json: JSON.parse(file.contents.toString()),
                     headers: {
-                        'Content-Type': 'application/json',
-                        'Content-Length': body.length
+                        'Content-Type': 'application/json'
                     }
                 }, function (error, response, body) {
                     if (error) {
@@ -128,4 +125,4 @@ gulp.task('put', function (cb) {
     cb();
 });
 
-gulp.task('update', gulp.series('get', 'compile', 'edit', 'put'));
+gulp.task('update', gulp.series('clean', 'get', 'compile', 'edit', 'put'));
