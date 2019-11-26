@@ -156,7 +156,18 @@ Check npm install
 npm -v
 ```
 
+### Get the local dev kit from git 
 
+```
+mkdir localdevkit
+cd localdevkit/
+git init
+git remote add -f origin https://github.com/opendatasoft/ods-cookbook/
+git config core.sparseCheckout true
+echo "widgets/external-use/local-dev-env" > .git/info/sparse-checkout
+git pull origin master
+```
+  
 #### Some help here 
 
 https://www.dyclassroom.com/howto-mac/how-to-install-nodejs-and-npm-on-mac-using-homebrew
