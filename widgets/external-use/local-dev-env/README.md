@@ -134,3 +134,29 @@ http://lesscss.org
 
 Less provide the ability to include CSS stylesheets into another, we will mainly use this feature to write cleaner and more efficient code.
 Once you have a Less tree view, you can compile it back to regular CSS to use it in the platform.
+
+
+### Virgin Mac OS install guide
+
+Get brew 
+
+```
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+```
+
+Get Node JS and npm
+
+```
+brew install node
+```
+
+Check npm install
+
+```
+npm -v
+```
+
+
+#### Some help here 
+
+https://www.dyclassroom.com/howto-mac/how-to-install-nodejs-and-npm-on-mac-using-homebrew
