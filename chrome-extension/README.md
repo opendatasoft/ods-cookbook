@@ -6,7 +6,7 @@ It activates automatically when browsing Opendatasoft URLs (ie. `*.opendatasoft.
 
 ## Install guide
 
-- Go to <chrome://extensions> page
+- Go to [Chrome extensions menu](chrome://extensions) page
 - Activate developer mode
 - Drag and drop [ODS extension zip](ods-chrome-extension.zip) onto the extension screen
 
