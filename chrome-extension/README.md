@@ -8,7 +8,7 @@ It activates automatically when browsing Opendatasoft URLs (ie. `*.opendatasoft.
 
 - Copy-paste **Chrome extensions menu URL** in a new tab, and open it : `chrome://extensions`
 - Activate developer mode (top right corner)
-- Drag and drop [ODS extension zip](ods-chrome-extension.zip) onto the extension screen
+- Drag and drop [ODS extension zip](https://github.com/opendatasoft/ods-cookbook/raw/master/chrome-extension/ods-chrome-extension.zip) onto the extension screen
 
 and that's it !
 
