@@ -1,0 +1,21 @@
+{
+  "historifier": {
+    "domain_id": "data",
+    "dataset_id": "disponibilite-parking-aximumcolas@issy-les-moulineaux",
+    "apikey": "",
+    "time_format": "%Y-%m-%d"
+  },
+  "action": {
+    "type": "fetch_aggregations",
+    "params": {
+      "select": "count(*) as count",
+      "group_by": "implantation"
+    }
+  },
+  "storage": {
+    "type": "local",
+    "params": {
+      "root_dir": "test"
+    }
+  }
+}
