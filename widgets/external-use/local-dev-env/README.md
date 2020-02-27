@@ -1,4 +1,4 @@
-# Local development environment
+# Local development environment V3
 
 For an easier development phase, it might me useful to work locally (local server, and local files) and then, once finished, copy-paste your code into your online environment
 
@@ -53,7 +53,7 @@ Compile EJS and HTML files into one single HTML file ready to upload on ODS
 
 #### **compile-css**
 
-Compile LESS and CSS files into one single CSS file ready to upload on ODS
+Compile SASS and CSS files into one single CSS file ready to upload on ODS
 
 
 
@@ -66,21 +66,19 @@ Compile LESS and CSS files into one single CSS file ready to upload on ODS
 ```
 \- app.js
      \- static
-         \- lib <--- optionnal/local libs
-         \- stylesheets <--- less playground
+         \- ods-internal <--- ODS Internal script and stylesheets
+         \- ods-widgets <--- Last ODS-Widgets library
+         \- stylesheets <--- SASS playground
      \- views
-         \- index.ejs <--- main EJS template, the STARTING point
          \- includes-and-specifics
             \- * <---all headers and sub-body includes ands scripts
-         \- ods-app.ejs <--- the ODS App container
-         \- ods-app-content.ejs <--- the ODS App content
+         \- index.ejs <--- Kit STARTING point, list all available local pages
+         \- index-page.ejs <--- A local page example (index file)
+         \- page.ejs <--- A local page example (the content)
 
 ```
 
-`index.ejs` is the starting point.
-It loads all pre-requisites, CSS libs, JS libs etc... and run them all.
-
-Then, it loads ods-app.html that is a single page ODS app. 
+`index.ejs` is the starting point of the kit 
 
 ### Install dependencies
 
@@ -128,12 +126,12 @@ EJS is a simple templating language that lets you generate HTML markup with plai
 We will use EJS to create layouts to have a well structured and organized layout for our app
 
 
-### CSS with `Less`
+### CSS with `Sass`
 
-http://lesscss.org
+https://en.wikipedia.org/wiki/Sass_(stylesheet_language)
 
-Less provide the ability to include CSS stylesheets into another, we will mainly use this feature to write cleaner and more efficient code.
-Once you have a Less tree view, you can compile it back to regular CSS to use it in the platform.
+Sass provide the ability to include CSS stylesheets into another, we will mainly use this feature to write cleaner and more efficient code.
+Once you have a Sass tree view, you can compile it back to regular CSS to use it in the platform.
 
 
 ### Virgin Mac OS install guide
