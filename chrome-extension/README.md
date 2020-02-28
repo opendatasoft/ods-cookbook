@@ -27,3 +27,20 @@ When browsing any ODS pages `/*` :
 - from the frontoffice -> direct link to the backoffice
 - from the backoffice -> direct link to the frontoffice 
 
+
+
+## Changelog
+
+V0.3
+- direct link to usage statistics
+- from the frontoffice -> direct link to the backoffice
+- from the backoffice -> direct link to the frontoffice
+
+V0.4
+- Introspect the page to see which datasets are used in a page
+
+V0.5
+- Add a toggle on/off by clicking on ODS icons (usefull for screenshots
+
+V0.6 
+- Add a 1500 millisec timer before checking for contexts to let enough time to angularjs digest process
