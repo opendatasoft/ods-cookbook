@@ -127,5 +127,9 @@ function setupActionMenu() {
 /* GSheets utilitary menu action : set up a new push url */
 function updatePushURL() {
   var name = Browser.inputBox('Set a new push URL to push content');
-  PropertiesService.getScriptProperties().setProperty('pushurl', name);
+  Logger.log('Updating Push URL to : %s', name);
+  if (name != 'cancel') {
+    PropertiesService.getScriptProperties().setProperty('pushurl', name);
+    Logger.log('Push URL updated to : %s', name);
+  }
 }
