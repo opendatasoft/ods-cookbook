@@ -12,6 +12,8 @@ _Principale ressource technique en ligne: https://github.com/opendatasoft/ods-co
 
 Nous expliquerons en-dessous du code ce que fait chaque partie. Il n’est pas nécessaire de comprendre toutes les parties, vous pouvez seulement faire confiance au code et remplacer la partie: <!-- YOUR ODS CODE HERE !!! -->
 
+Le template de code d'intégration se trouve également [ici, de manière à faciliter la copié-collé](https://github.com/opendatasoft/ods-cookbook/blob/master/widgets/external-use/fr-integration-drupal/template_code.html).
+
 ```html
 <!DOCTYPE html>
 <html>
