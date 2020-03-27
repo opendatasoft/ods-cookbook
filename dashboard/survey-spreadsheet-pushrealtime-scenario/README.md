@@ -1,6 +1,6 @@
 # The Survey/Spreadsheet Push API scenario! 
 
-The guide is an advanced version of [the basic scenario that you'll find here](/opendatasoft/ods-cookbook/tree/master/dashboard/survey-spreadsheet-scenario).
+The guide is an advanced version of [the basic scenario that you'll find here](/dashboard/survey-spreadsheet-scenario/).
 Please read carefully the first version as you'll need to proceed from step 1 to 10 before starting this version of the setup.
 
 
@@ -29,7 +29,7 @@ Simply :)
 
 #### Create a form, setup the triggers
 
-Follow steps 1 to 10 of this guide [The Survey/Spreadsheet export scenario](/opendatasoft/ods-cookbook/tree/master/dashboard/survey-spreadsheet-scenario).
+Follow steps 1 to 10 of this guide [The Survey/Spreadsheet export scenario](/dashboard/survey-spreadsheet-scenario).
 
 Then 
 
@@ -69,7 +69,7 @@ But we still need to adapt some lines of code depending on your usecase and your
 - `submit` function is the main function
 - it calls `processNamedValues` and `processRange` depending on the event : onForm or onEdit
 - both will process the row, and then process the attached images
-- If you don't have images in your form, then **comment lines 28 and 49**
+- If you don't have images in your form, then **comment lines 28, 49 and 112**
 - If you do have images, then `processImages` is the function you will need to adapt
 - line 10 refer to the name of the column/field of the form. In the exemple `Screenshot(s)`
 - replace it by yours, (hint: to get the correct name, copy paste it from the spreadsheet column title)
