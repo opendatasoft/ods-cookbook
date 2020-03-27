@@ -71,10 +71,12 @@ But we still need to adapt some lines of code depending on your usecase and your
 - both will process the row, and then process the attached images
 - If you don't have images in your form, then **comment lines 28, 49 and 112**
 - If you do have images, then `processImages` is the function you will need to adapt
-- line 10 refer to the name of the column/field of the form. In the exemple `Screenshot(s)`
+- line 10 refers to the name of the column/field containing the images of the form. In the exemple `Screenshot(s)`
 - replace it by yours, (hint: to get the correct name, copy paste it from the spreadsheet column title)
+- line 84 refers to the name of a column of the form, you’ll have to change it from 'Domain ID' if your form doesn’t contain this field
+- to investigate if the script doesn’t behave as expected, use: https://script.google.com/home/executions.
 
 
 Congratulation ! You have your first push-api-crowdsourced-ready setup running !
 
-- You can now submit some tests, wait, and see how your new submits are processed and published automatically on your OpenDataSoft platform!
+- You can now submit some tests, wait, and see how your new submits are processed and published automatically on your Opendatasoft platform!
