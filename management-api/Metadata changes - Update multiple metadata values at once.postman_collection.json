@@ -1,0 +1,372 @@
+{
+	"info": {
+		"_postman_id": "a158643f-1a71-4aea-9c54-f8a4a3413f05",
+		"name": "Metadata changes - Update multiple metadata values at once",
+		"description": "The goal is to update all the metadatas held in the columns of the data file.\n\nCollection written for a \"domaindatasets://\" export data file (the reason behind this is that catalog exports do not have admin metadata values, whereas \"domaindatasets://\"\" can). \nAll metadatas labels have to be distinct.\n\nThe only variables needed in your Postman environment are:\n- domainid\n- apikey\n\nThe steps to run this collection are:\n- Create a \"domaindatasets://\" dataset.\n- Export the rows you wish to update.\n- Import this sheet in a google sheet, and specify the correct separator (\";\" or \",\")\n- Within the google sheet, change as you want the values of your metadatas\n- Delete the columns of the metadata you do not wish to update\n- Export this sheet as a csv with comma separator\n- Run the collection with this csv as a data file\nWARNING: beware of entering all values as Text. true is not TRUE (boolean type in google sheet). To enforce true in google sheet, enter 'true.\n\nTwo tests are executed by the Runner:\n- Did you get only 200 responses?\n- Did you update as many metadatas as you entered values in your csv?\nIf you did encounter an error it should be documented in the logs (Postman Console). If this is not the case the collection should be updated to deal with the error.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. Fetch the UID of a dataset",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0efd5338-6e63-4d0c-bb7c-a847745b06ff",
+						"exec": [
+							"reponse = JSON.parse(responseBody);",
+							"pm.variables.set(\"datasetuid\",reponse.datasets[0].dataset_uid);",
+							"pm.variables.set(\"federated_boolean\", (reponse.datasets[0].metas.default.federated || false));",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{domainid}}.opendatasoft.com/api/management/v2/datasets/?rows=2&start=0&where=datasetid=\"{{Dataset identifier}}\"&apikey={{apikey}}",
+					"protocol": "https",
+					"host": [
+						"{{domainid}}",
+						"opendatasoft",
+						"com"
+					],
+					"path": [
+						"api",
+						"management",
+						"v2",
+						"datasets",
+						""
+					],
+					"query": [
+						{
+							"key": "rows",
+							"value": "2"
+						},
+						{
+							"key": "start",
+							"value": "0"
+						},
+						{
+							"key": "where",
+							"value": "datasetid=\"{{Dataset identifier}}\""
+						},
+						{
+							"key": "apikey",
+							"value": "{{apikey}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2. List all metadata",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "50b31cf3-6c75-48b1-929a-af98f46dd73d",
+						"exec": [
+							"pm.environment.set(\"metadata_list\",responseBody);",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{domainid}}.opendatasoft.com/api/management/v2/datasets/{{datasetuid}}/metadata?apikey={{apikey}}",
+					"protocol": "https",
+					"host": [
+						"{{domainid}}",
+						"opendatasoft",
+						"com"
+					],
+					"path": [
+						"api",
+						"management",
+						"v2",
+						"datasets",
+						"{{datasetuid}}",
+						"metadata"
+					],
+					"query": [
+						{
+							"key": "apikey",
+							"value": "{{apikey}}"
+						}
+					]
+				},
+				"description": "Returns a list of metadata for the dataset with the given UID.\nhttps://betahelp.opendatasoft.com/management-api/#list-all-metadata"
+			},
+			"response": []
+		},
+		{
+			"name": "3. Update multiple metadata at once",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "78136f5c-03a5-4b0b-9e83-61725bc50d0c",
+						"exec": [
+							"//console.log(pm.variables.get(\"title\"));",
+							"var metadata_list_json = JSON.parse(pm.environment.get(\"metadata_list\"));",
+							"var metadata_put_body = [];",
+							"var error_values = [];",
+							"console.log(pm.variables.get(\"federated_boolean\"));",
+							"Object.keys(pm.iterationData.variables()).forEach(function(d) {",
+							"    if (d == 'Dataset identifier') {",
+							"        return;",
+							"    }",
+							"    //only problem if metadatas have the same label",
+							"    var meta_info = metadata_list_json.find(obj => { return obj.definition.label === d});",
+							"    if (!meta_info) {",
+							"       error_values.push(\"The column \" + d + \" wasn't updated because it doesn't correspond to a modifiable metadata through API\");",
+							"       return;",
+							"   }",
+							"    var new_meta = {'metadata_name': meta_info.name,'value':pm.variables.get(d),'template_name':meta_info.template.name,\"override_remote_value\": pm.variables.get(\"federated_boolean\")};",
+							"    //deal with prefix of datasets domaindatasets://",
+							"    /*if (d.startsWith(\"custom_\")) {",
+							"        new_meta.metadata_name = d.substring(7);",
+							"        new_meta.template_name = \"custom\";",
+							"    }",
+							"    else if (d.startsWith(\"admin_\")) {",
+							"        new_meta.metadata_name = d.substring(6);",
+							"        new_meta.template_name = \"admin\";",
+							"    }",
+							"    else if (d.startsWith(\"dcat_\")) {",
+							"        new_meta.metadata_name = d.substring(5);",
+							"        new_meta.template_name = \"dcat\";",
+							"    }",
+							"    else if (d.startsWith(\"inspire_\")) {",
+							"        new_meta.metadata_name = d.substring(8);",
+							"        new_meta.template_name = \"inspire\";",
+							"    }",
+							"    var meta_info = metadata_list_json.find(obj => { return (obj.name === new_meta.metadata_name && obj.template.name === new_meta.template_name)});*/",
+							"    if (d == 'Themes') {",
+							"       error_values.push(\"Changing theme metadata is not yet supported by this collection\");",
+							"       return; ",
+							"    }",
+							"    else {",
+							"        //for text or datalist no need to reprocessing of value",
+							"        if (new_meta.value === null || new_meta.value === \"\") {",
+							"            if (!meta_info.definition.allow_empty) {",
+							"               error_values.push(new_meta.metadata_name + \" wasn't updated because \" + new_meta.metadata_name + \" of template \" + new_meta.template_name + \" doesn't allow empty values\");",
+							"                return;  ",
+							"            }",
+							"            else if ( (meta_info.definition.type == 'double' || meta_info.definition.type == 'int' || meta_info.definition.type == 'datetime' || meta_info.definition.type == 'date') && !meta_info.override_remote_value ) {",
+							"                new_meta.value = null;",
+							"            }",
+							"            else if (meta_info.definition.type == 'multitext') {",
+							"                new_meta.value = [];",
+							"            }",
+							"            else if (meta_info.definition.type == 'boolean') {",
+							"                error_values.push(new_meta.metadata_name + \" wasn't updated because booleans only accept true or false values\");",
+							"                return;",
+							"            }",
+							"        }",
+							"        else {",
+							"            if (meta_info.definition.type == 'text' && meta_info.definition.choices) {",
+							"                //check if value part of the choices",
+							"                if (new_meta.metadata_name == 'license') {",
+							"                    var license_found = meta_info.definition.choices.find(element => Object.values(element.labels).indexOf(new_meta.value) > -1);",
+							"                    if (license_found) {",
+							"                        new_meta.metadata_name = 'license_id';",
+							"                        new_meta.value = license_found.id;",
+							"                        new_meta.template_name = 'internal';",
+							"                    }",
+							"                    else {",
+							"                        error_values.push(new_meta.metadata_name + \" wasn't updated because \" + new_meta.metadata_name + \" of template \" + new_meta.template_name + \" doesn't have \" + new_meta.value + \" in the possible choices\");",
+							"                        return;",
+							"                    }",
+							"                }",
+							"                else if (new_meta.metadata_name == 'language') {",
+							"                    //problem with language in the API management currently",
+							"                    var complete_language = meta_info.definition.choices.find(element => { return element.includes(new_meta.value)} );",
+							"                    if (!complete_language) {",
+							"                        error_values.push(new_meta.metadata_name + \" wasn't updated because \" + new_meta.metadata_name + \" of template \" + new_meta.template_name + \" doesn't have \" + new_meta.value + \" in the possible choices\");",
+							"                    return;",
+							"                    }",
+							"                    new_meta.value = complete_language[1];",
+							"                }",
+							"                else if (!meta_info.definition.choices.includes(new_meta.value)) {",
+							"                    error_values.push(new_meta.metadata_name + \" wasn't updated because \" + new_meta.metadata_name + \" of template \" + new_meta.template_name + \" doesn't have \" + new_meta.value + \" in the possible choices\");",
+							"                    return;",
+							"                }",
+							"            }",
+							"            else if (meta_info.definition.type == 'multitext') {",
+							"                //separator ',' in export catalogue, and ';' in domaindatasets",
+							"                //new_meta.value = new_meta.value.split(\",\");",
+							"                new_meta.value = new_meta.value.split(\";\");",
+							"                //multidatalist with required choices",
+							"                if (meta_info.definition.choices) {",
+							"                    //vérifie que fait partie des choix:",
+							"                    var accepted_choices = [];",
+							"                    new_meta.value.forEach(function(e) {",
+							"                        if (meta_info.definition.choices.includes(e)) {",
+							"                            accepted_choices.push(e);",
+							"                        }",
+							"                        else {",
+							"                            error_values.push(new_meta.value + \" wasn't added to \" + new_meta.metadata_name + \" of template \" + new_meta.template_name + \" because it is not part of the possible choices\");",
+							"                        }",
+							"                    })",
+							"                    new_meta.value = accepted_choices;",
+							"                }",
+							"            }",
+							"            else if (meta_info.definition.type == 'datetime' || meta_info.definition.type == 'date') {",
+							"                //check if input looks like date or datetime",
+							"                if ((new Date(new_meta.value) !== \"Invalid Date\") && !isNaN(new Date(new_meta.value))) {",
+							"                    //\"Invalid datetime format for: {value}. Supported format is 2017-07-24T11:56:28+00:00\"",
+							"                    new_meta.value = new_meta.value.replace(\" \", \"T\");",
+							"                    //Until explanation for datetime format, execute below",
+							"                    if (new_meta.value.includes(\"+\")) {",
+							"                        new_meta.value = new_meta.value.split(\"+\")[0] + \"+00:00\";",
+							"                    }",
+							"                }",
+							"                else {",
+							"                    error_values.push(new_meta.metadata_name + \" of template \" + new_meta.template_name + \" wasn't updated because \" +  new_meta.value + \" is not a valid \" + meta_info.definition.type);",
+							"                    return;",
+							"                }",
+							"            }",
+							"            else if (meta_info.definition.type == 'int') {",
+							"                //check if valid integer",
+							"                if (!Number.isInteger(+new_meta.value)) {",
+							"                    error_values.push(new_meta.metadata_name + \" of template \" + new_meta.template_name + \" wasn't updated because \" +  new_meta.value + \" is not a valid integer\");",
+							"                    return;",
+							"                }",
+							"            }",
+							"            else if (meta_info.definition.type == 'double') {",
+							"                //check if valid double",
+							"                if (isNaN(new_meta.value) || Math.sign(new_meta.value)==-1) {",
+							"                    error_values.push(new_meta.metadata_name + \" of template \" + new_meta.template_name + \" wasn't updated because \" +  new_meta.value + \" is not a valid double\");",
+							"                    return;",
+							"                }",
+							"            }",
+							"            else if (meta_info.definition.type == 'boolean') {",
+							"                if (![null,\"false\",\"true\"].includes(new_meta.value)) {",
+							"                    error_values.push(new_meta.metadata_name + \" of template \" + new_meta.template_name + \" wasn't updated because \" +  new_meta.value + \" is not a valid boolean\");",
+							"                    return;",
+							"                }",
+							"                new_meta.value = (new_meta.value == 'true');",
+							"            }",
+							"        }",
+							"        metadata_put_body.push(new_meta);",
+							"        //metadata_put_body.push({\"template_name\": new_meta.template, \"metadata_name\": new_meta.name, \"override_remote_value\": true, \"value\": new_meta.value});",
+							"    }",
+							"});",
+							"pm.environment.set(\"number_of_metas_updated\", metadata_put_body.length);",
+							"pm.environment.set(\"put_body\",JSON.stringify(metadata_put_body));",
+							"if (error_values.length > 0) {",
+							"    console.log(error_values);",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "698237e0-e439-459a-a783-3eabc23e5e79",
+						"exec": [
+							"pm.test(\"Number of metadatas updated is equivalent to number of metadata in the data file\", function () {",
+							"    //console.log(\"number of metadatas to update: \" + (Object.keys(pm.iterationData.variables()).length - 1));",
+							"    //console.log(\"number of metadatas updated: \" + pm.environment.get(\"number_of_metas_updated\"));",
+							"    //length - 1 because of datasetid",
+							"    pm.expect(Object.keys(pm.iterationData.variables()).length - 1).to.eql(pm.environment.get(\"number_of_metas_updated\"));",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey"
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"metas\": {{put_body}} \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{domainid}}.opendatasoft.com/api/management/v2/datasets/{{datasetuid}}/metadata/?apikey={{apikey}}",
+					"protocol": "https",
+					"host": [
+						"{{domainid}}",
+						"opendatasoft",
+						"com"
+					],
+					"path": [
+						"api",
+						"management",
+						"v2",
+						"datasets",
+						"{{datasetuid}}",
+						"metadata",
+						""
+					],
+					"query": [
+						{
+							"key": "apikey",
+							"value": "{{apikey}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "8464e9f3-06cc-45ae-8bc9-5db39f510ee5",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "bc892c3f-3bd2-444b-9405-aa3023498ccb",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
