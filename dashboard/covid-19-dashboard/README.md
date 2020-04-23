@@ -1,4 +1,4 @@
-This the COVID-19 Dashboard as presented on the [Opendatasof apps site](https://apps.opendatasoft.com/en/regional-covid).
+This the COVID-19 Dashboard as presented on the [Opendatasoft apps site](https://apps.opendatasoft.com/en/regional-covid).
 
 
 ## How to use ?
