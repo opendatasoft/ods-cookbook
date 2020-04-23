@@ -1,0 +1,210 @@
+/* General settings */
+body {
+  background-color: #f6f8fb;
+}
+
+
+.feature-box {
+  margin: 21px 0;
+  padding: 13px;
+  background: white;
+  border-radius: 4px;
+  background-color: #ffffff;
+  background-size: cover;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.13);
+}
+
+.info-box {
+  border-radius: 4px;
+  background: #f6f8fb;
+  color: #142e7b;
+  font-size: 1.1rem;
+  margin: 13px 0;
+  padding: 13px 0;
+  text-align: center;
+}
+
+.underline-title {
+  position: relative;
+}
+
+.underline-title:before{
+    content: "";
+    position: absolute;
+    width: 34px;
+    height: 1px;
+    bottom: -8px;
+    left: 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.kpi-card {
+  width: 233px;
+  text-align: left;
+  margin: 13px 0;
+}
+
+.kpi-card h2 {
+  margin-bottom: 0;
+}
+
+.staticmap {
+  height: 100px;
+  margin: auto;
+}
+
+/* Table design */
+.summary-table {
+  table-layout: fixed;
+  white-space: nowrap;
+  width: 100%;
+  margin-bottom: 21px;
+}
+
+.scroll-table {
+  height: 377px;
+  overflow-y: auto;
+}
+
+.scroll-table thead th {
+  position: sticky;
+  top: 0;
+  background: #f6f8fb;
+  color: #142e7b;
+  border-bottom: 1px solid;
+  border-color: #dee5ef;
+}
+
+.summary-table thead {
+  background: #f6f8fb;
+  color: #142e7b;
+}
+
+.summary-table td,
+th {
+  padding: 1rem;
+}
+
+.summary-table td {
+  border-top: 1px solid;
+  border-color: #dee5ef;
+}
+
+.summary-table tr:hover {
+  background: #f6f8fb;
+}
+
+.summary-table .toggled {
+  background: #f6f8fb;
+}
+
+.hidden-checkbox {
+  visibility: hidden;
+}
+
+.fake-checkbox {
+  width: 13px;
+  height: 13px;
+  background: white;
+  border: 1px solid #142e7b;
+  border-radius: 4px;
+  font-weight: normal;
+  vertical-align: text-bottom;
+}
+
+.fake-checkbox:after {
+  content: "\f00c";
+  opacity: 0;
+  font-family: FontAwesome;
+  color: #142e7b;
+}
+
+.hidden-checkbox:checked ~ .fake-checkbox {
+  background: #142e7b;
+}
+/* Utilities */
+.mb-4 {
+  margin-bottom: 21px;
+}
+
+.my-4 {
+  margin-top: 21px;
+  margin-bottom: 21px;
+}
+
+.my-3 {
+  margin-top: 13px !important;
+  margin-bottom: 13px !important;
+}
+
+.mx-2 {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+.px-5 {
+  padding-left: 34px;
+  padding-right: 34px;
+}
+
+.text-primary {
+  color: #1873e2 !important;
+}
+
+.text-warning {
+  color: #FA8C44 !important;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-light {
+  color: #898D92;
+}
+
+.justify-content-start {
+  display: flex;
+  justify-content: flex-start;
+  align-items: baseline;
+}
+
+.justify-content-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+.justify-content-around {
+  display: flex;
+  justify-content: space-around;
+}
+
+.align-items-center {
+  display: flex;
+  align-items: center;
+}
+
+/** override legends style */
+.odswidget-legend {
+  width: 100%;
+  align-items: center;
+}
+
+.odswidget-legend__steps_style {
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+}
+
+/* Override map */
+.leaflet-tile-pane {
+  display: none;
+}
+
+.leaflet-control-container {
+  display: none;
+}
+
+.odswidget.odswidget-map__map.leaflet-container {
+  background-color: transparent;
+}
