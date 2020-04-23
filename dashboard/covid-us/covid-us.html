@@ -1,0 +1,311 @@
+<div class="container">
+    <h2 class="text-center mb-4">
+      Coronavirus (COVID-19) Dashboard: City of Newark, Essex County, New Jersey
+    </h2>
+    <article id="kpis" class="feature-box">
+      <!-- Refine only if you use the national set from public. You can also distribute the filtered dataset. -->
+      <ods-dataset-context context="state" state-domain="public" state-dataset="coronavirus-covid-19-pandemic-usa-counties" state-parameters="{ 'refine.province_state': 'New Jersey' }">
+        <div class="row my-4" ods-analysis="totalState" ods-analysis-context="state" ods-analysis-x="date" ods-analysis-serie-cases="SUM(tot_confirmed)" ods-analysis-serie-death="SUM(tot_death)">
+          <div class="col-sm-2 align-items-center">
+            <!-- Change with your assets. You can use relative path src="/assets/theme_images/county.png" -->
+            <img class="staticmap" src="https://newark-dashboardcovid.trial.opendatasoft.com/assets/theme_image/state.png" />
+          </div>
+          <div class="col-sm-10 px-5">
+            <div class="row">
+              <div class="col-sm-12 justify-content-start">
+                <h3 class="underline-title">
+                  State of New Jersey
+                </h3>
+                <p class="text-center text-light mx-2">(last updated {{ state.dataset.metas.modified | date }}, <a class="access" target="_blank" href="/explore/dataset/covid-19-pandemic-usa-counties/information/">source</a>)</p>
+              </div>
+              <div class="col-sm-6 justify-content-start">
+                <div class="kpi-card my-3">
+                  <!-- If your dataset can be ordered by -date, you can use totalState.results[0] to get the last result -->
+                  <h2 class="text-primary">
+                    {{ totalState.results[totalState.results.length - 1].cases | number}}
+                  </h2>
+                  <p class="text-light">total positive cases</p>
+                </div>
+                <div class="kpi-card my-3">
+                  <h2 class="text-primary">
+                    {{ totalState.results[totalState.results.length - 1].cases - totalState.results[totalState.results.length - 2].cases | number }}
+                  </h2>
+                  <p class="text-light"> new positive cases</p>
+                </div>
+              </div>
+              <div class="col-sm-6 justify-content-start">
+                <div class="kpi-card my-3">
+                  <h2 class="text-warning">
+                    {{ totalState.results[totalState.results.length - 1].death | number }}
+                  </h2>
+                  <p class="text-light">total deaths</p>
+                </div>
+                <div class="kpi-card my-3">
+                  <h2 class="text-warning">
+                    {{ totalState.results[totalState.results.length - 1].death - totalState.results[totalState.results.length - 2].death | number }}
+                  </h2>
+                  <p class="text-light">new deaths</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ods-dataset-context>
+      <ods-dataset-context context="county" county-domain="public" county-dataset="coronavirus-covid-19-pandemic-usa-counties" county-parameters="{ 'refine.admin2': 'Essex' }">
+        <div class="row my-4" ods-analysis="totalCounty" ods-analysis-context="county" ods-analysis-x="date" ods-analysis-serie-cases="SUM(tot_confirmed)" ods-analysis-serie-death="SUM(tot_death)">
+          <div class="col-sm-2 align-items-center">
+            <!-- Change with your assets. You can use relative path src="/assets/theme_images/county.png" -->
+            <img class="staticmap" src="https://newark-dashboardcovid.trial.opendatasoft.com/assets/theme_image/county.png" />
+          </div>
+          <div class="col-sm-10 px-5">
+            <div class="row">
+              <div class="col-sm-12 justify-content-start">
+                <h3 class="underline-title">
+                  County of Essex
+                </h3>
+                <p class="text-light text-center mx-2">
+                  (last updated {{ county.dataset.metas.modified | date }}, <a class="access" target="_blank" href="/explore/dataset/covid-19-pandemic-usa-counties/information/">source</a>)
+                </p>
+              </div>
+              <div class="col-sm-6 justify-content-start">
+                <div class="kpi-card my-3">
+                  <h2 class="text-primary">
+                    {{ totalCounty.results[totalCounty.results.length - 1].cases | number}}
+                  </h2>
+                  <p class="text-light">total positive cases</p>
+                </div>
+                <div class="kpi-card my-3">
+                  <h2 class="text-primary">
+                    {{ totalCounty.results[totalCounty.results.length - 1].cases - totalCounty.results[totalCounty.results.length - 2].cases | number }}
+                  </h2>
+                  <p class="text-light"> new positive cases</p>
+                </div>
+              </div>
+              <div class="col-sm-6 justify-content-start">
+                <div class="kpi-card my-3">
+                  <h2 class="text-warning">
+                    {{ totalCounty.results[totalCounty.results.length - 1].death | number }}
+                  </h2>
+                  <p class="text-light">total deaths</p>
+                </div>
+                <div class="kpi-card my-3">
+                  <h2 class="text-warning">
+                    {{ totalCounty.results[totalCounty.results.length - 1].death - totalCounty.results[totalCounty.results.length - 2].death | number }}
+                  </h2>
+                  <p class="text-light">new deaths</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ods-dataset-context>
+      <!-- Due the format of the dataset, we need to refine the same dataset differently to get two context for positive cases and death. It may vary based on the data scheme you have.
+          Remove citydied if you can have both data from the same context. -->
+      <ods-dataset-context context="citypos, citydied" citypos-dataset="aggregates-test" citypos-sort="date" citypos-parameters="{ 'refine.status': 'Positive' }" citydied-dataset="aggregates-test" citydied-sort="date" citydied-parameters="{ 'refine.patient_died': 'Y' }">
+        <div class="row my-4">
+          <div class="col-sm-2 align-items-center">
+            <!-- Change with your assets. You can use relative path src="/assets/theme_images/county.png" -->
+            <img class="staticmap" src="https://newark-dashboardcovid.trial.opendatasoft.com/assets/theme_image/city.png" />
+          </div>
+          <div class="col-sm-10 px-5 justify-content-start">
+            <!-- This row is inside a col for responsive reason. Be careful, follownings cols only live in this row -->
+            <div class="row">
+              <div class="col-xs-12 justify-content-start">
+                <h3 class="underline-title">
+                  City of Newark
+                </h3>
+                <p class="text-light mx-2">
+                  (last updated {{ citypos.dataset.metas.modified | date }}, <a class="access" target="_blank" href="/explore/dataset/covid-19-pandemic-usa-counties/information/">source</a>)
+                </p>
+              </div>
+              <div class="col-sm-6 justify-content-start" ods-analysis="cityPositiveCases" ods-analysis-context="citypos" ods-analysis-x="date" ods-analysis-serie-cases="SUM(number_of_cases)">
+                <div class="kpi-card my-3">
+                  <!-- The subagregation sum on all dates on the cityPositives analysis, which already sum on everything else (zipcode and category) -->
+                  <h2 class="text-primary" ods-subaggregation="cityPositiveCases.results" ods-subaggregation-serie-total="SUM(cases)">
+                    {{ results[0].total }}
+                  </h2>
+                  <p class="text-light">total positive cases</p>
+                </div>
+                <div class="kpi-card my-3">
+                  <h2 class="text-primary">
+                    {{ cityPositiveCases.results[cityPositiveCases.results.length - 1].cases | number }}
+                  </h2>
+                  <p class="text-light"> new positive cases</p>
+                </div>
+              </div>
+              <!-- Remove this analysis if you have confirmed and death from the same context -->
+              <div class="col-sm-6 justify-content-start" ods-analysis="cityDeaths" ods-analysis-context="citydied" ods-analysis-x="date" ods-analysis-serie-deaths="SUM(number_of_cases)">
+                <div class="kpi-card my-3">
+                  <!-- The subagregation sum on all dates on the cityPositives analysis, which already sum on everything else (zipcode and category) -->
+                  <h2 class="text-warning" ods-subaggregation="cityDeaths.results" ods-subaggregation-serie-total="SUM(deaths)">
+                    {{ results[0].total }}
+                  </h2>
+                  <p class="text-light">total deaths</p>
+                </div>
+                <div class="kpi-card my-3">
+                  <h2 class="text-warning">
+                    {{ cityDeaths.results[cityDeaths.results.length - 1].deaths | number }}
+                  </h2>
+                  <p class="text-light">new deaths</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ods-dataset-context>
+    </article>
+    <article id="city-details" class="feature-box">
+      <!-- Replace aggregates-test with your local dataset -->
+      <ods-dataset-context context="city" city-dataset="aggregates-test" city-sort="date">
+        <div class="row my-4">
+          <div class="col-md-4">
+            <h3 class="underline-title my-3">
+              Distribution by Age, City of Newark
+            </h3>
+              <ods-chart single-y-axis="true" align-month="true">
+                <ods-chart-query context="city" field-x="age_range" maxpoints="0" stacked="normal" series-breakdown="status" category-colors="{'Positive':'#1873e2','Negative':'#429455'}">
+                  <ods-chart-serie expression-y="number_of_cases" chart-type="bar" function-y="SUM" scientific-display="true">
+                  </ods-chart-serie>
+                </ods-chart-query>
+              </ods-chart>
+            </div>
+          <div class="col-md-4">
+            <h3 class="underline-title my-3">
+              Distribution by Gender, City of Newark
+            </h3>
+              <ods-chart single-y-axis="true" align-month="true">
+                <ods-chart-query context="city" field-x="gender" maxpoints="0" stacked="normal" series-breakdown="status" category-colors="{'Positive':'#1873e2','Negative':'#429455'}">
+                  <ods-chart-serie expression-y="number_of_cases" chart-type="column" function-y="SUM" scientific-display="true">
+                  </ods-chart-serie>
+                </ods-chart-query>
+              </ods-chart>
+           </div>
+           <div class="col-md-4">
+             <h3 class="underline-title my-3">
+              Distribution by Race, City of Newark
+             </h3>
+             <ods-chart single-y-axis="true" align-month="true">
+               <ods-chart-query context="city" field-x="race" maxpoints="0" stacked="normal" series-breakdown="status" category-colors="{'Positive':'#1873e2','Negative':'#429455'}">
+                 <ods-chart-serie expression-y="number_of_cases" chart-type="column" function-y="SUM" scientific-display="true"></ods-chart-serie>
+                </ods-chart-query>
+              </ods-chart>
+            </div>
+          </div>
+        </ods-dataset-context>
+        <!-- change the refine to the current state
+             Replace aggregates-test with your local dataset -->
+        <ods-dataset-context context="citypos, citydied, selectedpos, selecteddied, uszipcodes"
+                             citypos-dataset="aggregates-test"
+                             citypos-sort="date"
+                             citypos-parameters="{ 'refine.status': 'Positive' }"
+                             citydied-dataset="aggregates-test"
+                             citydied-sort="date"
+                             citydied-parameters="{ 'refine.patient_died': 'Y' }"
+                             uszipcodes-domain="public"
+                             uszipcodes-dataset="us-county-boundaries"
+                             uszipcodes-parameters="{ 'refine.STUSAB': 'MS' }">
+        <div class="row my-4">
+          <div class="col-md-6">
+            <h3 class="underline-title my-3">
+              Total Positive Cases as of {{ citypos.dataset.metas.modified | date }}, City of Newark
+            </h3>
+            <h4>
+              Click on a shape to identify the corresponding ZIP code
+            </h4>
+            <div ods-color-gradient="colorgradient" ods-color-gradient-context="citypos" ods-color-gradient-x="zip_code" ods-color-gradient-serie="SUM(number_of_cases)" ods-color-gradient-high="rgb(24, 115, 226)"
+              ods-color-gradient-low="rgb(208, 224, 242)" ods-color-gradient-nb-classes="4">
+              <ods-map basemap="jawg.light" no-refit="true" scroll-wheel-zoom="false" display-control="false" toolbar-drawing="false" location="11,40.72736,-74.17213">
+                <ods-map-layer context="uszipcodes" color-categories="colorgradient['colors']" color-by-field="zipcode" color-categories-other="lightgrey" display="categories" shape-opacity="0.85">
+                </ods-map-layer>
+              </ods-map>
+              <ods-legend color-gradient="colorgradient" display="steps" decimal-precision="0"></ods-legend>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <h3 class="underline-title my-3">
+              <!-- citydied and citypos are the same dataset, so the last modified date is the same -->
+              Total Deaths as of {{citypos.dataset.metas.modified | date }}, City of Newark
+            </h3>
+            <h4>
+              Click on a shape to identify the corresponding ZIP code
+            </h4>
+            <div ods-color-gradient="colorgradient2" ods-color-gradient-context="citydied" ods-color-gradient-x="zip_code" ods-color-gradient-serie="SUM(number_of_cases)" ods-color-gradient-high="rgb(250, 140, 68)"
+              ods-color-gradient-low="rgb(252, 220, 202)" ods-color-gradient-nb-classes="3">
+              <ods-map basemap="jawg.light" no-refit="true" scroll-wheel-zoom="false" display-control="false" toolbar-drawing="false" location="11,40.72736,-74.17213">
+                <ods-map-layer context="uszipcodes" color-categories="colorgradient2['colors']" color-by-field="zipcode" color-categories-other="lightgrey" display="categories" shape-opacity="0.85">
+                </ods-map-layer>
+              </ods-map>
+              <ods-legend color-gradient="colorgradient2" display="steps" decimal-precision="0"></ods-legend>
+            </div>
+          </div>
+        </div>
+      </ods-dataset-context>
+    </article>
+    <article id="zipcode-table" class="feature-box">
+      <!-- Here you need to duplicate all your context: one to display all values (table) and one to display only selected (graph) -->
+      <ods-dataset-context context="citypos, citydied, selectedpos, selecteddied"
+        citypos-dataset="aggregates-test" citypos-sort="date" citypos-parameters="{ 'refine.status': 'Positive' }"
+        citydied-dataset="aggregates-test" citydied-sort="date" citydied-parameters="{ 'refine.patient_died': 'Y' }"
+        selectedpos-dataset="aggregates-test" selectedpos-sort="date"
+        selectedpos-parameters="{ 'disjunctive.zip_code': true, 'refine.status': 'Positive' }"
+        selecteddied-dataset="aggregates-test" selecteddied-sort="date" selecteddied-parameters="{ 'disjunctive.zip_code': true, 'refine.patient_died': 'Y' }">
+        <!-- Keeps the filter on the two context in sync. Remove if you have only one dataset for both cases and death -->
+        {{ selecteddied.parameters['refine.zip_code'] = selectedpos.parameters['refine.zip_code']; "" }}
+        <div class="row my-4">
+          <div class="col-md-5" title="Click on a row to add it to the charts below">
+            <div class="info-box">
+              Select one or multiple ZIP codes to focus on your area.
+            </div>
+            <div class="scroll-table">
+              <table class="summary-table">
+                <thead>
+                  <th>Zipcode</th>
+                  <th class="text-primary" ods-analysis="positivesByZipcode" ods-analysis-context="citypos" ods-analysis-x="zip_code" ods-analysis-serie-cases="SUM(number_of_cases)">Positive</th>
+                  <th class="text-warning" ods-analysis="deathsByZipcode" ods-analysis-context="citydied" ods-analysis-x="zip_code" ods-analysis-serie-cases="SUM(number_of_cases)">Deaths</th>
+                </thead>
+                <tbody>
+                  <!-- result.x is the zipcode —the x-axis of the analysis by zipcode analysis  -->
+                  <tr ng-repeat="result in positivesByZipcode.results | orderBy:'-x'" ng-class="{'toggled': toggled}">
+                    <td>
+                      <div>
+                        <!-- The custom checkbox is made by using the label and hiding the checkbox.
+                        Regular checkboxes will work perfectly as wall (but cannot be styled) -->
+                        <input id="{{ result.x }}" type="checkbox" class="hidden-checkbox" ods-toggle-model="$parent.selectedpos.parameters" ods-toggle-key="refine.zip_code" ods-toggle-value="{{ result.x }}" />
+                        <label for="{{ result.x }}" class="fake-checkbox" ng-click="toggled = !toggled"></label>
+                        {{ result.x }}
+                      </div>
+                    </td>
+                    <!-- Replace with corresponding data fields -->
+                    <td>{{ positivesByZipcode.results[$index].cases || 0 }}</td>
+                    <td>{{ deathsByZipcode.results[$index].cases || 0 }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-md-7" title="Click on a row to add it to the charts below">
+            <h3 class="underline-title my-3">Evolution of Positive Cases and Deaths,
+              City of Newark
+            </h3>
+            <span class="text-light">Currently showing: </span>
+            <span class="text-light" ng-if="selectedpos.parameters['refine.zip_code']" ng-repeat="zipcode in selectedpos.parameters['refine.zip_code']">
+              {{ zipcode }}<i ng-if="!$last">, </i>
+            </span>
+            <span class="text-light" ng-if="!selectedpos.parameters['refine.zip_code']">
+              all zipcodes
+            </span>
+            <!-- Those charts will react to selected rows. Only change the expression-y. -->
+                <ods-chart timescale="year" single-y-axis="true" scientific-display="false" align-month="true" label-x="">
+                  <ods-chart-query context="selectedpos" field-x="date" maxpoints="0" timescale="day">
+                    <ods-chart-serie expression-y="number_of_cases" chart-type="line" function-y="SUM" color="#1873e2" scientific-display="true" label-y="Positive Cases" display-values="true"> </ods-chart-serie>
+                </ods-chart-query>
+                <ods-chart-query context="selecteddied" field-x="date" maxpoints="0" timescale="day">
+                  <ods-chart-serie expression-y="number_of_cases" chart-type="line" function-y="SUM" color="#FA8C44" scientific-display="true" label-y="Deaths" display-values="true">
+                  </ods-chart-serie>
+                </ods-chart-query>
+              </ods-chart>
+          </div>
+        </div>
+      </ods-dataset-context>
+    </article>
+  </div>
