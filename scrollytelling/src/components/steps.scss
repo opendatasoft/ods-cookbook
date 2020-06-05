@@ -1,0 +1,32 @@
+.step {
+  opacity: 0.25;
+  min-height: 33vh;
+  padding: 33vh 0 66vh 18vh;
+  margin: 25vh 0;
+}
+
+.step.active {
+  opacity: 0.9;
+}
+
+.step div {
+  padding: 1rem 3rem;
+}
+
+.step-chart {
+  padding-top: 25vh;
+  padding-bottom: 25vh;
+}
+
+.step-explain {
+  position: relative;
+  background: rgb(157, 157, 157);
+  border: 2px dashed black;
+  &:before {
+    position: absolute;
+    content: ".step";
+    font-size: 2rem;
+    top: 0.25rem;
+    left: 0.25rem;
+  }
+}

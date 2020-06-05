@@ -1,0 +1,46 @@
+.story-block {
+  padding: 1rem 3rem;
+  width: 33vh;
+}
+
+.story-block-over {
+  border: 1px solid black;
+  color: #444;
+  background-color: #fafafa;
+}
+
+.story-block-long {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.story-block-center {
+  margin: 0 auto;
+}
+
+.story-block-crazy {
+  border-color: rgb(179, 84, 246);
+  box-shadow: 2px 2px 0px rgb(147, 62, 207);
+  border-radius: 8px;
+}
+
+.story-block-explain {
+  width: 50vh;
+  padding-top: 2rem;
+  position: relative;
+  &:before {
+    position: absolute;
+    content: ".story-block";
+    font-size: 2rem;
+    top: 0.25rem;
+    left: 0.25rem;
+  }
+}
+
+.story-block-outro {
+  margin: 10vh auto;
+  padding: 33vh 0;
+  width: 50vh;
+}
