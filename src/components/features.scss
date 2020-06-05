@@ -1,0 +1,16 @@
+.fullscreen-feature {
+  height: 100vh;
+  width: 100vw;
+}
+
+.feature-col {
+  position: sticky;
+  align-self: flex-start;
+  max-width: 75vh;
+  top: 33vh;
+  margin-top: 3rem;
+  pre {
+    white-space: pre-wrap;
+    overflow: wrap;
+  }
+}

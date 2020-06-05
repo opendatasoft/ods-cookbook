@@ -1,0 +1,38 @@
+@import './components/features.scss';
+@import './components/steps.scss';
+@import './components/story-blocks.scss';
+@import './components/ods-map.scss';
+@import './components/ods-chart.scss';
+@import './components/reveal-list/style.scss';
+@import './components/mapbox/style.scss';
+@import './components/codebox/style.scss';
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+p {
+  font-size: 1.65rem;
+  line-height: 1.65;
+}
+
+.scroll-columns {
+  display: flex;
+  margin: 0 auto;
+}
+
+.prose {
+  max-width: 54rem;
+  margin: 3rem auto;
+}
+
+.logos {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  img {
+    margin: 2rem;
+  }
+}

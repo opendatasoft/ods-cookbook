@@ -1,0 +1,13 @@
+.codeline {
+  opacity: 0.5;
+  transition: visibility 0s linear 300ms, opacity 300ms;
+}
+
+.codeline.active {
+  opacity: 1;
+  transition: visibility 0s linear 300ms, opacity 300ms;
+}
+
+.step-mapbox {
+  padding-bottom: 5vh;
+}

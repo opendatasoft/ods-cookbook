@@ -1,0 +1,12 @@
+.mapbox-map {
+  position: sticky;
+  top: 0;
+  left: 0;
+  opacity: 1;
+  transition: opacity 1200ms ease;
+}
+
+.mapbox-map.fade-out {
+  opacity: 0;
+  transition: opacity 300ms ease
+}
