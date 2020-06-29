@@ -276,7 +276,7 @@
 							"                    error_values.push(new_meta.metadata_name + \" wasn't updated because \" + new_meta.metadata_name + \" of template \" + new_meta.template_name + \" doesn't have \" + new_meta.value + \" in the possible choices\");",
 							"                    return;",
 							"                }",
-							"                new_meta.value = complete_language[1];",
+							"                new_meta.value = complete_language[0];",
 							"            }",
 							"            else if (!meta_info.definition.choices.includes(new_meta.value)) {",
 							"                error_values.push(new_meta.metadata_name + \" wasn't updated because \" + new_meta.metadata_name + \" of template \" + new_meta.template_name + \" doesn't have \" + new_meta.value + \" in the possible choices\");",
