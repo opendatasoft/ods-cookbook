@@ -288,7 +288,7 @@
 							"            //new_meta.value = new_meta.value.split(\",\");",
 							"            new_meta.value = new_meta.value.split(\";\");",
 							"            //multidatalist with required choices",
-							"            if (meta_info.definition.choices || meta_info.definition.widget.suggest_values) {",
+							"            if (meta_info.definition.choices || (meta_info.definition.widget.suggest_values && !meta_info.definition.widget.suggest_url)) {",
 							"                //vérifie que fait partie des choix:",
 							"                var accepted_choices = [];",
 							"                if (new_meta.metadata_name == 'theme' && new_meta.template_name == 'default') {",

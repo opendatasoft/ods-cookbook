@@ -26,7 +26,7 @@ Le template de code d'intégration se trouve également [ici, de manière à fac
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="https://opendatasoft.github.io/ods-widgets/dist/ods-widgets.css">
+        <link rel="stylesheet" href="https://static.opendatasoft.com/ods-widgets/latest/ods-widgets.css">
     </head>
 
     <body>
@@ -41,7 +41,7 @@ Le template de code d'intégration se trouve également [ici, de manière à fac
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular-sanitize.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/i18n/angular-locale_fr-fr.js"></script>
-        <script type="text/javascript" src="https://opendatasoft.github.io/ods-widgets/dist/ods-widgets.js"></script>
+        <script type="text/javascript" src="https://static.opendatasoft.com/ods-widgets/latest/ods-widgets.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/locale/fr.js"></script>
 
         <!-- ODS Translation dict. -->
@@ -106,7 +106,7 @@ Explications des différentes parties du code d’intégration:
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="https://opendatasoft.github.io/ods-widgets/dist/ods-widgets.css">
+        <link rel="stylesheet" href="https://static.opendatasoft.com/ods-widgets/latest/ods-widgets.css">
 
   Les portails ODS embarquent de nombreuses classes et styles associés. Les balises ```<link>``` permettront d’importer toutes les librairies nécessaires à un affichage équivalent aux portails ODS. L’ordre doit être respecté, à savoir:
     * Bootstrap
@@ -119,7 +119,7 @@ Explications des différentes parties du code d’intégration:
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular-sanitize.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/i18n/angular-locale_fr-fr.js"></script>
-        <script type="text/javascript" src="https://opendatasoft.github.io/ods-widgets/dist/ods-widgets.js"></script>
+        <script type="text/javascript" src="https://static.opendatasoft.com/ods-widgets/latest/ods-widgets.js"></script></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/locale/fr.js"></script> 
 
   Les portails ODS fonctionnent grâce à des méthodes et fonctions de différentes librairies JS. Les balises ```<script>``` permettent d’importer les librairies nécessaires aux interactions des portails ODS. L’ordre doit être respecté, à savoir:
