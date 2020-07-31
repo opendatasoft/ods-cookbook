@@ -6,6 +6,13 @@ It activates automatically when browsing Opendatasoft URLs (ie. `*.opendatasoft.
 
 ## Install guide
 
+The extension is now live on the Chrome Web Store !
+Simply install it from here :
+
+https://chrome.google.com/webstore/detail/opendatasoft/eplolkkongbailacchomkdadfaoobmed/related
+
+## Install guide (developer mode)
+
 - Copy-paste **Chrome extensions menu URL** in a new tab, and open it : `chrome://extensions`
 - Activate developer mode (top right corner)
 - Drag and drop [ODS extension zip](https://github.com/opendatasoft/ods-cookbook/raw/master/chrome-extension/ods-chrome-extension.zip) onto the extension screen
