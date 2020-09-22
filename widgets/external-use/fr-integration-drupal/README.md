@@ -230,13 +230,18 @@ En suivant toutes ces étapes à partir d’une version Drupal vierge, votre pag
 
 ## Conflits d’intégration connus avec un Drupal non vierge (eg des modules ont été ajoutés).
 
-* Conflit de versions de librairies chargées pour ODS: il se peut que votre Drupal charge déjà des librairies comme JQuery ou AngularJS et que vos versions utilisées soient plus anciennes ou plus récentes que celles d’ODS. Ces différentes peuvent entraîner des conflits et il faut donc être vigilant à l’ordre dans lequel vous chargez les librairies. 
+* Conflit de versions de librairies chargées pour ODS: il se peut que votre Drupal charge déjà des librairies comme JQuery ou AngularJS et que vos versions utilisées soient plus anciennes ou plus récentes que celles d’ODS. Ces différentes peuvent entraîner des conflits et il faut donc être vigilant aux versions des librairies que vous chargez, ou à l’ordre dans lequel vous chargez les librairies. 
 
-  Exemple: dans un cas précis de client, la librairie JQuery du Drupal était plus récente que la version d’ODS (2.1.4). Ainsi, le fait de charger la librairie JQuery dans la page elle-même remplaçait la plus récente, et le “sticky sidebar” ne fonctionnait plus, car absent de la version 2.1.4. Pour éviter cela, il a fallu enlever la ligne qui charge JQuery dans la page (<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>) et ajouter un paramètre defer dans toutes les autres lignes de chargement de script, comme suit:
-  
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.min.js" defer></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular-sanitize.min.js" defer></script>
-        <script type="text/javascript" src="https://opendatasoft.github.io/ods-widgets/dist/ods-widgets.js" defer></script>
+  Exemple: dans un cas précis de client, la librairie JQuery du Drupal était plus récente que la version d’ODS (2.1.4). Ainsi, le fait de charger la librairie JQuery dans la page elle-même remplaçait la plus récente, et le “sticky sidebar” ne fonctionnait plus, car absent de la version 2.1.4. Pour éviter cela, deux solutions s'offrent à vous : 
+    * Au lieu de charger la version JQuery utilisée par la librairie de widgets, utilisez une version plus récente et chargez donc le script suivant :
+        
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            
+    * Enlevez la ligne qui charge JQuery dans la page (<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>) et ajouter un paramètre defer dans toutes les autres lignes de chargement de script, comme suit (attention, cette solution ne fonctionnera pas si vous avez besoin des scripts de traduction ou de fonds de carte personnalisés) :
+    
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.min.js" defer></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular-sanitize.min.js" defer></script>
+            <script type="text/javascript" src="https://opendatasoft.github.io/ods-widgets/dist/ods-widgets.js" defer></script>
 
 
 * Problème de chargement CSS: certaines classes génériques qui étaient modifiées sur le site ODS ne sont pas modifiables sur Drupal. Par exemple, modifier body ne semble rien changer dans les pages Drupal. dans ce cas, il faut adapter à la marge le CSS, par exemple en remplaçant body par .content, car c’est ce qui est utilisé pour une page Drupal. Le CSS de la page ODS peut donc nécessiter une modification à la marge. 
