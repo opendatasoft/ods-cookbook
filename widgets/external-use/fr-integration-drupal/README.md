@@ -233,9 +233,9 @@ En suivant toutes ces étapes à partir d’une version Drupal vierge, votre pag
 * Conflit de versions de librairies chargées pour ODS: il se peut que votre Drupal charge déjà des librairies comme JQuery ou AngularJS et que vos versions utilisées soient plus anciennes ou plus récentes que celles d’ODS. Ces différentes peuvent entraîner des conflits et il faut donc être vigilant aux versions des librairies que vous chargez, ou à l’ordre dans lequel vous chargez les librairies. 
 
   Exemple: dans un cas précis de client, la librairie JQuery du Drupal était plus récente que la version d’ODS (2.1.4). Ainsi, le fait de charger la librairie JQuery dans la page elle-même remplaçait la plus récente, et le “sticky sidebar” ne fonctionnait plus, car absent de la version 2.1.4. Pour éviter cela, deux solutions s'offrent à vous : 
-    * Au lieu de charger la version JQuery utilisée par la librairie de widgets, utilisez une version plus récente et chargez donc le script suivant :
+    * Au lieu de charger la version JQuery utilisée par la librairie de widgets, utilisez une version plus récente (e.g. 3.5.1) et chargez donc le script suivant au lieu du script existant (<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>) :
         
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
             
     * Enlevez la ligne qui charge JQuery dans la page (<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>) et ajouter un paramètre defer dans toutes les autres lignes de chargement de script, comme suit (attention, cette solution ne fonctionnera pas si vous avez besoin des scripts de traduction ou de fonds de carte personnalisés) :
     
