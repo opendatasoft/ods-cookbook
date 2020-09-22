@@ -224,8 +224,6 @@ En suivant toutes ces étapes à partir d’une version Drupal vierge, votre pag
 
 * Au lieu d’appeler les librairies js de JQuery, Angular et ODS, et les feuilles de style CSS de Bootstrap, Font Awesome of ODS (https://help.opendatasoft.com/widgets/#/tutorial/00setup) directement dans l’écriture du code de la page, vous pouvez charger ces librairies dans le header de votre site institutionnel. Le responsable de site institutionnel pourra charger ces librairies dans le header, et vous n’aurez ainsi pas à recopier tous les appels aux librairies dans chacune de vos pages ou articles qui viennent d’un portail ODS.
 
-* Il est préférable de télécharger les librairies ods-widgets (css et js) pour les charger en local: https://github.com/opendatasoft/ods-widgets/releases/tag/1.4.3 . En effet, le lien distant n’est plus mis à jour et vous manquez donc les fonctionnalités récentes. A terme, nous proposerons des liens de distributions de nos librairies, mais, pour l’heure, nous conseillons de télécharger des versions locales.
-
 * Au lieu d’écrire directement le style CSS dans la partie html en utilisant les balises <style> et </style>, vous pouvez créer une feuille de style CSS spéciale ODS qui viendraient donc reprendre les styles utilisées dans tous les contenus d’Opendatasoft copiés sur le site institutionnel. Comment écrit précédemment, mieux vaut que ces classes soient préfixées de “ods-”. Cela ne concernent cependant pas les classes génériques de type container, container-fluid, row, etc.
 
 ## Conflits d’intégration connus avec un Drupal non vierge (eg des modules ont été ajoutés).
