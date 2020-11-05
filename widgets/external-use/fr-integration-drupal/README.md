@@ -26,7 +26,7 @@ Le template de code d'intégration se trouve également [ici, de manière à fac
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="https://static.opendatasoft.com/ods-widgets/latest/ods-widgets.css">
+        <link rel="stylesheet" href="https://static.opendatasoft.com/ods-widgets/latest-v2/ods-widgets.css">
     </head>
 
     <body>
@@ -38,11 +38,11 @@ Le template de code d'intégration se trouve également [ici, de manière à fac
         </div>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular-sanitize.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/i18n/angular-locale_fr-fr.js"></script>
-        <script type="text/javascript" src="https://static.opendatasoft.com/ods-widgets/latest/ods-widgets.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.8.2/angular-sanitize.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.8.2/angular-locale_fr.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/locale/fr.js"></script>
+        <script type="text/javascript" src="https://static.opendatasoft.com/ods-widgets/latest-v2/ods-widgets.min.js"></script> 
 
         <!-- ODS Translation dict. -->
         <script type="text/javascript">
@@ -73,16 +73,19 @@ Le template de code d'intégration se trouve également [ici, de manière à fac
                        {
                             "label": "Jawg Streets",
                             "provider": "jawg.streets",
+                            "id": "jawg.streets",
                             "jawg_apikey": "xR04uwhHrvdCDoa7fOcwtnzQJ692NTKx1ae0n0QratDbuNgUuzo089KTzubJJ9mc"
                         },
                         {
                             "label": "Jawg Light",
                             "provider": "jawg.light",
+                            "id": "jawg.light",
                             "jawg_apikey": "xR04uwhHrvdCDoa7fOcwtnzQJ692NTKx1ae0n0QratDbuNgUuzo089KTzubJJ9mc"
                         },
- 		{
+ 		                {
                             "label": "Stamen",
-                            "provider": "stamen.toner"
+                            "provider": "stamen.toner",
+                            "id":"stamen"
                         },
                         {
                             "url": "https://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png",
@@ -106,7 +109,7 @@ Explications des différentes parties du code d’intégration:
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="https://static.opendatasoft.com/ods-widgets/latest/ods-widgets.css">
+        <link rel="stylesheet" href="https://static.opendatasoft.com/ods-widgets/latest-v2/ods-widgets.css">
 
   Les portails ODS embarquent de nombreuses classes et styles associés. Les balises ```<link>``` permettront d’importer toutes les librairies nécessaires à un affichage équivalent aux portails ODS. L’ordre doit être respecté, à savoir:
     * Bootstrap
@@ -116,17 +119,17 @@ Explications des différentes parties du code d’intégration:
 * Balises scripts pour intégrer les librairies JS.
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular-sanitize.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/i18n/angular-locale_fr-fr.js"></script>
-        <script type="text/javascript" src="https://static.opendatasoft.com/ods-widgets/latest/ods-widgets.js"></script></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/locale/fr.js"></script> 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.8.2/angular-sanitize.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.8.2/angular-locale_fr.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/locale/fr.js"></script>
+        <script type="text/javascript" src="https://static.opendatasoft.com/ods-widgets/latest-v2/ods-widgets.min.js"></script> 
 
   Les portails ODS fonctionnent grâce à des méthodes et fonctions de différentes librairies JS. Les balises ```<script>``` permettent d’importer les librairies nécessaires aux interactions des portails ODS. L’ordre doit être respecté, à savoir:
     * JQuery (version 2.1.4)
-    * AngularJS (version 1.4.7)
-    * AngularJS Sanitize (version 1.4.7) pour valider le HTML.
-    * AngularJS Locale (version 1.4.7) pour gérer correctement les chiffres et dates en français (il faut charger une autre librairie si gestion dans d’autres langues: https://code.angularjs.org/1.4.7/i18n/).
+    * AngularJS (version 1.8.2)
+    * AngularJS Sanitize (version 1.8.2) pour valider le HTML.
+    * AngularJS Locale (version 1.8.2) pour gérer correctement les chiffres et dates en français (il faut charger une autre librairie si gestion dans d’autres langues: https://code.angularjs.org/1.8.2/i18n/).
     * ods-widgets
     * Moment Locale (version 2.17.1) également pour gérer correctement les dates en français.   
 
@@ -181,16 +184,19 @@ Explications des différentes parties du code d’intégration:
                                {
                                     "label": "Jawg Streets",
                                     "provider": "jawg.streets",
+                                    "id": "jawg.streets",
                                     "jawg_apikey": "xR04uwhHrvdCDoa7fOcwtnzQJ692NTKx1ae0n0QratDbuNgUuzo089KTzubJJ9mc"
                                 },
                                 {
                                     "label": "Jawg Light",
                                     "provider": "jawg.light",
+                                    "id": "jawg.light",
                                     "jawg_apikey": "xR04uwhHrvdCDoa7fOcwtnzQJ692NTKx1ae0n0QratDbuNgUuzo089KTzubJJ9mc"
                                 },
-         		{
+                                {
                                     "label": "Stamen",
-                                    "provider": "stamen.toner"
+                                    "provider": "stamen.toner",
+                                    "id":"stamen"
                                 },
                                 {
                                     "url": "https://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png",
@@ -237,9 +243,11 @@ En suivant toutes ces étapes à partir d’une version Drupal vierge, votre pag
             
     * Enlevez la ligne qui charge JQuery dans la page (<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>) et ajouter un paramètre defer dans toutes les autres lignes de chargement de script, comme suit (attention, cette solution ne fonctionnera pas si vous avez besoin des scripts de traduction ou de fonds de carte personnalisés) :
     
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.min.js" defer></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular-sanitize.min.js" defer></script>
-            <script type="text/javascript" src="https://opendatasoft.github.io/ods-widgets/dist/ods-widgets.js" defer></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js" defer></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.8.2/angular-sanitize.min.js" defer></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.8.2/angular-locale_fr.min.js" defer></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/locale/fr.js" defer></script>
+            <script type="text/javascript" src="https://static.opendatasoft.com/ods-widgets/latest-v2/ods-widgets.min.js" defer></script>
 
 
 * Problème de chargement CSS: certaines classes génériques qui étaient modifiées sur le site ODS ne sont pas modifiables sur Drupal. Par exemple, modifier body ne semble rien changer dans les pages Drupal. dans ce cas, il faut adapter à la marge le CSS, par exemple en remplaçant body par .content, car c’est ce qui est utilisé pour une page Drupal. Le CSS de la page ODS peut donc nécessiter une modification à la marge. 
