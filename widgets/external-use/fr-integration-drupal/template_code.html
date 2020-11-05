@@ -9,7 +9,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="https://static.opendatasoft.com/ods-widgets/latest/ods-widgets.css">
+        <link rel="stylesheet" href="https://static.opendatasoft.com/ods-widgets/latest-v2/ods-widgets.css">
     </head>
 
     <body>
@@ -21,11 +21,11 @@
         </div>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular-sanitize.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/i18n/angular-locale_fr-fr.js"></script>
-        <script type="text/javascript" src="https://static.opendatasoft.com/ods-widgets/latest/ods-widgets.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.8.2/angular-sanitize.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.8.2/angular-locale_fr.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/locale/fr.js"></script>
+        <script type="text/javascript" src="https://static.opendatasoft.com/ods-widgets/latest-v2/ods-widgets.min.js"></script> 
 
         <!-- ODS Translation dict. -->
         <script type="text/javascript">
@@ -56,16 +56,19 @@
                        {
                             "label": "Jawg Streets",
                             "provider": "jawg.streets",
+                            "id": "jawg.streets",
                             "jawg_apikey": "xR04uwhHrvdCDoa7fOcwtnzQJ692NTKx1ae0n0QratDbuNgUuzo089KTzubJJ9mc"
                         },
                         {
                             "label": "Jawg Light",
                             "provider": "jawg.light",
+                            "id": "jawg.light",
                             "jawg_apikey": "xR04uwhHrvdCDoa7fOcwtnzQJ692NTKx1ae0n0QratDbuNgUuzo089KTzubJJ9mc"
                         },
- 		{
+ 		                {
                             "label": "Stamen",
-                            "provider": "stamen.toner"
+                            "provider": "stamen.toner",
+                            "id":"stamen"
                         },
                         {
                             "url": "https://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png",
