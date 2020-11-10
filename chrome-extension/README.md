@@ -51,3 +51,7 @@ V0.5
 
 V0.6 
 - Add a 1500 millisec timer before checking for contexts to let enough time to angularjs digest process
+
+V0.7
+- Add @media print style to remove the extension when printing a page
+- Add exclude_matches to not activate the extension on codelibrary, academy and helphub
