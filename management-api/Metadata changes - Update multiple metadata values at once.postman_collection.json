@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "a158643f-1a71-4aea-9c54-f8a4a3413f05",
 		"name": "Metadata changes - Update multiple metadata values at once",
-		"description": "The goal is to update all the metadatas held in the columns of the data file.\nYou must ask the infra team (#ask-platform-admin) to enforce these changes in the front after you run the collection!\n\nCollection written for a \"domaindatasets://\" export data file (the reason behind this is that catalog exports do not have admin metadata values, whereas \"domaindatasets://\"\" can). \nAll metadatas labels have to be distinct.\nYou can find a \"how to\" on how to create the data file required by the collection (Steps 1-6 of the steps below).\n\nThe only variables needed in your Postman environment are:\n- domainid\n- apikey\nAll the other needed variables come from the data file.\n\nThe steps to run this collection are:\nStep 1 - Create a \"domaindatasets://\" dataset.\nStep 2 - Export the rows you wish to update.\nStep 3 - Import this sheet in a google sheet, and specify the correct separator (\";\" or \",\")\nStep 4 - Within the google sheet, change as you want the values of your metadatas\nStep 5 - Delete the columns of the metadata you do not wish to update\nStep 6 - Export this sheet as a csv with comma separator\nStep 7 - Run the collection with this csv as a data file\nWARNING: beware of entering all values as Text. true is not TRUE (boolean type in google sheet). To enforce true in google sheet, enter 'true.\n\nTwo tests are executed by the Runner :\n- Did you get only 200 responses?\n- Did you update as many metadatas as you entered values in your csv?\nIf you did encounter an error it should be documented in the logs (Postman Console). If this is not the case the collection should be updated to deal with the error.\n\nPrecisions:\n- Themes can be changed if you provide labels (under a \"Themes\" column, as in the \"domaindatasets://\" dataset), or if you provide IDs (under a \"theme_id\" column).\n- Languages can be changed if you provide the abbreviation (eg \"fr\" or \"en).",
+		"description": "The goal is to update all the metadatas held in the columns of the data file.\nYou must ask the infra team (#ask-platform-admin) to enforce these changes in the front after you run the collection!\n\nCollection written for a \"domaindatasets://\" export data file (the reason behind this is that catalog exports do not have admin metadata values, whereas \"domaindatasets://\"\" can). \nAll metadatas labels have to be distinct.\nYou can find a \"how to\" on how to create the data file required by the collection (Steps 1-6 of the steps below).\n\nThe only variables needed in your Postman environment are:\n- domainid\n- apikey\n\nOne variable comes from the collection variables :\n- publish_metadata : true/false depending if you want to apply directly the changes in the front office. It is true by default.\n\nAll the other needed variables come from the data file.\n\nThe steps to run this collection are:\nStep 1 - Create a \"domaindatasets://\" dataset.\nStep 2 - Export the rows you wish to update.\nStep 3 - Import this sheet in a google sheet, and specify the correct separator (\";\" or \",\")\nStep 4 - Within the google sheet, change as you want the values of your metadatas\nStep 5 - Delete the columns of the metadata you do not wish to update\nStep 6 - Export this sheet as a csv with comma separator\nStep 7 - Run the collection with this csv as a data file\nWARNING: beware of entering all values as Text. true is not TRUE (boolean type in google sheet). To enforce true in google sheet, enter 'true.\n\nThree tests are executed by the Runner :\n- Did you get only 200 responses?\n- Did you update as many metadatas as you entered values in your csv?\nIf you did encounter an error it should be documented in the logs (Postman Console). If this is not the case the collection should be updated to deal with the error.\n- Have the new metadata been published in the front office if you have chosen to do so ?\n\nPrecisions:\n- Themes can be changed if you provide labels (under a \"Themes\" column, as in the \"domaindatasets://\" dataset), or if you provide IDs (under a \"theme_id\" column).\n- Languages can be changed if you provide the abbreviation (eg \"fr\" or \"en).",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -12,7 +12,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "0efd5338-6e63-4d0c-bb7c-a847745b06ff",
 						"exec": [
 							"reponse = JSON.parse(responseBody);",
 							"pm.variables.set(\"datasetuid\",reponse.datasets[0].dataset_uid);",
@@ -76,7 +75,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "50b31cf3-6c75-48b1-929a-af98f46dd73d",
 						"exec": [
 							"pm.variables.set(\"metadata_list\",responseBody);",
 							"pm.variables.set(\"ignore_list_metadata_request\",'true');",
@@ -91,7 +89,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "65b66c12-699f-40b9-b4aa-c7bc7cfa4b5c",
 						"exec": [
 							""
 						],
@@ -135,7 +132,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "1e29b25f-4171-4d49-9e4f-6d7c03e8d965",
 						"exec": [
 							"pm.variables.set(\"theme_ids_list\",responseBody);",
 							"",
@@ -180,7 +176,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "78136f5c-03a5-4b0b-9e83-61725bc50d0c",
 						"exec": [
 							"//console.log(pm.variables.get(\"title\"));",
 							"var metadata_list_json = JSON.parse(pm.variables.get(\"metadata_list\"));",
@@ -371,7 +366,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "698237e0-e439-459a-a783-3eabc23e5e79",
 						"exec": [
 							"pm.test(\"Number of metadatas updated is equivalent to number of metadata in the data file\", function () {",
 							"    //console.log(\"number of metadatas to update: \" + (Object.keys(pm.iterationData.variables()).length - 1));",
@@ -382,7 +376,11 @@
 							"",
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
-							"});"
+							"});",
+							"",
+							"if (pm.variables.get(\"publish_metadata\")=='false') {",
+							"    postman.setNextRequest(null);",
+							"}"
 						],
 						"type": "text/javascript"
 					}
@@ -436,13 +434,60 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "4. Publish metadata",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"New metadata have been published\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey"
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "https://{{domainid}}.opendatasoft.com/api/management/v2/datasets/{{datasetuid}}/publish_metadata/?apikey={{apikey}}",
+					"protocol": "https",
+					"host": [
+						"{{domainid}}",
+						"opendatasoft",
+						"com"
+					],
+					"path": [
+						"api",
+						"management",
+						"v2",
+						"datasets",
+						"{{datasetuid}}",
+						"publish_metadata",
+						""
+					],
+					"query": [
+						{
+							"key": "apikey",
+							"value": "{{apikey}}"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"event": [
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "8464e9f3-06cc-45ae-8bc9-5db39f510ee5",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -452,7 +497,6 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "bc892c3f-3bd2-444b-9405-aa3023498ccb",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -460,5 +504,10 @@
 			}
 		}
 	],
-	"protocolProfileBehavior": {}
+	"variable": [
+		{
+			"key": "publish_metadata",
+			"value": "true"
+		}
+	]
 }
