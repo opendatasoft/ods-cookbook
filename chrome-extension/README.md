@@ -9,7 +9,7 @@ It activates automatically when browsing Opendatasoft URLs (ie. `*.opendatasoft.
 The extension is now live on the Chrome Web Store !
 Simply install it from here :
 
-https://chrome.google.com/webstore/detail/opendatasoft/eplolkkongbailacchomkdadfaoobmed/related
+https://chrome.google.com/webstore/detail/opendatasoft/eplolkkongbailacchomkdadfaoobmed/
 
 ## Install guide (developer mode)
 
