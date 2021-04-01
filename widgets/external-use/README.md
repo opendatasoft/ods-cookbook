@@ -137,6 +137,21 @@ And build the json configuration like :
 }
 ```
 
+For custom WMS basemap, build the json configuration like :
+```json
+{
+    "url": "https://wms.umea.se/geoserver/gwc/service/wms",
+    "provider": "custom_wms",
+    "label": "LantmäterietsKarta",
+    "id": "custom_basemap",
+    "layers": "Projektkarta_V2",
+    "styles": "",
+    "minZoom": 1,
+    "maxZoom": 20,
+    "attribution": "Lantmäteri Umeå kommun"
+}
+```
+
 Then, add it to your code :
 ```html
 <script type="text/javascript">
