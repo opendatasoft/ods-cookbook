@@ -1,0 +1,1563 @@
+{
+	"info": {
+		"_postman_id": "b3330a1c-b40d-6c7e-2e3e-07efcef5db9a",
+		"name": "Documentation Requests for ODS API Management",
+		"description": "This collection aims at translating as many example requests as possible from the ODS documentation into Postman. Exhaustivity should be the target.\n\nIts organization follows the one of the documentation website: https://betahelp.opendatasoft.com/management-api/#introduction .\n\nAll variables (such as apikey, datasetid, datasetuid, etc.) should be stored in a Postman environement.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "List users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{domainid}}.opendatasoft.com/api/management/v2/users/?apikey={{apikey}}",
+							"protocol": "https",
+							"host": [
+								"{{domainid}}",
+								"opendatasoft",
+								"com"
+							],
+							"path": [
+								"api",
+								"management",
+								"v2",
+								"users",
+								""
+							],
+							"query": [
+								{
+									"key": "apikey",
+									"value": "{{apikey}}"
+								}
+							]
+						},
+						"description": "This endpoint lists all the users linked to the domain.\n\nReturns\nReturns a list of User objects.\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Invite users to the domain",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"emails\": [\"louise.von-data@opendatasoft.com\", \"bruce.von-data@opendatasoft.com\"]}"
+						},
+						"url": {
+							"raw": "https://{{domainid}}.opendatasoft.com/api/management/v2/users/?apikey={{apikey}}",
+							"protocol": "https",
+							"host": [
+								"{{domainid}}",
+								"opendatasoft",
+								"com"
+							],
+							"path": [
+								"api",
+								"management",
+								"v2",
+								"users",
+								""
+							],
+							"query": [
+								{
+									"key": "apikey",
+									"value": "{{apikey}}"
+								}
+							]
+						},
+						"description": "Sends an invitation e-mail to a list of e-mail addresses.\n\nReturns\nReturns a JSON object with requested e-mail addresses as keys and a status for the corresponding e-mail address as values.\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve a user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{domainid}}.opendatasoft.com/api/management/v2/users/{{username}}/?apikey={{apikey}}",
+							"protocol": "https",
+							"host": [
+								"{{domainid}}",
+								"opendatasoft",
+								"com"
+							],
+							"path": [
+								"api",
+								"management",
+								"v2",
+								"users",
+								"{{username}}",
+								""
+							],
+							"query": [
+								{
+									"key": "apikey",
+									"value": "{{apikey}}"
+								}
+							]
+						},
+						"description": "This endpoint retrieves the requested user.\n\nReturns\nReturns a User object.\n\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Update an user",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"group_ids\": [\"another-group\"], \"permissions\": [\"publish_dataset\"]}"
+						},
+						"url": {
+							"raw": "https://{{domainid}}.opendatasoft.com/api/management/v2/users/{{username}}/?apikey={{apikey}}",
+							"protocol": "https",
+							"host": [
+								"{{domainid}}",
+								"opendatasoft",
+								"com"
+							],
+							"path": [
+								"api",
+								"management",
+								"v2",
+								"users",
+								"{{username}}",
+								""
+							],
+							"query": [
+								{
+									"key": "apikey",
+									"value": "{{apikey}}"
+								}
+							]
+						},
+						"description": "Update an existing user.\n\nBody\ngroup_ids\narray\toptional A list of group identifiers to add the user to\npermissions\narray\toptional A list of permissions to grant the user\nquotas\noptional An object holding the quotas to grant the user\nlimits\noptional An object holding the limits to grant the user"
+					},
+					"response": []
+				},
+				{
+					"name": "Remove a user from the domain",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://{{domainid}}.opendatasoft.com/api/management/v2/users/{{domainid}}/?apikey={{apikey}}",
+							"protocol": "https",
+							"host": [
+								"{{domainid}}",
+								"opendatasoft",
+								"com"
+							],
+							"path": [
+								"api",
+								"management",
+								"v2",
+								"users",
+								"{{domainid}}",
+								""
+							],
+							"query": [
+								{
+									"key": "apikey",
+									"value": "{{apikey}}"
+								}
+							]
+						},
+						"description": "This endpoint removes the requested user from the domain.\n\nReturns\nOn success the endpoint returns an empty 204 HTTP response. If the user is the only domain administrator left, the call will fail and an error specifying that a removal of the only domain administrator is unallowed will be returned.\n"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "API Keys",
+			"item": [
+				{
+					"name": "List API Keys",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{domainid}}.opendatasoft.com/api/management/v2/apikeys/",
+							"protocol": "https",
+							"host": [
+								"{{domainid}}",
+								"opendatasoft",
+								"com"
+							],
+							"path": [
+								"api",
+								"management",
+								"v2",
+								"apikeys",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create an API Key",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"label\": \"API Key with all the available permissions\", \"permissions\": [\"edit_dataset\", \"publish_dataset\", \"explore_restricted_dataset\", \"manage_dataset\",\"create_dataset\",\"create_page\",\"edit_domain\",\"edit_page\",\"manage_page\",\"explore_restricted_dataset\",\"edit_reuse\",\"manage_subdomains\",\"explore_monitoring\",\"edit_theme\"]}"
+						},
+						"url": {
+							"raw": "https://{{domainid}}.opendatasoft.com/api/management/v2/apikeys/",
+							"protocol": "https",
+							"host": [
+								"{{domainid}}",
+								"opendatasoft",
+								"com"
+							],
+							"path": [
+								"api",
+								"management",
+								"v2",
+								"apikeys",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve an API Key",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{domainid}}.opendatasoft.com/api/management/v2/apikeys/{{apikey}}?apikey={{apikey}}",
+							"protocol": "https",
+							"host": [
+								"{{domainid}}",
+								"opendatasoft",
+								"com"
+							],
+							"path": [
+								"api",
+								"management",
+								"v2",
+								"apikeys",
+								"{{apikey}}"
+							],
+							"query": [
+								{
+									"key": "apikey",
+									"value": "{{apikey}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update an API Key",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"label\": \"My own label\", \"permissions\": [\"edit_dataset\", \"publish_dataset\"]}"
+						},
+						"url": {
+							"raw": "https://{{domain}}.opendatasoft.com/api/management/v2/apikeys/{{apikey}}",
+							"protocol": "https",
+							"host": [
+								"{{domain}}",
+								"opendatasoft",
+								"com"
+							],
+							"path": [
+								"api",
+								"management",
+								"v2",
+								"apikeys",
+								"{{apikey}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete an API Key",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{domainid}}.opendatasoft.com/api/management/v2/apikeys/{{apikey}}",
+							"protocol": "https",
+							"host": [
+								"{{domainid}}",
+								"opendatasoft",
+								"com"
+							],
+							"path": [
+								"api",
+								"management",
+								"v2",
+								"apikeys",
+								"{{apikey}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Files",
+			"item": [
+				{
+					"name": "List all files",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{domainid}}.opendatasoft.com/api/management/v2/files?apikey={{apikey}}",
+							"protocol": "https",
+							"host": [
+								"{{domainid}}",
+								"opendatasoft",
+								"com"
+							],
+							"path": [
+								"api",
+								"management",
+								"v2",
+								"files"
+							],
+							"query": [
+								{
+									"key": "apikey",
+									"value": "{{apikey}}"
+								}
+							]
+						},
+						"description": "This endpoint lists all files available to the user who performs the request. A file is available to the requesting user if either the user uploaded the file themselves, or if the user has sufficient permissions to edit a dataset where the file is used, or if the user is a domain administrator who has sufficient permissions to edit all datasets of the domain."
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve information about one file",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{domainid}}.opendatasoft.com/api/management/v2/files/{{fileid}}?apikey={{apikey}}",
+							"protocol": "https",
+							"host": [
+								"{{domainid}}",
+								"opendatasoft",
+								"com"
+							],
+							"path": [
+								"api",
+								"management",
+								"v2",
+								"files",
+								"{{fileid}}"
+							],
+							"query": [
+								{
+									"key": "apikey",
+									"value": "{{apikey}}"
+								}
+							]
+						},
+						"description": "This endpoint is for retrieving the file object with provided file_id."
+					},
+					"response": []
+				},
+				{
+					"name": "Upload a file",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"content\": \"language,phrase\\nEnglish,Hello World\\nEsperanto,Saluton mondo\\n\", \"mimetype\": \"text/csv\", \"filename\": \"data.csv\"}"
+						},
+						"url": {
+							"raw": "https://{{domainid}}.opendatasoft.com/api/management/v2/files?apikey={{apikey}}",
+							"protocol": "https",
+							"host": [
+								"{{domainid}}",
+								"opendatasoft",
+								"com"
+							],
+							"path": [
+								"api",
+								"management",
+								"v2",
+								"files"
+							],
+							"query": [
+								{
+									"key": "apikey",
+									"value": "{{apikey}}"
+								}
+							]
+						},
+						"description": "This endpoint is for uploading a new file to the platform. There are two ways to send files to the platform: either by sending a full file using the HTTP multipart mechanism, or by sending the file content and other metadata such as its type and file name. The use case dictates which method works best. For instance, in order to create files out of batch processes it might be easier to use the content method, but to upload an existing file from a local hard drive, the multipart method might work better. Both methods have the same result: they create a file on the domain. Please note that no file over the limit of 240Mb can be uploaded."
+					},
+					"response": []
+				},
+				{
+					"name": "Download a file",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{domainid}}.opendatasoft.com/api/management/v2/download_file/{{fileid}}?apikey={{apikey}}",
+							"protocol": "https",
+							"host": [
+								"{{domainid}}",
+								"opendatasoft",
+								"com"
+							],
+							"path": [
+								"api",
+								"management",
+								"v2",
+								"download_file",
+								"{{fileid}}"
+							],
+							"query": [
+								{
+									"key": "apikey",
+									"value": "{{apikey}}"
+								}
+							]
+						},
+						"description": "This endpoint is for downloading a file with the provided file_id from the platform."
+					},
+					"response": []
+				}
+			],
+			"description": "On the Opendatasoft platform, files can be used as data source to create new datasets, and as dataset attachments, to add extra informations to datasets.\n\nhttps://betahelp.opendatasoft.com/management-api/#files"
+		},
+		{
+			"name": "Datasets",
+			"item": [
+				{
+					"name": "Search dataset from datasetid",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{domainid}}.opendatasoft.com/api/management/v2/datasets?apikey={{apikey}}&where=datasetid=\"{{datasetid}}\"",
+							"protocol": "https",
+							"host": [
+								"{{domainid}}",
+								"opendatasoft",
+								"com"
+							],
+							"path": [
+								"api",
+								"management",
+								"v2",
+								"datasets"
+							],
+							"query": [
+								{
+									"key": "apikey",
+									"value": "{{apikey}}"
+								},
+								{
+									"key": "where",
+									"value": "datasetid=\"{{datasetid}}\""
+								}
+							]
+						},
+						"description": "This endpoint lists all the datasets that can be edited by this user.\nhttps://betahelp.opendatasoft.com/management-api/#list-datasets"
+					},
+					"response": []
+				},
+				{
+					"name": "Create a dataset",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"metas\": {\"default\": {\"title\": \"My dataset title\"}}}"
+						},
+						"url": {
+							"raw": "https://{{domainid}}.opendatasoft.com/api/management/v2/datasets?apikey={{apikey}}",
+							"protocol": "https",
+							"host": [
+								"{{domainid}}",
+								"opendatasoft",
+								"com"
+							],
+							"path": [
+								"api",
+								"management",
+								"v2",
+								"datasets"
+							],
+							"query": [
+								{
+									"key": "apikey",
+									"value": "{{apikey}}"
+								}
+							]
+						},
+						"description": "Creates a new dataset.\nhttps://betahelp.opendatasoft.com/management-api/#list-datasets"
+					},
+					"response": []
+				},
+				{
+					"name": "List datasets",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{domainid}}.opendatasoft.com/api/management/v2/datasets?apikey={{apikey}}&rows=100",
+							"protocol": "https",
+							"host": [
+								"{{domainid}}",
+								"opendatasoft",
+								"com"
+							],
+							"path": [
+								"api",
+								"management",
+								"v2",
+								"datasets"
+							],
+							"query": [
+								{
+									"key": "apikey",
+									"value": "{{apikey}}"
+								},
+								{
+									"key": "rows",
+									"value": "100"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Datasets are at the core of the platform. A dataset is composed of:\n\nthe actual data available on the portal (not available via the management API)\nmetadata like a title, a description and keywords describing the data, so users can discover it in the portal's catalog\nconfigurations for processors, visualisation and security, which define the way data will be processed by the platform and made visible to users\nThrough the management API, it is possible to:\n\ncreate datasets\nattach resources to datasets\nconfigure datasets processing pipeline, visualisations and security attributes\npublish datasets"
+		},
+		{
+			"name": "Dataset actions",
+			"item": [
+				{
+					"name": "Publish a dataset",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "https://{{domainid}}.opendatasoft.com/api/management/v2/datasets/{{datasetuid}}/publish?apikey={{apikey}}",
+							"protocol": "https",
+							"host": [
+								"{{domainid}}",
+								"opendatasoft",
+								"com"
+							],
+							"path": [
+								"api",
+								"management",
+								"v2",
+								"datasets",
+								"{{datasetuid}}",
+								"publish"
+							],
+							"query": [
+								{
+									"key": "apikey",
+									"value": "{{apikey}}"
+								}
+							]
+						},
+						"description": "Make the dataset modifications available through the search API. It may entail the processing of all the records."
+					},
+					"response": []
+				},
+				{
+					"name": "Unpublish a dataset",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "https://{{domainid}}.opendatasoft.com/api/management/v2/datasets/{{datasetuid}}/unpublish?apikey={{apikey}}",
+							"protocol": "https",
+							"host": [
+								"{{domainid}}",
+								"opendatasoft",
+								"com"
+							],
+							"path": [
+								"api",
+								"management",
+								"v2",
+								"datasets",
+								"{{datasetuid}}",
+								"unpublish"
+							],
+							"query": [
+								{
+									"key": "apikey",
+									"value": "{{apikey}}"
+								}
+							]
+						},
+						"description": "Remove the dataset from the search API. Unpublishing a dataset does not delete the dataset.\n\nReturns\nReturns a job object.\n\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Abort a dataset processing",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "https://{{domainid}}.opendatasoft.com/api/management/v2/datasets/{{datasetuid}}/abort_processing?apikey={{apikey}}",
+							"protocol": "https",
+							"host": [
+								"{{domainid}}",
+								"opendatasoft",
+								"com"
+							],
+							"path": [
+								"api",
+								"management",
+								"v2",
+								"datasets",
+								"{{datasetuid}}",
+								"abort_processing"
+							],
+							"query": [
+								{
+									"key": "apikey",
+									"value": "{{apikey}}"
+								}
+							]
+						},
+						"description": "Stop the current processing job and keep the processed records available in the search API.\n\nReturns.\nReturns a job object."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a dataset",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://{{domainid}}.opendatasoft.com/api/management/v2/datasets/{{datasetuid}}?apikey={{apikey}}",
+							"protocol": "https",
+							"host": [
+								"{{domainid}}",
+								"opendatasoft",
+								"com"
+							],
+							"path": [
+								"api",
+								"management",
+								"v2",
+								"datasets",
+								"{{datasetuid}}"
+							],
+							"query": [
+								{
+									"key": "apikey",
+									"value": "{{apikey}}"
+								}
+							]
+						},
+						"description": "Delete the dataset.\n\nReturns\nReturns nothing."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Dataset Resources",
+			"item": [
+				{
+					"name": "Retrieve a datasource object",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{domainid}}.opendatasoft.com/api/management/v2/datasets/{{datasetuid}}/resources/{{resourceuid}}?apikey={{apikey}}",
+							"protocol": "https",
+							"host": [
+								"{{domainid}}",
+								"opendatasoft",
+								"com"
+							],
+							"path": [
+								"api",
+								"management",
+								"v2",
+								"datasets",
+								"{{datasetuid}}",
+								"resources",
+								"{{resourceuid}}"
+							],
+							"query": [
+								{
+									"key": "apikey",
+									"value": "{{apikey}}"
+								}
+							]
+						},
+						"description": "This endpoint is for retrieving one resource object using its resource uid\n\nThis API endpoint takes in its URL path a resource uid and returns the associated object.\n\nReturns\nThe resource object with the given resource uid.\n\n"
+					},
+					"response": []
+				},
+				{
+					"name": "List dataset resources",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{domainid}}.opendatasoft.com/api/management/v2/datasets/{{datasetuid}}/resources/?apikey={{apikey}}",
+							"protocol": "https",
+							"host": [
+								"{{domainid}}",
+								"opendatasoft",
+								"com"
+							],
+							"path": [
+								"api",
+								"management",
+								"v2",
+								"datasets",
+								"{{datasetuid}}",
+								"resources",
+								""
+							],
+							"query": [
+								{
+									"key": "apikey",
+									"value": "{{apikey}}"
+								}
+							]
+						},
+						"description": "This endpoint is meant to list all resources that are linked to a dataset.\n\nReturns\nThis API call returns the list of resource objects linked to the dataset.\n\n"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Dataset metadata",
+			"item": [
+				{
+					"name": "List all metadata",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{domainid}}.opendatasoft.com/api/management/v2/datasets/{{datasetuid}}/metadata?apikey={{apikey}}",
+							"protocol": "https",
+							"host": [
+								"{{domainid}}",
+								"opendatasoft",
+								"com"
+							],
+							"path": [
+								"api",
+								"management",
+								"v2",
+								"datasets",
+								"{{datasetuid}}",
+								"metadata"
+							],
+							"query": [
+								{
+									"key": "apikey",
+									"value": "{{apikey}}"
+								}
+							]
+						},
+						"description": "Returns a list of metadata for the dataset with the given UID.\nhttps://betahelp.opendatasoft.com/management-api/#list-all-metadata"
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve a metadata",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{domainid}}.opendatasoft.com/api/management/v2/datasets/{{datasetuid}}/metadata/{{metadata_template}}/{{metadata_name}}?apikey={{apikey}}",
+							"protocol": "https",
+							"host": [
+								"{{domainid}}",
+								"opendatasoft",
+								"com"
+							],
+							"path": [
+								"api",
+								"management",
+								"v2",
+								"datasets",
+								"{{datasetuid}}",
+								"metadata",
+								"{{metadata_template}}",
+								"{{metadata_name}}"
+							],
+							"query": [
+								{
+									"key": "apikey",
+									"value": "{{apikey}}"
+								}
+							]
+						},
+						"description": "Retrieves the metadata with the given name within the given template.\nhttps://betahelp.opendatasoft.com/management-api/#retrieve-a-metadata"
+					},
+					"response": []
+				},
+				{
+					"name": "Update a metadata",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"value\": {{metadata_value}}, \"override_remote_value\": true}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{domainid}}.opendatasoft.com/api/management/v2/datasets/{{datasetuid}}/metadata/{{metadata_template}}/{{metadata_name}}?apikey={{apikey}}",
+							"protocol": "https",
+							"host": [
+								"{{domainid}}",
+								"opendatasoft",
+								"com"
+							],
+							"path": [
+								"api",
+								"management",
+								"v2",
+								"datasets",
+								"{{datasetuid}}",
+								"metadata",
+								"{{metadata_template}}",
+								"{{metadata_name}}"
+							],
+							"query": [
+								{
+									"key": "apikey",
+									"value": "{{apikey}}"
+								}
+							]
+						},
+						"description": "Updates the value of a metadata.\nhttps://betahelp.opendatasoft.com/management-api/#update-a-metadata-value"
+					},
+					"response": []
+				},
+				{
+					"name": "Update multiple metadata",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"metas\": [\n\t\t{\n\t\t\t\"metadata_name\": \"accrualperiodicity\",\n\t\t\t\"value\": \"\",\n\t\t\t\"template_name\": \"dcat\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"attributions\",\n\t\t\t\"value\": \"\",\n\t\t\t\"template_name\": \"default\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"contact_address\",\n\t\t\t\"value\": \"\",\n\t\t\t\"template_name\": \"inspire\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"contact_email\",\n\t\t\t\"value\": \"\",\n\t\t\t\"template_name\": \"dcat\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"contact_name\",\n\t\t\t\"value\": \"\",\n\t\t\t\"template_name\": \"dcat\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"contact_position\",\n\t\t\t\"value\": \"\",\n\t\t\t\"template_name\": \"inspire\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"contributor\",\n\t\t\t\"value\": \"\",\n\t\t\t\"template_name\": \"dcat\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"created\",\n\t\t\t\"value\": null,\n\t\t\t\"template_name\": \"dcat\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"creator\",\n\t\t\t\"value\": \"\",\n\t\t\t\"template_name\": \"dcat\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"dataquality\",\n\t\t\t\"value\": \"\",\n\t\t\t\"template_name\": \"dcat\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"description\",\n\t\t\t\"value\": \"\",\n\t\t\t\"template_name\": \"default\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"extend_bounding_box_eastbound_longitude\",\n\t\t\t\"value\": \"\",\n\t\t\t\"template_name\": \"inspire\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"file_identifier\",\n\t\t\t\"value\": \"\",\n\t\t\t\"template_name\": \"inspire\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"extend_description\",\n\t\t\t\"value\": \"\",\n\t\t\t\"template_name\": \"inspire\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"granularity\",\n\t\t\t\"value\": \"\",\n\t\t\t\"template_name\": \"dcat\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"issued\",\n\t\t\t\"value\": null,\n\t\t\t\"template_name\": \"dcat\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"keyword\",\n\t\t\t\"value\": \"\",\n\t\t\t\"template_name\": \"default\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"language\",\n\t\t\t\"value\": \"\",\n\t\t\t\"template_name\": \"default\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"license\",\n\t\t\t\"value\": \"\",\n\t\t\t\"template_name\": \"default\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"modified\",\n\t\t\t\"value\": null,\n\t\t\t\"template_name\": \"default\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"extend_bounding_box_northbound_latitude\",\n\t\t\t\"value\": \"\",\n\t\t\t\"template_name\": \"inspire\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"publisher\",\n\t\t\t\"value\": \"\",\n\t\t\t\"template_name\": \"default\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"publisher_type\",\n\t\t\t\"value\": \"\",\n\t\t\t\"template_name\": \"dcat\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"identification_purpose\",\n\t\t\t\"value\": \"\",\n\t\t\t\"template_name\": \"inspire\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"rml_mapping\",\n\t\t\t\"value\": \"\",\n\t\t\t\"template_name\": \"semantic\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"references\",\n\t\t\t\"value\": \"\",\n\t\t\t\"template_name\": \"default\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"extend_bounding_box_southbound_latitude\",\n\t\t\t\"value\": \"\",\n\t\t\t\"template_name\": \"inspire\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"spatial\",\n\t\t\t\"value\": \"\",\n\t\t\t\"template_name\": \"dcat\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"temporal\",\n\t\t\t\"value\": \"\",\n\t\t\t\"template_name\": \"dcat\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"theme\",\n\t\t\t\"value\": \"\",\n\t\t\t\"template_name\": \"inspire\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"timezone\",\n\t\t\t\"value\": \"\",\n\t\t\t\"template_name\": \"default\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"title\",\n\t\t\t\"value\": \"territoire_commune\",\n\t\t\t\"template_name\": \"default\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"type\",\n\t\t\t\"value\": \"\",\n\t\t\t\"template_name\": \"inspire\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"extend_bounding_box_westbound_longitude\",\n\t\t\t\"value\": \"\",\n\t\t\t\"template_name\": \"inspire\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"admin_boolean\",\n\t\t\t\"value\": true,\n\t\t\t\"template_name\": \"test-admin-template\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"admin_date\",\n\t\t\t\"value\": null,\n\t\t\t\"template_name\": \"test-admin-template\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"admin_datetime\",\n\t\t\t\"value\": null,\n\t\t\t\"template_name\": \"test-admin-template\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"admin_double\",\n\t\t\t\"value\": null,\n\t\t\t\"template_name\": \"test-admin-template\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"admin_enum\",\n\t\t\t\"value\": \"\",\n\t\t\t\"template_name\": \"test-admin-template\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"admin_enumlist\",\n\t\t\t\"value\": \"\",\n\t\t\t\"template_name\": \"test-admin-template\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"admin_int\",\n\t\t\t\"value\": null,\n\t\t\t\"template_name\": \"test-admin-template\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"admin_list\",\n\t\t\t\"value\": \"\",\n\t\t\t\"template_name\": \"test-admin-template\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"admin_longstring\",\n\t\t\t\"value\": \"\",\n\t\t\t\"template_name\": \"test-admin-template\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"admin_text\",\n\t\t\t\"value\": \"\",\n\t\t\t\"template_name\": \"test-admin-template\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"custom_label1\",\n\t\t\t\"value\": \"\",\n\t\t\t\"template_name\": \"custom\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"custom_label10\",\n\t\t\t\"value\": null,\n\t\t\t\"template_name\": \"custom\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"custom_label2\",\n\t\t\t\"value\": \"\",\n\t\t\t\"template_name\": \"custom\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"custom_label3\",\n\t\t\t\"value\": null,\n\t\t\t\"template_name\": \"custom\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"custom_label4\",\n\t\t\t\"value\": null,\n\t\t\t\"template_name\": \"custom\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"custom_label5\",\n\t\t\t\"value\": \"\",\n\t\t\t\"template_name\": \"custom\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"custom_label6\",\n\t\t\t\"value\": \"\",\n\t\t\t\"template_name\": \"custom\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"custom_label7\",\n\t\t\t\"value\": \"\",\n\t\t\t\"template_name\": \"custom\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"custom_label8\",\n\t\t\t\"value\": \"\",\n\t\t\t\"template_name\": \"custom\",\n\t\t\t\"override_remote_value\": false\n\t\t},\n\t\t{\n\t\t\t\"metadata_name\": \"custom_label9\",\n\t\t\t\"value\": null,\n\t\t\t\"template_name\": \"custom\",\n\t\t\t\"override_remote_value\": false\n\t\t}\n\t]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{domainid}}.opendatasoft.com/api/management/v2/datasets/{{datasetuid}}/metadata/?apikey={{apikey}}",
+							"protocol": "https",
+							"host": [
+								"{{domainid}}",
+								"opendatasoft",
+								"com"
+							],
+							"path": [
+								"api",
+								"management",
+								"v2",
+								"datasets",
+								"{{datasetuid}}",
+								"metadata",
+								""
+							],
+							"query": [
+								{
+									"key": "apikey",
+									"value": "{{apikey}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reset a metadata value",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://{{domainid}}.opendatasoft.com/api/management/v2/datasets/{{datasetuid}}/metadata/{{metadata_template}}/{{metadata_name}}?apikey={{apikey}}",
+							"protocol": "https",
+							"host": [
+								"{{domainid}}",
+								"opendatasoft",
+								"com"
+							],
+							"path": [
+								"api",
+								"management",
+								"v2",
+								"datasets",
+								"{{datasetuid}}",
+								"metadata",
+								"{{metadata_template}}",
+								"{{metadata_name}}"
+							],
+							"query": [
+								{
+									"key": "apikey",
+									"value": "{{apikey}}"
+								}
+							]
+						},
+						"description": "Resets a metadata value by deleting the value property.\n\nFor federated and harvested datasets, it also sets the override_remote_value flag to false.\n\nAs a result, the metadata value won't show up in the explore API output anymore. Unless it is a federated or harvested dataset with a remote_value set.\nhttps://betahelp.opendatasoft.com/management-api/#reset-a-metadata-value"
+					},
+					"response": []
+				}
+			],
+			"description": "Metadata is data describing the dataset itself. This is a set of fields describing the data, such as a title, a description, a list of keywords, a modification date, or whether the dataset is compliant to a specific geospatial norm. Adding metadata on a dataset is important to make sure it can be found, understood, and reused by users. In some cases, it can also be important for interoperability, to make sure other systems can understand the content of the dataset.\n\nDataset metadata are grouped within metadata templates that you can think of as namespaces. On top of the default metadata template, you may also find (depending on your domain's configuration) the inspire, dcat or citadeljson templates. Many other templates also exist and you can contact the support to define your own templates.\n\nhttps://betahelp.opendatasoft.com/management-api/#dataset-metadata"
+		},
+		{
+			"name": "Harvesters",
+			"item": [
+				{
+					"name": "List harvesters",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{domainid}}.opendatasoft.com/api/management/v2/harvesters/?apikey={{apikey}}",
+							"protocol": "https",
+							"host": [
+								"{{domainid}}",
+								"opendatasoft",
+								"com"
+							],
+							"path": [
+								"api",
+								"management",
+								"v2",
+								"harvesters",
+								""
+							],
+							"query": [
+								{
+									"key": "apikey",
+									"value": "{{apikey}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Fields specification",
+			"item": [
+				{
+					"name": "Display a dataset fields specification stack",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{domainid}}.opendatasoft.com/api/management/v2/datasets/{{datasetuid}}/fields_specifications?apikey={{apikey}}",
+							"protocol": "https",
+							"host": [
+								"{{domainid}}",
+								"opendatasoft",
+								"com"
+							],
+							"path": [
+								"api",
+								"management",
+								"v2",
+								"datasets",
+								"{{datasetuid}}",
+								"fields_specifications"
+							],
+							"query": [
+								{
+									"key": "apikey",
+									"value": "{{apikey}}"
+								}
+							]
+						},
+						"description": "This endpoint is meant to return the list of field configuration items for a dataset. Since field configurations are exposed as processor objects, their unique identifiers are processor_uids.\n\nThe payload lists the fields specification stack of the dataset. Please note that it reads in the order in which the configuration is applied.\n\nhttps://betahelp.opendatasoft.com/management-api/#display-a-dataset-fields-specification-stack"
+					},
+					"response": []
+				},
+				{
+					"name": "Add a field configuration item to a dataset",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\": \"annotate\", \"args\": {\"field\": \"right_name\", \"annotation\": \"facet\"}}"
+						},
+						"url": {
+							"raw": "https://{{domainid}}.opendatasoft.com/api/management/v2/datasets/{{datasetuid}}/fields_specifications?apikey={{apikey}}",
+							"protocol": "https",
+							"host": [
+								"{{domainid}}",
+								"opendatasoft",
+								"com"
+							],
+							"path": [
+								"api",
+								"management",
+								"v2",
+								"datasets",
+								"{{datasetuid}}",
+								"fields_specifications"
+							],
+							"query": [
+								{
+									"key": "apikey",
+									"value": "{{apikey}}"
+								}
+							]
+						},
+						"description": "This endpoint is for adding a field configuration item for the dataset.\n\nThe endpoint takes a processor object (without its processor_uid, which will be automatically generated), creates a new field configuration item with the provided arguments and appends it at the end of the fields specification chain.\n\nhttps://betahelp.opendatasoft.com/management-api/#add-a-field-configuration-item-to-a-dataset"
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve a field configuration item",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{domainid}}.opendatasoft.com/api/management/v2/datasets/{{datasetuid}}/fields_specifications/{{processoruid}}?apikey={{apikey}}",
+							"protocol": "https",
+							"host": [
+								"{{domainid}}",
+								"opendatasoft",
+								"com"
+							],
+							"path": [
+								"api",
+								"management",
+								"v2",
+								"datasets",
+								"{{datasetuid}}",
+								"fields_specifications",
+								"{{processoruid}}"
+							],
+							"query": [
+								{
+									"key": "apikey",
+									"value": "{{apikey}}"
+								}
+							]
+						},
+						"description": "This endpoint is meant to retrieve a field configuration item from a dataset, using its processor_uid.\n\nhttps://betahelp.opendatasoft.com/management-api/#retrieve-a-field-configuration-item"
+					},
+					"response": []
+				},
+				{
+					"name": "Update a field configuration item",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\": \"annotate\", \"args\": {\"field\": \"other_field\", \"annotation\": \"facet\"}}"
+						},
+						"url": {
+							"raw": "https://{{domainid}}.opendatasoft.com/api/management/v2/datasets/{{datasetuid}}/fields_specifications/{{processoruid}}?apikey={{apikey}}",
+							"protocol": "https",
+							"host": [
+								"{{domainid}}",
+								"opendatasoft",
+								"com"
+							],
+							"path": [
+								"api",
+								"management",
+								"v2",
+								"datasets",
+								"{{datasetuid}}",
+								"fields_specifications",
+								"{{processoruid}}"
+							],
+							"query": [
+								{
+									"key": "apikey",
+									"value": "{{apikey}}"
+								}
+							]
+						},
+						"description": "This endpoint is meant to update a field configuration item in place within the fields specification stack.\n\nhttps://betahelp.opendatasoft.com/management-api/#update-a-field-configuration-item"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a field configuration item",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "https://{{domainid}}.opendatasoft.com/api/management/v2/datasets/{{datasetuid}}/fields_specifications/{{processoruid}}?apikey={{apikey}}",
+							"protocol": "https",
+							"host": [
+								"{{domainid}}",
+								"opendatasoft",
+								"com"
+							],
+							"path": [
+								"api",
+								"management",
+								"v2",
+								"datasets",
+								"{{datasetuid}}",
+								"fields_specifications",
+								"{{processoruid}}"
+							],
+							"query": [
+								{
+									"key": "apikey",
+									"value": "{{apikey}}"
+								}
+							]
+						},
+						"description": "This endpoint is meant to delete a field configuration item from the fields specification stack of a dataset\n\nhttps://betahelp.opendatasoft.com/management-api/#delete-a-field-configuration-item"
+					},
+					"response": []
+				}
+			],
+			"description": "Dataset fields can be configured using a variety of options. These options include their type, their label, whether they are a filter or not, whether they should be discarded, or even how fields are ordered. These configuration options, collectively refered to as fields specification, are accessed using processor-like objects.\n\nhttps://betahelp.opendatasoft.com/management-api/#fields-specification"
+		},
+		{
+			"name": "Pages",
+			"item": [
+				{
+					"name": "Retrieve all pages",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{domainid}}.opendatasoft.com/api/management/v2/pages?apikey={{apikey}}",
+							"protocol": "https",
+							"host": [
+								"{{domainid}}",
+								"opendatasoft",
+								"com"
+							],
+							"path": [
+								"api",
+								"management",
+								"v2",
+								"pages"
+							],
+							"query": [
+								{
+									"key": "apikey",
+									"value": "{{apikey}}"
+								}
+							]
+						},
+						"description": "This endpoint returns a paginated list of all the pages that can be edited by this user.\n\nhttps://betahelp.opendatasoft.com/management-api/#retrieve-all-pages"
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve a page",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{domainid}}.opendatasoft.com/api/management/v2/pages/{{pageslug}}?apikey={{apikey}}",
+							"protocol": "https",
+							"host": [
+								"{{domainid}}",
+								"opendatasoft",
+								"com"
+							],
+							"path": [
+								"api",
+								"management",
+								"v2",
+								"pages",
+								"{{pageslug}}"
+							],
+							"query": [
+								{
+									"key": "apikey",
+									"value": "{{apikey}}"
+								}
+							]
+						},
+						"description": "This endpoint returns a paginated list of all the pages that can be edited by this user.\n\nhttps://betahelp.opendatasoft.com/management-api/#retrieve-all-pages"
+					},
+					"response": []
+				},
+				{
+					"name": "Create a page",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"slug\": \"my-page\", \"title\": {\"fr\": \"Titre de la page\", \"en\": \"Page title\"}, \"description\": \"The page description\", \"layout\": \"single-main.html\", \"content\": {\"main\": {\"text\": {\"fr\": \"Contenu de la page\", \"en\": \"Page content\"}}}, \"tags\": [\"tag1\", \"tag2\"], \"restricted\": true}"
+						},
+						"url": {
+							"raw": "https://{{domainid}}.opendatasoft.com/api/management/v2/pages?apikey={{apikey}}",
+							"protocol": "https",
+							"host": [
+								"{{domainid}}",
+								"opendatasoft",
+								"com"
+							],
+							"path": [
+								"api",
+								"management",
+								"v2",
+								"pages"
+							],
+							"query": [
+								{
+									"key": "apikey",
+									"value": "{{apikey}}"
+								}
+							]
+						},
+						"description": "This endpoint is for creating a new page.\n\nhttps://betahelp.opendatasoft.com/management-api/#create-a-page"
+					},
+					"response": []
+				},
+				{
+					"name": "Update a page",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"slug\": \"my-page\", \"title\": {\"fr\": \"Titre de la page\", \"en\": \"Page title\"}, \"description\": \"The page description\", \"layout\": \"single-main.html\", \"content\": {\"main\": {\"text\": {\"fr\": \"Contenu de la page\", \"en\": \"Page content\"}}}, \"tags\": [\"tag1\", \"tag2\"], \"restricted\": true}"
+						},
+						"url": {
+							"raw": "https://{{domainid}}.opendatasoft.com/api/management/v2/pages/{{pageslug}}?apikey={{apikey}}",
+							"protocol": "https",
+							"host": [
+								"{{domainid}}",
+								"opendatasoft",
+								"com"
+							],
+							"path": [
+								"api",
+								"management",
+								"v2",
+								"pages",
+								"{{pageslug}}"
+							],
+							"query": [
+								{
+									"key": "apikey",
+									"value": "{{apikey}}"
+								}
+							]
+						},
+						"description": "This endpoint is for updating an existing page object with provided slug.\n\nhttps://betahelp.opendatasoft.com/management-api/#update-a-page"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a page",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"slug\": \"my-page\", \"title\": {\"fr\": \"Titre de la page\", \"en\": \"Page title\"}, \"description\": \"The page description\", \"layout\": \"single-main.html\", \"content\": {\"main\": {\"text\": {\"fr\": \"Contenu de la page\", \"en\": \"Page content\"}}}, \"tags\": [\"tag1\", \"tag2\"], \"restricted\": true}"
+						},
+						"url": {
+							"raw": "https://{{domainid}}.opendatasoft.com/api/management/v2/pages/{{pageslug}}?apikey={{apikey}}",
+							"protocol": "https",
+							"host": [
+								"{{domainid}}",
+								"opendatasoft",
+								"com"
+							],
+							"path": [
+								"api",
+								"management",
+								"v2",
+								"pages",
+								"{{pageslug}}"
+							],
+							"query": [
+								{
+									"key": "apikey",
+									"value": "{{apikey}}"
+								}
+							]
+						},
+						"description": "This endpoint is for deleting an existing page object with provided slug.\n\nhttps://betahelp.opendatasoft.com/management-api/#delete-a-page"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete multiple pages",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[{\"slug\": \"my-page\"}, {\"slug\":\"my-page-2\"}]"
+						},
+						"url": {
+							"raw": "https://{{domainid}}.opendatasoft.com/api/management/v2/pages?apikey={{apikey}}",
+							"protocol": "https",
+							"host": [
+								"{{domainid}}",
+								"opendatasoft",
+								"com"
+							],
+							"path": [
+								"api",
+								"management",
+								"v2",
+								"pages"
+							],
+							"query": [
+								{
+									"key": "apikey",
+									"value": "{{apikey}}"
+								}
+							]
+						},
+						"description": "This endpoint is for deleting multiple pages.\n\nhttps://betahelp.opendatasoft.com/management-api/#delete-multiple-pages"
+					},
+					"response": []
+				}
+			],
+			"description": "Pages can be used to write editorial content directly on the platform, build advanced dashboards and organize data portals.\n\nThrough the management API, it is possible to list, create, edit and delete pages as well as to configure pages visiblity on the portal.\n\nhttps://betahelp.opendatasoft.com/management-api/#pages"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
