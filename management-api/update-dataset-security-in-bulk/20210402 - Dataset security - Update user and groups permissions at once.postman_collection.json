@@ -1,0 +1,553 @@
+{
+	"info": {
+		"_postman_id": "af95d2af-9def-4959-86f8-c0cd1fa22f26",
+		"name": "Dataset Security Changes - Force group creation Copy",
+		"description": "WARNING - This collection is not a feature of Opendatasoft and is only a experimental tool that allows you to work efficiently with the Beta API Management in a graphical interface.\n\nThis Postman collection is designed to help you edit security rules in bulk by sending the resquets for UID fetch, for security changes and for publishing all at once. If a group listed in your datafile does not exist, it is created on your domain.\n\nThe only variables needed in your Postman environment are:\n- domainid\n- apikey (with necessary permissions)\n\nAll the other needed variables come from the CSV data file, organized as follows :\n- datasetid\n- groupid\n- is_data_visible\n- visible_fields\n- filter_query\n- api_calls_quota\n- permissions\n- publish\n\nA few remarks about how to write data in your data file :\n- use \";\" to list your fields and permissions.\n- to list your fields or apply your filter queries, the field_id should be used (e.g. amenity name or cuisine in the example below)\n- permissions_id should be used: in all it will be explore_restricted_dataset and/or edit_dataset and/or publish_dataset. To easily retrieve permissions_id, you can download in .csv the list of users from the Back-Office > Users & Groups\n- To easily retrieve the group ID, go to BO > Users & Groups > Groups and hover the selected group: the group_id will appear in the link in the bottom left corner\n- use single quotes (\" ' \") within your filter queries. Before including it in the file, test your filter query on your dataset: the right query will be reg_name:'Occitanie' if you want to refine on Occitanie on this dataset https://public.opendatasoft.com/explore/dataset/taux-incidence-covid19-departement-france/table/?disjunctive.dep_name&sort=date&q=reg_name:%27Occitanie%27\n- if you have non null api_calls_quota rules, they must be presented in the following manner : \"api_calls_quota_limit;api_calls_quota_unit\" (api_calls_quota_unit being a temporal unit e.g. hour or day or month) => an example 1000;day\n\n\nBelow an example of such a datafile :\ndatasetid,groupid,is_data_visible,visible_fields,filter_query,api_calls_quota,permissions,publish\nopen-data-inception,data-publishers-squad,true,,,1000;day,explore_restricted_dataset;edit_dataset;publish_dataset,true\nopen-data-inception,data-users-squad,true,name;country;url,country:'Italy',,explore_restricted_dataset,true\n\nIn the runner, attach your data file and specify some delay between request if you are publishing the same dataset more than once (e.g. 500 ms).",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. Fetch the UID of a dataset",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"reponse = JSON.parse(responseBody);",
+							"pm.variables.set(\"datasetuid\",reponse.datasets[0].dataset_uid);",
+							"",
+							"pm.test(\"Dataset uid has been fetched correctly\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var groupid = pm.iterationData.get(\"groupid\");",
+							"if (pm.variables.get(\"groups_checked\")) {",
+							"    var groups_uptonow = pm.variables.get(\"groups_checked\");",
+							"    if (groups_uptonow.hasOwnProperty(groupid)) {",
+							"        pm.test(\"Group existence has already been checked\", function () {",
+							"            true;",
+							"        });",
+							"        postman.setNextRequest(\"4. Check the security status of the group\");",
+							"    }",
+							"}",
+							"else {",
+							"    var groups_uptonow = {} ;",
+							"    pm.variables.set(\"groups_checked\",groups_uptonow);",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{domainid}}.opendatasoft.com/api/management/v2/datasets/?rows=2&start=0&where=datasetid=\"{{datasetid}}\"&apikey={{apikey}}",
+					"protocol": "https",
+					"host": [
+						"{{domainid}}",
+						"opendatasoft",
+						"com"
+					],
+					"path": [
+						"api",
+						"management",
+						"v2",
+						"datasets",
+						""
+					],
+					"query": [
+						{
+							"key": "rows",
+							"value": "2"
+						},
+						{
+							"key": "start",
+							"value": "0"
+						},
+						{
+							"key": "where",
+							"value": "datasetid=\"{{datasetid}}\""
+						},
+						{
+							"key": "apikey",
+							"value": "{{apikey}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2. Check group existence",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"reponse = JSON.parse(responseBody);",
+							"var groupid = pm.iterationData.get(\"groupid\");",
+							"var groups_uptonow = pm.variables.get(\"groups_checked\");",
+							"groups_uptonow[groupid]=true;",
+							"pm.variables.set(\"groups_checked\",groups_uptonow);",
+							"if(reponse.permissions) {",
+							"    pm.test(\"Group whose security level must be updated on the dataset exists on the portal\", function () {",
+							"        pm.response.to.have.status(200);",
+							"    });",
+							"    postman.setNextRequest(\"4. Check the security status of the group\"); ",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{domainid}}.opendatasoft.com/api/management/v2/groups/{{groupid}}/?apikey={{apikey}}",
+					"protocol": "https",
+					"host": [
+						"{{domainid}}",
+						"opendatasoft",
+						"com"
+					],
+					"path": [
+						"api",
+						"management",
+						"v2",
+						"groups",
+						"{{groupid}}",
+						""
+					],
+					"query": [
+						{
+							"key": "apikey",
+							"value": "{{apikey}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3. Create group",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Group has been correctly created because it did not exist on the portal\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"title\": \"{{groupid}}\" }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{domainid}}.opendatasoft.com/api/management/v2/groups/?apikey={{apikey}}",
+					"protocol": "https",
+					"host": [
+						"{{domainid}}",
+						"opendatasoft",
+						"com"
+					],
+					"path": [
+						"api",
+						"management",
+						"v2",
+						"groups",
+						""
+					],
+					"query": [
+						{
+							"key": "apikey",
+							"value": "{{apikey}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4. Check the security status of the group",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"reponse = JSON.parse(responseBody);",
+							"if(reponse.permissions) {",
+							"    pm.test(\"Group whose security level must be updated on the dataset already has a security status on the dataset, therefore check on security status can be skipped\", function () {",
+							"        pm.response.to.have.status(200);",
+							"    });",
+							"    postman.setNextRequest(\"6. Update security level of a dataset for a group\"); ",
+							"}",
+							"else {",
+							"    pm.test(\"Group whose security level must be updated on the dataset does not have a security status on the dataset, therefore one must be created\", function () {",
+							"        pm.response.to.have.status(200);",
+							"    });",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic cGhpbGlwcGUudmFpbGxhbnRAb3BlbmRhdGFzb2Z0LmNvbTpHR1c4d21RZHhoZ29uTkd5ek1ycERVRmc="
+					}
+				],
+				"url": {
+					"raw": "https://{{domainid}}.opendatasoft.com/api/management/v2/datasets/{{datasetuid}}/security/groups/{{groupid}}/?apikey={{apikey}}",
+					"protocol": "https",
+					"host": [
+						"{{domainid}}",
+						"opendatasoft",
+						"com"
+					],
+					"path": [
+						"api",
+						"management",
+						"v2",
+						"datasets",
+						"{{datasetuid}}",
+						"security",
+						"groups",
+						"{{groupid}}",
+						""
+					],
+					"query": [
+						{
+							"key": "apikey",
+							"value": "{{apikey}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5. Create security level of a dataset for a group",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Security level for the group has been created\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"if(pm.variables.get(\"publish\") == \"false\") {",
+							"   postman.setNextRequest(null); ",
+							"}",
+							"else {",
+							"    postman.setNextRequest(\"7. Publish the dataset\"); ",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.variables.set(\"is_data_visible\", pm.iterationData.get(\"is_data_visible\"));",
+							"if (pm.iterationData.get(\"visible_fields\") === null || pm.iterationData.get(\"visible_fields\") === \"\") {",
+							"    pm.variables.set(\"visible_fields\", JSON.stringify([]) );",
+							"}",
+							"else {",
+							"    pm.variables.set(\"visible_fields\", JSON.stringify((pm.iterationData.get(\"visible_fields\").split(\";\"))));",
+							"}",
+							"if (pm.iterationData.get(\"api_calls_quota\") === null || pm.iterationData.get(\"api_calls_quota\") === \"\") {",
+							"    pm.variables.set(\"api_calls_quota\", \"null\" );",
+							"}",
+							"else {",
+							"    var api_colls_quota_body = {\"limit\": new Number(pm.iterationData.get(\"api_calls_quota\").split(\";\")[0]), \"unit\": pm.iterationData.get(\"api_calls_quota\").split(\";\")[1]};",
+							"    pm.variables.set(\"api_calls_quota\", JSON.stringify(api_colls_quota_body));",
+							"}",
+							"pm.variables.set(\"filter_query\", String(pm.iterationData.get(\"filter_query\")));",
+							"if (pm.iterationData.get(\"permissions\") === null || pm.iterationData.get(\"permissions\") === \"\") {",
+							"    pm.variables.set(\"permissions\", JSON.stringify([]) );",
+							"}",
+							"else {",
+							"    pm.variables.set(\"permissions\", JSON.stringify((pm.iterationData.get(\"permissions\").split(\";\"))));",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"is_data_visible\": {{is_data_visible}}, \"visible_fields\": {{visible_fields}}, \"filter_query\": \"{{filter_query}}\", \"api_calls_quota\": {{api_calls_quota}},  \"permissions\": {{permissions}} ,\"group\": {\"group_id\": \"{{groupid}}\"} }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{domainid}}.opendatasoft.com/api/management/v2/datasets/{{datasetuid}}/security/groups/?apikey={{apikey}}",
+					"protocol": "https",
+					"host": [
+						"{{domainid}}",
+						"opendatasoft",
+						"com"
+					],
+					"path": [
+						"api",
+						"management",
+						"v2",
+						"datasets",
+						"{{datasetuid}}",
+						"security",
+						"groups",
+						""
+					],
+					"query": [
+						{
+							"key": "apikey",
+							"value": "{{apikey}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6. Update security level of a dataset for a group",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Security level for the group has been updated\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"if(pm.variables.get(\"publish\") == \"false\") {",
+							"   postman.setNextRequest(null); ",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.variables.set(\"is_data_visible\", pm.iterationData.get(\"is_data_visible\"));",
+							"if (pm.iterationData.get(\"visible_fields\") === null || pm.iterationData.get(\"visible_fields\") === \"\") {",
+							"    pm.variables.set(\"visible_fields\", JSON.stringify([]) );",
+							"}",
+							"else {",
+							"    pm.variables.set(\"visible_fields\", JSON.stringify((pm.iterationData.get(\"visible_fields\").split(\";\"))));",
+							"}",
+							"if (pm.iterationData.get(\"api_calls_quota\") === null || pm.iterationData.get(\"api_calls_quota\") === \"\") {",
+							"    pm.variables.set(\"api_calls_quota\", \"null\" );",
+							"}",
+							"else {",
+							"    var api_colls_quota_body = {\"limit\": new Number(pm.iterationData.get(\"api_calls_quota\").split(\";\")[0]), \"unit\": pm.iterationData.get(\"api_calls_quota\").split(\";\")[1]};",
+							"    pm.variables.set(\"api_calls_quota\", JSON.stringify(api_colls_quota_body));",
+							"}",
+							"pm.variables.set(\"filter_query\", String(pm.iterationData.get(\"filter_query\")));",
+							"if (pm.iterationData.get(\"permissions\") === null || pm.iterationData.get(\"permissions\") === \"\") {",
+							"    pm.variables.set(\"permissions\", JSON.stringify([]) );",
+							"}",
+							"else {",
+							"    pm.variables.set(\"permissions\", JSON.stringify((pm.iterationData.get(\"permissions\").split(\";\"))));",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"is_data_visible\": {{is_data_visible}}, \"visible_fields\": {{visible_fields}}, \"filter_query\": \"{{filter_query}}\", \"api_calls_quota\": {{api_calls_quota}},  \"permissions\": {{permissions}} }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{domainid}}.opendatasoft.com/api/management/v2/datasets/{{datasetuid}}/security/groups/{{groupid}}/?apikey={{apikey}}",
+					"protocol": "https",
+					"host": [
+						"{{domainid}}",
+						"opendatasoft",
+						"com"
+					],
+					"path": [
+						"api",
+						"management",
+						"v2",
+						"datasets",
+						"{{datasetuid}}",
+						"security",
+						"groups",
+						"{{groupid}}",
+						""
+					],
+					"query": [
+						{
+							"key": "apikey",
+							"value": "{{apikey}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "7. Publish the dataset",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Dataset has been published\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "https://{{domainid}}.opendatasoft.com/api/management/v2/datasets/{{datasetuid}}/publish/?apikey={{apikey}}",
+					"protocol": "https",
+					"host": [
+						"{{domainid}}",
+						"opendatasoft",
+						"com"
+					],
+					"path": [
+						"api",
+						"management",
+						"v2",
+						"datasets",
+						"{{datasetuid}}",
+						"publish",
+						""
+					],
+					"query": [
+						{
+							"key": "apikey",
+							"value": "{{apikey}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "apikey",
+			"value": "apikey",
+			"type": "string"
+		},
+		{
+			"key": "domainid",
+			"value": "domain",
+			"type": "string"
+		}
+	]
+}
