@@ -93,7 +93,7 @@ Enfin, ajoutez encore dans cette ballise ```<head>``` les balises ```<script>```
 </script>
 ```
 
-Spip intègre de base JQuery, mais si vous l'avez désactivé sur votre raison, il faudrait bien charger en premier lieu le script Jquery :
+Spip intègre de base JQuery, mais si vous l'avez désactivé sur votre version, il faudrait bien charger en premier lieu le script Jquery :
 
 ```html
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
