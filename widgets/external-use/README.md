@@ -47,21 +47,36 @@ Include directly this file :
 Translation dictionary must be declared for each language through this bunch of code :
 
 ```html
+<!-- ODS Translation dict. -->
 <script type="text/javascript">
     var ods = angular.module('ods-widgets');
     ods.run(function(gettextCatalog) {
-      gettextCatalog.setStrings('fr', {
-        'Clear all': 'Tout effacer',
-        'More': 'Voir plus',
-        'Less': 'Voir moins',
-        'Download image': 'Télécharger l\'image'
-      });
-      gettextCatalog.setCurrentLanguage('fr');
+        gettextCatalog.setStrings('fr', {
+            'Clear all': 'Tout effacer',
+            'More': 'Voir plus',
+            'Less': 'Voir moins',
+            'Download image': 'Télécharger l\'image',
+            '({{ $count }} options)': '({{ $count }} options)',
+            'All': 'Tous',
+            'Clear selection': 'Effacer la sélection',
+            'Filter': 'Filtre',
+            'Hide options': 'Cacher les options',
+            'No option selected': 'Aucune option sélectionnée',
+            'No options': 'Aucune option',
+            'Options are loading...': 'Options en cours de chargement...',
+            'Select one element': 'Sélectionnez un élément',
+            'Select one or more elements': 'Sélectionnez un ou plusieurs éléments',
+            'Show all': 'Tout afficher',
+            'Show options': 'Afficher les options',
+            'Show selection': 'Voir la sélection',
+            '{{ $count }} options selected': '{{ $count }} options sélectionnées',
+        });
+        gettextCatalog.setCurrentLanguage('fr');
     });
-  </script>
+</script>
 ```
 
-Here, 4 keys are declared with the corresponding French translation.
+Here, several keys are declared with the corresponding French translation.
 
 
 #### Urlsync context parameter

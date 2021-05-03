@@ -52,7 +52,21 @@ Le template de code d'intégration se trouve également [ici, de manière à fac
                     'Clear all': 'Tout effacer',
                     'More': 'Voir plus',
                     'Less': 'Voir moins',
-                    'Download image': 'Télécharger l\'image'
+                    'Download image': 'Télécharger l\'image',
+                    '({{ $count }} options)': '({{ $count }} options)',
+                    'All': 'Tous',
+                    'Clear selection': 'Effacer la sélection',
+                    'Filter': 'Filtre',
+                    'Hide options': 'Cacher les options',
+                    'No option selected': 'Aucune option sélectionnée',
+                    'No options': 'Aucune option',
+                    'Options are loading...': 'Options en cours de chargement...',
+                    'Select one element': 'Sélectionnez un élément',
+                    'Select one or more elements': 'Sélectionnez un ou plusieurs éléments',
+                    'Show all': 'Tout afficher',
+                    'Show options': 'Afficher les options',
+                    'Show selection': 'Voir la sélection',
+                    '{{ $count }} options selected': '{{ $count }} options sélectionnées',
                 });
                 gettextCatalog.setCurrentLanguage('fr');
             });
@@ -162,16 +176,30 @@ Explications des différentes parties du code d’intégration:
 
         <!-- ODS Translation dict. -->
         <script type="text/javascript">
-                var ods = angular.module('ods-widgets');
-                ods.run(function(gettextCatalog) {
-                     gettextCatalog.setStrings('fr', {
-                            'Clear all': 'Tout effacer',
-                            'More': 'Voir plus',
-                            'Less': 'Voir moins',
-                            'Download image': 'Télécharger l\'image'
-                    });
-                    gettextCatalog.setCurrentLanguage('fr');
+            var ods = angular.module('ods-widgets');
+            ods.run(function(gettextCatalog) {
+                gettextCatalog.setStrings('fr', {
+                    'Clear all': 'Tout effacer',
+                    'More': 'Voir plus',
+                    'Less': 'Voir moins',
+                    'Download image': 'Télécharger l\'image',
+                    '({{ $count }} options)': '({{ $count }} options)',
+                    'All': 'Tous',
+                    'Clear selection': 'Effacer la sélection',
+                    'Filter': 'Filtre',
+                    'Hide options': 'Cacher les options',
+                    'No option selected': 'Aucune option sélectionnée',
+                    'No options': 'Aucune option',
+                    'Options are loading...': 'Options en cours de chargement...',
+                    'Select one element': 'Sélectionnez un élément',
+                    'Select one or more elements': 'Sélectionnez un ou plusieurs éléments',
+                    'Show all': 'Tout afficher',
+                    'Show options': 'Afficher les options',
+                    'Show selection': 'Voir la sélection',
+                    '{{ $count }} options selected': '{{ $count }} options sélectionnées',
                 });
+                gettextCatalog.setCurrentLanguage('fr');
+            });
         </script>
 
 * Script en bas de page pour ajouter des fonds de carte customisés (et qui seront donc disponibles dans les widgets ods-map). Le plus simple est la configuration Jawg, puisque la configuration est faite côté Jawg, avec une clé api.
