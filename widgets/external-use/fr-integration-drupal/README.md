@@ -66,7 +66,10 @@ Le template de code d'intégration se trouve également [ici, de manière à fac
                     'Show all': 'Tout afficher',
                     'Show options': 'Afficher les options',
                     'Show selection': 'Voir la sélection',
-                    '{{ $count }} options selected': '{{ $count }} options sélectionnées',
+                    '{{ $count }} option selected': [
+                        '{{ $count }} option sélectionnée',
+                        '{{ $count }} options sélectionnées'
+                        ]
                 });
                 gettextCatalog.setCurrentLanguage('fr');
             });
@@ -196,7 +199,10 @@ Explications des différentes parties du code d’intégration:
                     'Show all': 'Tout afficher',
                     'Show options': 'Afficher les options',
                     'Show selection': 'Voir la sélection',
-                    '{{ $count }} options selected': '{{ $count }} options sélectionnées',
+                    '{{ $count }} option selected': [
+                        '{{ $count }} option sélectionnée',
+                        '{{ $count }} options sélectionnées'
+                        ]
                 });
                 gettextCatalog.setCurrentLanguage('fr');
             });
