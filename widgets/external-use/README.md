@@ -21,16 +21,16 @@ Do not hesitate to fork it and use it as a template or simply download the [virg
 #### AngularJS locale :
 
 The angular-locale library should be included in the script includes at the end of the html page.
-All locales can be found here for AngularJS V 1.4.7 :
-https://code.angularjs.org/1.4.7/i18n/
+All locales can be found here for AngularJS V 1.8.2 :
+https://code.angularjs.org/1.8.2/i18n/
 
 French version for example is : 
-https://code.angularjs.org/1.4.7/i18n/angular-locale_fr-fr.js
+https://code.angularjs.org/1.8.2/i18n/angular-locale_fr-fr.js
 
 
 Or include directly the file from Cloudflare CDN :
 ```html
-<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/i18n/angular-locale_fr-fr.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.8.2/angular-locale_fr.min.js"></script>
 ```
 
 Another module might need to be localized concerning date formating filter. 
@@ -47,21 +47,39 @@ Include directly this file :
 Translation dictionary must be declared for each language through this bunch of code :
 
 ```html
+<!-- ODS Translation dict. -->
 <script type="text/javascript">
     var ods = angular.module('ods-widgets');
     ods.run(function(gettextCatalog) {
-      gettextCatalog.setStrings('fr', {
-        'Clear all': 'Tout effacer',
-        'More': 'Voir plus',
-        'Less': 'Voir moins',
-        'Download image': 'Télécharger l\'image'
-      });
-      gettextCatalog.setCurrentLanguage('fr');
+        gettextCatalog.setStrings('fr', {
+            'Clear all': 'Tout effacer',
+            'More': 'Voir plus',
+            'Less': 'Voir moins',
+            'Download image': 'Télécharger l\'image',
+            '({{ $count }} options)': '({{ $count }} options)',
+            'All': 'Tous',
+            'Clear selection': 'Effacer la sélection',
+            'Filter': 'Filtre',
+            'Hide options': 'Cacher les options',
+            'No option selected': 'Aucune option sélectionnée',
+            'No options': 'Aucune option',
+            'Options are loading...': 'Options en cours de chargement...',
+            'Select one element': 'Sélectionnez un élément',
+            'Select one or more elements': 'Sélectionnez un ou plusieurs éléments',
+            'Show all': 'Tout afficher',
+            'Show options': 'Afficher les options',
+            'Show selection': 'Voir la sélection',
+            '{{ $count }} option selected': [
+              '{{ $count }} option sélectionnée',
+              '{{ $count }} options sélectionnées'
+              ]
+        });
+        gettextCatalog.setCurrentLanguage('fr');
     });
-  </script>
+</script>
 ```
 
-Here, 4 keys are declared with the corresponding French translation.
+Here, several keys are declared with the corresponding French translation.
 
 
 #### Urlsync context parameter

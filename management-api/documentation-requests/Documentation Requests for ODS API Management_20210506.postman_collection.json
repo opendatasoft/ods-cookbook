@@ -462,7 +462,7 @@
 					"response": []
 				},
 				{
-					"name": "Upload a file",
+					"name": "Upload a file - content upload",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -530,6 +530,45 @@
 							]
 						},
 						"description": "This endpoint is for downloading a file with the provided file_id from the platform."
+					},
+					"response": []
+				},
+				{
+					"name": "Upload a file - multipart",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/Users/philippevaillant/Desktop/test.csv"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://{{domainid}}.opendatasoft.com/api/management/v2/files?apikey={{apikey}}",
+							"protocol": "https",
+							"host": [
+								"{{domainid}}",
+								"opendatasoft",
+								"com"
+							],
+							"path": [
+								"api",
+								"management",
+								"v2",
+								"files"
+							],
+							"query": [
+								{
+									"key": "apikey",
+									"value": "{{apikey}}"
+								}
+							]
+						}
 					},
 					"response": []
 				}
@@ -848,6 +887,48 @@
 							]
 						},
 						"description": "This endpoint is meant to list all resources that are linked to a dataset.\n\nReturns\nThis API call returns the list of resource objects linked to the dataset.\n\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Create a new resource",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"url\": \"odsfile://{{fileid}}\", \"title\": \"My Awesome Data File\", \"type\": \"csvfile\", \"params\": {\"headers_first_row\": true, \"separator\": \",\"} }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{domainid}}.opendatasoft.com/api/management/v2/datasets/{{datasetuid}}/resources/?apikey={{apikey}}",
+							"protocol": "https",
+							"host": [
+								"{{domainid}}",
+								"opendatasoft",
+								"com"
+							],
+							"path": [
+								"api",
+								"management",
+								"v2",
+								"datasets",
+								"{{datasetuid}}",
+								"resources",
+								""
+							],
+							"query": [
+								{
+									"key": "apikey",
+									"value": "{{apikey}}"
+								}
+							]
+						},
+						"description": "This endpoint is for creating a new resource for the dataset\n\nA new resource is created using the resource object sent in the body, and echoes back the object, with its newly generated resource_uid on success.\n\nParameters\nThe payload must be a valid resource object without any uid.\n\nReturns\nThe newly created resource object with its newly created resource uid.\n"
 					},
 					"response": []
 				}
