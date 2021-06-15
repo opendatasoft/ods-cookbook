@@ -1,4 +1,4 @@
-# Local development environment V3
+# Local development environment V4
 
 For an easier development phase, it might me useful to work locally (local server, and local files) and then, once finished, copy-paste your code into your online environment
 
@@ -65,20 +65,21 @@ Compile SASS and CSS files into one single CSS file ready to upload on ODS
 
 ```
 \- app.js
-     \- static
-         \- ods-internal <--- ODS Internal script and stylesheets
-         \- ods-widgets <--- Last ODS-Widgets library
-         \- stylesheets <--- SASS playground
-     \- views
-         \- includes-and-specifics
-            \- * <---all headers and sub-body includes ands scripts
-         \- index.ejs <--- Kit STARTING point, list all available local pages
-         \- index-page.ejs <--- A local page example (index file)
-         \- page.ejs <--- A local page example (the content)
+     \- pages
+         \- views <--- your HTML content (as EJS or HTML)
+         \- style <--- your CSS content (as SCSS or CSS)
+     \- ods-portal
+         \- ods-code-widgets <--- optionnal/local libs from ODS
+         \- internal-stylesheets <--- ODS Syles from the platform
+         \- theme.scss <--- your portal theme, to copy here
+     \- kit <--- technical content, should not be modified 
+         \- scripts <--- HTTP hooks for enriching or modifing local requests
+         \- styles <--- CSS page structure for local development
+         \- views <--- HTML page structure for local development
 
+    \- config.js <--- Contains private credientials MUST NOT BE COMMIT
+    \- config.project.js <--- Contains project specific varaibles
 ```
-
-`index.ejs` is the starting point of the kit 
 
 ### Install dependencies
 
