@@ -1,0 +1,14 @@
+#ods-map {
+  min-height: 166vh;
+}
+.ods-map-wrapper {
+  position: sticky;
+  top: 0;
+  left: 0;
+  opacity: 0.5;
+}
+
+// selector.active allow you to give a different transition style for each of your feature with only adding the .active class
+.ods-map-wrapper.active {
+  opacity: 1;
+}

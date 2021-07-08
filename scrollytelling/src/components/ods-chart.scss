@@ -1,0 +1,15 @@
+.ods-chart-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  visibility: hidden;
+  padding-left: 100vw;
+  transition: visibility 0s linear 300ms, padding-left 300ms ease;
+}
+
+// selector.active allow you to give a different transition style for each of your feature with only adding the .active class
+.ods-chart-wrapper.active {
+  visibility: visible;
+  padding-left: 0;
+  transition: visibility 0s linear 300ms, padding-left 300ms 300ms ease;
+}
