@@ -55,3 +55,8 @@ V0.6
 V0.7
 - Add @media print style to remove the extension when printing a page
 - Add exclude_matches to not activate the extension on codelibrary, academy and helphub
+
+V0.8
+- Activates on all Opendatasoft portal (not only on *.opendatasoft.com URLs)
+- Display a disabled icon if the current page is not an ODS Portal
+- MINOR FIX: when clicking on the extension icon (show/hide shortcuts bar) outside an ODS portal, an error occurred in the console. 
