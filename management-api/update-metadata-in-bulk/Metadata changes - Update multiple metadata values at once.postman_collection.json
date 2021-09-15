@@ -402,7 +402,7 @@
 							"    //console.log(\"number of metadatas to update: \" + (Object.keys(pm.iterationData.variables()).length - 1));",
 							"    //console.log(\"number of metadatas updated: \" + pm.environment.get(\"number_of_metas_updated\"));",
 							"    //length - 1 because of datasetid",
-							"    pm.expect(Object.keys(pm.iterationData.variables()).length - 1).to.eql(pm.variables.get(\"number_of_metas_updated\"));",
+							"    pm.expect(Object.keys(pm.iterationData.toObject()).length - 1).to.eql(pm.variables.get(\"number_of_metas_updated\"));",
 							"});",
 							"",
 							"pm.test(\"Status code is 200\", function () {",
