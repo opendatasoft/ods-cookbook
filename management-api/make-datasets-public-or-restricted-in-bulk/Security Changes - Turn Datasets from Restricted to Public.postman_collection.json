@@ -1,0 +1,168 @@
+{
+	"info": {
+		"_postman_id": "d6925e06-4e2e-46b5-8f71-1861d0fe0e7c",
+		"name": "Security Changes - Turn Datasets from Restricted to Public",
+		"description": "The goal of this collection is to update in bulk the general access rules of datasets.\n\nThe only variables needed in your Postman environment are:\n\n*   domainid\n*   apikey\n    \n\nOne variable comes from the collection variables :\n\n*   access_policy : \"domain\" or \"restricted\". The given domains become all public or restricted.\n    \n\nThe data file is just one column, called \"datasetid\", listing all the datasets that need to have their access policy updated. The file is a CSV in UTF-8.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. Fetch the UID of a dataset",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"reponse = JSON.parse(responseBody);",
+							"pm.variables.set(\"datasetuid\",reponse.datasets[0].dataset_uid);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{domainid}}/api/management/v2/datasets/?rows=2&start=0&where=datasetid=\"{{datasetid}}\"&apikey={{apikey}}",
+					"protocol": "https",
+					"host": [
+						"{{domainid}}"
+					],
+					"path": [
+						"api",
+						"management",
+						"v2",
+						"datasets",
+						""
+					],
+					"query": [
+						{
+							"key": "rows",
+							"value": "2"
+						},
+						{
+							"key": "start",
+							"value": "0"
+						},
+						{
+							"key": "where",
+							"value": "datasetid=\"{{datasetid}}\""
+						},
+						{
+							"key": "apikey",
+							"value": "{{apikey}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2. Update the general access policy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if(pm.variables.get(\"publish\") == \"false\") {",
+							"   postman.setNextRequest(null); ",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\"{{access_policy}}\""
+				},
+				"url": {
+					"raw": "https://{{domainid}}/api/management/v2/datasets/{{datasetuid}}/security/access_policy?apikey={{apikey}}",
+					"protocol": "https",
+					"host": [
+						"{{domainid}}"
+					],
+					"path": [
+						"api",
+						"management",
+						"v2",
+						"datasets",
+						"{{datasetuid}}",
+						"security",
+						"access_policy"
+					],
+					"query": [
+						{
+							"key": "apikey",
+							"value": "{{apikey}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3. Publish the dataset",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "https://{{domainid}}/api/management/v2/datasets/{{datasetuid}}/publish?apikey={{apikey}}",
+					"protocol": "https",
+					"host": [
+						"{{domainid}}"
+					],
+					"path": [
+						"api",
+						"management",
+						"v2",
+						"datasets",
+						"{{datasetuid}}",
+						"publish"
+					],
+					"query": [
+						{
+							"key": "apikey",
+							"value": "{{apikey}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "access_policy",
+			"value": "domain"
+		}
+	]
+}

@@ -1,0 +1,479 @@
+{
+	"info": {
+		"_postman_id": "24fa148a-588e-48a9-ac8e-b97307ceb9f3",
+		"name": "Copy - Sources",
+		"description": "The goal of this collection is to easily copy paste the list of sources from a dataset to another.\n\n>NOTE: due to POSTMAN limitation to handle binary content in Collection Runners. Binary sources (ie. non-text files, like Spreadsheets, Shapefiles etc...) ARE NOT SUPPORTED. The source will be created with the correct configuration, but the file will be corrupted and you'll need to download and reupload it manually.\n\nRequired variables in the collection are :\n\n- domain_id_source\n- domain_id_destination\n- dataset_id_source\n- dataset_id_destination\n\nRequired variable in your environnement will only be your :\n\n- username\n- password",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Récupération de l'ID de la source",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"reponse = JSON.parse(responseBody);",
+							"",
+							"pm.collectionVariables.set('dataset_uid_source', reponse.datasets[0].dataset_uid)",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{domain_id_source}}.opendatasoft.com/api/management/v2/datasets?where=datasetid=\"{{dataset_id_source}}\"",
+					"protocol": "https",
+					"host": [
+						"{{domain_id_source}}",
+						"opendatasoft",
+						"com"
+					],
+					"path": [
+						"api",
+						"management",
+						"v2",
+						"datasets"
+					],
+					"query": [
+						{
+							"key": "where",
+							"value": "datasetid=\"{{dataset_id_source}}\""
+						}
+					]
+				},
+				"description": "This endpoint lists all the datasets that can be edited by this user.\nhttps://betahelp.opendatasoft.com/management-api/#list-datasets"
+			},
+			"response": []
+		},
+		{
+			"name": "Récupération de l'ID de la destination",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"reponse = JSON.parse(responseBody);",
+							"",
+							"pm.collectionVariables.set('dataset_uid_destination', reponse.datasets[0].dataset_uid)",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{domain_id_destination}}.opendatasoft.com/api/management/v2/datasets?where=datasetid=\"{{dataset_id_destination}}\"",
+					"protocol": "https",
+					"host": [
+						"{{domain_id_destination}}",
+						"opendatasoft",
+						"com"
+					],
+					"path": [
+						"api",
+						"management",
+						"v2",
+						"datasets"
+					],
+					"query": [
+						{
+							"key": "where",
+							"value": "datasetid=\"{{dataset_id_destination}}\""
+						}
+					]
+				},
+				"description": "This endpoint lists all the datasets that can be edited by this user.\nhttps://betahelp.opendatasoft.com/management-api/#list-datasets"
+			},
+			"response": []
+		},
+		{
+			"name": "Liste les ressources de la source",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set('resources_config', responseBody);",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{domain_id_source}}.opendatasoft.com/api/management/v2/datasets/{{dataset_uid_source}}/resources/",
+					"protocol": "https",
+					"host": [
+						"{{domain_id_source}}",
+						"opendatasoft",
+						"com"
+					],
+					"path": [
+						"api",
+						"management",
+						"v2",
+						"datasets",
+						"{{dataset_uid_source}}",
+						"resources",
+						""
+					]
+				},
+				"description": "This endpoint is meant to list all resources that are linked to a dataset.\n\nReturns\nThis API call returns the list of resource objects linked to the dataset.\n\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Téléchargement de la ressource",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let resources_config = JSON.parse(pm.collectionVariables.get(\"resources_config\"));",
+							"let resource_config = resources_config.shift();",
+							"",
+							"pm.variables.set(\"resource_uid\", resource_config.resource_uid);",
+							"",
+							"pm.collectionVariables.set(\"resource_config\", JSON.stringify(resource_config));",
+							"pm.collectionVariables.set(\"resources_config\", JSON.stringify(resources_config));"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code == 200) {",
+							"    pm.collectionVariables.set('resource_body', pm.response.text());",
+							"",
+							"    pm.test(\"Status code is 200\", function () {",
+							"        pm.response.to.have.status(200);",
+							"    });    ",
+							"} else if (pm.response.code == 400) {",
+							"    resource_config = JSON.parse(pm.collectionVariables.get('resource_config'));",
+							"    pm.collectionVariables.set('resource_url', resource_config.url);",
+							"    postman.setNextRequest(\"Création de la ressource destination\");",
+							"}",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{domain_id_source}}.opendatasoft.com/api/management/v2/datasets/{{dataset_uid_source}}/resources/{{resource_uid}}/download",
+					"protocol": "https",
+					"host": [
+						"{{domain_id_source}}",
+						"opendatasoft",
+						"com"
+					],
+					"path": [
+						"api",
+						"management",
+						"v2",
+						"datasets",
+						"{{dataset_uid_source}}",
+						"resources",
+						"{{resource_uid}}",
+						"download"
+					]
+				},
+				"description": "This endpoint is for retrieving one resource object using its resource uid\n\nThis API endpoint takes in its URL path a resource uid and returns the associated object.\n\nReturns\nThe resource object with the given resource uid.\n\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Création du fichier pour le jdd destinaton",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"body = pm.collectionVariables.get('resource_body');",
+							"resource_config = JSON.parse(pm.collectionVariables.get('resource_config'));",
+							"",
+							"let mimetype = 'text/plain';",
+							"if (resource_config.type == 'csvfile') {",
+							"    mimetype = 'text/csv';",
+							"}",
+							"if (resource_config.type == 'jsonfile') {",
+							"    mimetype = 'application/json';",
+							"}",
+							"",
+							"let output = {\"content\": body, ",
+							"              \"mimetype\": mimetype, ",
+							"              \"filename\": resource_config.title}",
+							"",
+							"pm.variables.set('output', JSON.stringify(output));"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"reponse = JSON.parse(responseBody);",
+							"",
+							"pm.collectionVariables.set('resource_url', reponse.url);",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{{output}}"
+				},
+				"url": {
+					"raw": "https://{{domain_id_destination}}.opendatasoft.com/api/management/v2/files",
+					"protocol": "https",
+					"host": [
+						"{{domain_id_destination}}",
+						"opendatasoft",
+						"com"
+					],
+					"path": [
+						"api",
+						"management",
+						"v2",
+						"files"
+					]
+				},
+				"description": "This endpoint is for uploading a new file to the platform. There are two ways to send files to the platform: either by sending a full file using the HTTP multipart mechanism, or by sending the file content and other metadata such as its type and file name. The use case dictates which method works best. For instance, in order to create files out of batch processes it might be easier to use the content method, but to upload an existing file from a local hard drive, the multipart method might work better. Both methods have the same result: they create a file on the domain. Please note that no file over the limit of 240Mb can be uploaded."
+			},
+			"response": []
+		},
+		{
+			"name": "Création de la ressource destination",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let resources_config = JSON.parse(pm.collectionVariables.get(\"resources_config\"));",
+							"",
+							"if (resources_config && resources_config.length > 0){",
+							"    postman.setNextRequest(\"Téléchargement de la ressource\");",
+							"} else {",
+							"    postman.setNextRequest(null);",
+							"}",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"resource_config = JSON.parse(pm.collectionVariables.get('resource_config'));",
+							"",
+							"let resource_url = pm.collectionVariables.get('resource_url');",
+							"",
+							"let output = { \"url\": resource_url, ",
+							"               \"title\": resource_config.title, ",
+							"               \"type\": resource_config.type, ",
+							"               \"params\": resource_config.params",
+							"             };",
+							"",
+							"if (resource_config.connection) {",
+							"    output['connection'] = resource_config.connection;",
+							"}",
+							"",
+							"pm.variables.set('output', JSON.stringify(output));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{{output}}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{domain_id_destination}}.opendatasoft.com/api/management/v2/datasets/{{dataset_uid_destination}}/resources/",
+					"protocol": "https",
+					"host": [
+						"{{domain_id_destination}}",
+						"opendatasoft",
+						"com"
+					],
+					"path": [
+						"api",
+						"management",
+						"v2",
+						"datasets",
+						"{{dataset_uid_destination}}",
+						"resources",
+						""
+					]
+				},
+				"description": "This endpoint is for creating a new resource for the dataset\n\nA new resource is created using the resource object sent in the body, and echoes back the object, with its newly generated resource_uid on success.\n\nParameters\nThe payload must be a valid resource object without any uid.\n\nReturns\nThe newly created resource object with its newly created resource uid.\n"
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "{{password}}",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "{{username}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "domain_id_source",
+			"value": "fpassaniti"
+		},
+		{
+			"key": "domain_id_destination",
+			"value": "fpassaniti"
+		},
+		{
+			"key": "dataset_id_source",
+			"value": "source"
+		},
+		{
+			"key": "dataset_id_destination",
+			"value": "destination"
+		},
+		{
+			"key": "dataset_uid_source",
+			"value": ""
+		},
+		{
+			"key": "dataset_uid_destination",
+			"value": ""
+		},
+		{
+			"key": "pipeline_processors",
+			"value": ""
+		},
+		{
+			"key": "pipeline_fields_specifications",
+			"value": ""
+		},
+		{
+			"key": "resource_uids_source",
+			"value": ""
+		},
+		{
+			"key": "resource_body",
+			"value": ""
+		},
+		{
+			"key": "resource_url",
+			"value": ""
+		},
+		{
+			"key": "resources_config",
+			"value": ""
+		},
+		{
+			"key": "resource_config",
+			"value": ""
+		},
+		{
+			"key": "resource_filename",
+			"value": ""
+		},
+		{
+			"key": "resource_type",
+			"value": ""
+		},
+		{
+			"key": "resource_params",
+			"value": ""
+		},
+		{
+			"key": "resource_mimetype",
+			"value": ""
+		}
+	]
+}

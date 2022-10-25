@@ -1,0 +1,473 @@
+{
+	"info": {
+		"_postman_id": "9d7513d6-db57-4bcb-9293-48080cf54171",
+		"name": "Copy - Processing pipeline",
+		"description": "The goal of this collection is to easily copy paste the entire processing pipeline from a dataset to another.\n\nRequired variables in the collection are :\n\n- domain_id_source\n- domain_id_destination\n- dataset_id_source\n- dataset_id_destination\n\nRequired variable in your environnement will only be your :\n\n- username\n- password",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Récupération de l'ID de la source",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"reponse = JSON.parse(responseBody);",
+							"",
+							"pm.collectionVariables.set('dataset_uid_source', reponse.datasets[0].dataset_uid)",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{domain_id_source}}.opendatasoft.com/api/management/v2/datasets?where=datasetid=\"{{dataset_id_source}}\"",
+					"protocol": "https",
+					"host": [
+						"{{domain_id_source}}",
+						"opendatasoft",
+						"com"
+					],
+					"path": [
+						"api",
+						"management",
+						"v2",
+						"datasets"
+					],
+					"query": [
+						{
+							"key": "where",
+							"value": "datasetid=\"{{dataset_id_source}}\""
+						}
+					]
+				},
+				"description": "This endpoint lists all the datasets that can be edited by this user.\nhttps://betahelp.opendatasoft.com/management-api/#list-datasets"
+			},
+			"response": []
+		},
+		{
+			"name": "Récupération de l'ID de la destination",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"reponse = JSON.parse(responseBody);",
+							"",
+							"pm.collectionVariables.set('dataset_uid_destination', reponse.datasets[0].dataset_uid)",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{domain_id_destination}}.opendatasoft.com/api/management/v2/datasets?where=datasetid=\"{{dataset_id_destination}}\"",
+					"protocol": "https",
+					"host": [
+						"{{domain_id_destination}}",
+						"opendatasoft",
+						"com"
+					],
+					"path": [
+						"api",
+						"management",
+						"v2",
+						"datasets"
+					],
+					"query": [
+						{
+							"key": "where",
+							"value": "datasetid=\"{{dataset_id_destination}}\""
+						}
+					]
+				},
+				"description": "This endpoint lists all the datasets that can be edited by this user.\nhttps://betahelp.opendatasoft.com/management-api/#list-datasets"
+			},
+			"response": []
+		},
+		{
+			"name": "Récupération des processeurs",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"reponse = JSON.parse(responseBody);",
+							"",
+							"reponse.forEach((processor) => {",
+							"    delete processor.processor_uid;",
+							"})",
+							"",
+							"pm.collectionVariables.set('pipeline_processors', JSON.stringify(reponse));",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{{processor}}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{domain_id_source}}.opendatasoft.com/api/management/v2/datasets/{{dataset_uid_source}}/processors/?",
+					"protocol": "https",
+					"host": [
+						"{{domain_id_source}}",
+						"opendatasoft",
+						"com"
+					],
+					"path": [
+						"api",
+						"management",
+						"v2",
+						"datasets",
+						"{{dataset_uid_source}}",
+						"processors",
+						""
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Récupération des spécifications de champs",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"reponse = JSON.parse(responseBody);",
+							"",
+							"reponse.forEach((spec) => {",
+							"    delete spec.processor_uid;",
+							"})",
+							"",
+							"pm.collectionVariables.set('pipeline_fields_specifications', JSON.stringify(reponse));",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{{processor}}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{domain_id_source}}.opendatasoft.com/api/management/v2/datasets/{{dataset_uid_source}}/fields_specifications/?",
+					"protocol": "https",
+					"host": [
+						"{{domain_id_source}}",
+						"opendatasoft",
+						"com"
+					],
+					"path": [
+						"api",
+						"management",
+						"v2",
+						"datasets",
+						"{{dataset_uid_source}}",
+						"fields_specifications",
+						""
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Envoi des processeurs",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let processors = JSON.parse(pm.collectionVariables.get(\"pipeline_processors\"));",
+							"",
+							"let processor = processors.shift();",
+							"    ",
+							"pm.variables.set(\"processor\", JSON.stringify(processor));",
+							"pm.collectionVariables.set(\"pipeline_processors\", JSON.stringify(processors));"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let processors = JSON.parse(pm.collectionVariables.get(\"pipeline_processors\"));",
+							"",
+							"if (processors && processors.length > 0){",
+							"    postman.setNextRequest(\"Envoi des processeurs\");",
+							"} else {",
+							"    postman.setNextRequest(\"Envoi des spécifications de champs\");",
+							"}",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{{processor}}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{domain_id_destination}}.opendatasoft.com/api/management/v2/datasets/{{dataset_uid_destination}}/processors/?",
+					"protocol": "https",
+					"host": [
+						"{{domain_id_destination}}",
+						"opendatasoft",
+						"com"
+					],
+					"path": [
+						"api",
+						"management",
+						"v2",
+						"datasets",
+						"{{dataset_uid_destination}}",
+						"processors",
+						""
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Envoi des spécifications de champs",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let specs = JSON.parse(pm.collectionVariables.get(\"pipeline_fields_specifications\"));",
+							"",
+							"let spec = specs.shift();",
+							"    ",
+							"pm.variables.set(\"spec\", JSON.stringify(spec));",
+							"pm.collectionVariables.set(\"pipeline_fields_specifications\", JSON.stringify(specs));"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let specs = JSON.parse(pm.collectionVariables.get(\"pipeline_fields_specifications\"));",
+							"",
+							"if (specs && specs.length > 0){",
+							"    postman.setNextRequest(\"Envoi des spécifications de champs\");",
+							"} else {",
+							"    postman.setNextRequest(null);",
+							"}",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{{spec}}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{domain_id_destination}}.opendatasoft.com/api/management/v2/datasets/{{dataset_uid_destination}}/fields_specifications/?",
+					"protocol": "https",
+					"host": [
+						"{{domain_id_destination}}",
+						"opendatasoft",
+						"com"
+					],
+					"path": [
+						"api",
+						"management",
+						"v2",
+						"datasets",
+						"{{dataset_uid_destination}}",
+						"fields_specifications",
+						""
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "{{password}}",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "{{username}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "domain_id_source",
+			"value": "fpassaniti"
+		},
+		{
+			"key": "domain_id_destination",
+			"value": "fpassaniti"
+		},
+		{
+			"key": "dataset_id_source",
+			"value": "source"
+		},
+		{
+			"key": "dataset_id_destination",
+			"value": "destination"
+		},
+		{
+			"key": "dataset_uid_source",
+			"value": ""
+		},
+		{
+			"key": "dataset_uid_destination",
+			"value": ""
+		},
+		{
+			"key": "pipeline_processors",
+			"value": ""
+		},
+		{
+			"key": "pipeline_fields_specifications",
+			"value": ""
+		}
+	]
+}
