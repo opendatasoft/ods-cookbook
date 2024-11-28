@@ -1,4 +1,4 @@
-# Local development environment V4
+# Local development environment V4.1
 
 For an easier development phase, it might me useful to work locally (local server, and local files) and then, once finished, copy-paste your code into your online environment
 
@@ -7,6 +7,14 @@ The biggest advantage for big and complex pages is the ability to split your cod
 **This toolkit helps to develop locally, compile your code, and even push it directly to your domain through the Managment API** 
 
 This toolkit is composed of several `gulp` tasks. `gulp` is a toolkit for automating tasks in your development. (also called a task runner).
+
+### What's new in 4.1
+
+ - `PROXY_URL` parameter added to deal with HTTP Proxy within your organization
+ - `BASEPATH` parameter added to set a base path locally to deal with specific development environment within your organization
+ - `ODS_ADMIN_APIKEY` parameter will now replace ODS_USERNAME and ODS_PASSWORD parameters, to no longer use basic auth. 
+ - Better error logs for gulp update errors
+ - /assets will no longer by proxified, they should now be available in the kit
 
 ## List of tasks
 
