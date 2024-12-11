@@ -60,3 +60,6 @@ V0.8
 - Activates on all Opendatasoft portal (not only on *.opendatasoft.com URLs)
 - Display a disabled icon if the current page is not an ODS Portal
 - MINOR FIX: when clicking on the extension icon (show/hide shortcuts bar) outside an ODS portal, an error occurred in the console. 
+
+V0.9
+- Migration to manifest v3 and the new Chrome API
