@@ -1,0 +1,56 @@
+{
+  "name": "Huwise",
+  "description": "Set of shortcuts to improve power users productivity",
+  "version": "0.9.1",
+  "permissions": [
+    "scripting",
+    "activeTab"
+  ],
+  "background": {
+    "service_worker": "all.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*/pages/*",
+        "https://*/page/*"
+      ],
+      "exclude_matches": [
+        "https://academy.opendatasoft.com/*",
+        "https://codelibrary.opendatasoft.com/*",
+        "https://help.opendatasoft.com/*",
+        "https://academy.huwise.com/*",
+        "https://codelibrary.huwise.com/*",
+        "https://help.huwise.com/*"
+      ],
+      "js": ["add_page_links.js"],
+      "css": ["hw.css"]
+    },
+    {
+      "matches": [
+        "https://*/*"
+      ],
+      "exclude_matches": [
+        "https://academy.opendatasoft.com/*",
+        "https://codelibrary.opendatasoft.com/*",
+        "https://help.opendatasoft.com/*",
+        "https://academy.huwise.com/*",
+        "https://codelibrary.huwise.com/*",
+        "https://help.huwise.com/*"
+      ],
+      "js": ["add_bo_links.js"],
+      "css": ["hw.css"]
+    }
+  ],
+  "action": {
+    "default_title": "Huwise Chrome extension, activates automatically when browsing Huwise portals",
+    "default_icon": {
+      "16": "icon16.png"
+    }
+  },
+  "manifest_version": 3,
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png" }
+}
