@@ -2,14 +2,8 @@
 
 A simple extension to increase productivity for every day users of the platform. It provides quick access to main tools like pages, monitoring, publish etc... 
 
-It activates automatically when browsing Opendatasoft URLs (ie. `*.opendatasoft.com/*`)
+It activates automatically when browsing huwise URLs (ie. `*.huwise.com/*`)
 
-## Install guide
-
-The extension is now live on the Chrome Web Store !
-Simply install it from here :
-
-https://chrome.google.com/webstore/detail/opendatasoft/eplolkkongbailacchomkdadfaoobmed/
 
 ## Install guide (developer mode)
 
@@ -21,12 +15,12 @@ and that's it !
 
 ## Available links
 
-When browsing ODS content pages `/pages/*` :
+When browsing Huwise content pages `/pages/*` :
 
 - direct link to content edition
 - direct link to usage statistics
 
-When browsing any ODS pages `/*` :
+When browsing any Huwise pages `/*` :
 
 - direct link to create a new page
 - direct link to create a new dataset
@@ -63,3 +57,6 @@ V0.8
 
 V0.9
 - Migration to manifest v3 and the new Chrome API
+
+V0.9.1
+- Rebrand 
